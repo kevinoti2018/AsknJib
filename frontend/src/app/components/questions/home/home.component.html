@@ -1,11 +1,11 @@
-<p>home works!</p>
-
 <mat-drawer-container class="container">
-    <mat-drawer #sidenav mode="side" [opened]="isSidenavOpen" class="sidenav bg-secondaryContainer p-1">
+    <mat-drawer #sidenav mode="over" [opened]="isSidenavOpen"  class="sidenav bg-secondaryContainer p-1">
       
       <mat-nav-list>
-        <a mat-list-item routerLink="home">Home</a>
-        <a mat-list-item routerLink="tags">tags</a>
+        <a mat-list-item routerLink="/questions">Home</a>
+        <a mat-list-item routerLink="/questions/tags">tags</a>
+        <a mat-list-item routerLink="/questions/ask">Ask a question</a>
+        <a mat-list-item routerLink="/questions/kevin">My questions</a>
      
       </mat-nav-list>
     </mat-drawer>
@@ -38,9 +38,9 @@
               </div>
             </div>
     
-            <div class="bottom ">
+            <div class="bottom "> 
                 <mat-card class=" bg-primaryContainer h-48 p-1 m-4  " >
-                    <div class="tops">
+                    <div class="tops sm:grid-cols-1">
                         <div class="left">
                             <div class="votes px-2 py-1 ">
                                 <h2>0 votes</h2>
@@ -142,7 +142,7 @@
             </div>
            
        </div>
-       <div class="end bg-secondaryContainer h-96">
+       <div class="end bg-secondaryContainer h-96 ">
         <h1>Top Questions?</h1>
     </div>
       </div>
@@ -171,7 +171,7 @@
 
 .content {
   overflow: auto;
-  height: 100%;
+  /* height: 100%; */
 }
 .body-contents{
     display: grid;
@@ -245,4 +245,39 @@
         margin: 0 0.2rem;
         text-align: center;
     }
+
+    @media (max-width: 640px) {
+    .end{
+        visibility: hidden;
+       
+    }
+    .body-contents{
+        display: grid;
+        grid-column: 1fr;
+        width: 100%;
+        
+    }
+    mat-card{
+        width: 100%;
+        /* background: #000; */
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .right .bottom mat-card .tops{
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .right .bottom mat-card .tops .left{
+        display: flex;
+        /* background-color: red; */
+        height: 3rem;
+    }
+    .right .bottom .bottom{
+        display: grid;
+        grid-template-columns: 1fr;
+        justify-content: center;
+        align-items: center;
+    }
+
+}
   </style>

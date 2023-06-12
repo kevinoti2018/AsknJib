@@ -1,10 +1,14 @@
 
 <mat-drawer-container class="container">
-    <mat-drawer #sidenav mode="side" [opened]="isSidenavOpen" class="sidenav bg-secondaryContainer p-1">
+    <mat-drawer #sidenav mode="over" [opened]="isSidenavOpen" class="sidenav bg-secondaryContainer p-1">
       
       <mat-nav-list>
-        <a mat-list-item routerLink="home">Home</a>
-        <a mat-list-item routerLink="tags">tags</a>
+        <a mat-list-item routerLink="/questions">Home</a>
+        <a mat-list-item routerLink="/questions/tags">tags</a>
+        <a mat-list-item routerLink="/questions/ask">Ask a question</a>
+        <a mat-list-item routerLink="/questions/kevin">My questions</a>
+
+
      
       </mat-nav-list>
     </mat-drawer>
@@ -33,58 +37,80 @@
                </mat-list>
         </div>
 
-        <div class="title-field bg-white mt-2">
+      
+          <div class="title-field bg-white mt-2">
             <h1 class="font-semibold text-xl mb-1 text-footer">Title</h1>
             <p>Be specific, imagine you are asking the question to someone else</p>
             <input type="text" placeholder="eg. is there an R function for finding an element in a vector?"
-                   [(ngModel)]="title" name="title" required #titleInput="ngModel">
-            <div *ngIf="titleInput.invalid && titleInput.touched">
+                   [formControl]="titleControl">
+            <div *ngIf="titleControl.invalid && titleControl.touched">
               <p class="error-message">Title is required.</p>
             </div>
-            <button class="bg-primary text-white p-1 w-14 mt-1 rounded-lg">Next</button>
-        </div>
+            <button class="bg-primary text-white p-1 w-14 mt-1 rounded-lg" (click)="goToDetails()" 
+            [disabled]="!titleControl.valid" 
+            [ngClass]="{ 'disabled-button': !titleControl.valid }"
+            >Next</button>
+          </div>
           
-          <div class="quiz-details bg-white mt-2">
+          <div class="quiz-details bg-white mt-2" *ngIf="showDetails">
             <h1 class="font-semibold text-xl mb-1 text-footer">What are the details of your problem?</h1>
             <p>Introduce the problem and expand on what you put with the title</p>
             <input type="text" placeholder="eg. is there an R function for finding an element in a vector?"
-                   [(ngModel)]="details" name="details" required #detailsInput="ngModel">
-            <div *ngIf="detailsInput.invalid && detailsInput.touched">
+                   [formControl]="detailsControl">
+            <div *ngIf="detailsControl.invalid && detailsControl.touched">
               <p class="error-message">Details are required.</p>
             </div>
-            <button class="bg-primary text-white p-1 w-14 mt-1 rounded-lg">Next</button>
+            <button class="bg-primary text-white p-1 w-14 mt-1 rounded-lg" (click)="goToTry()" 
+            [disabled]="!detailsControl.valid"
+            [ngClass]="{ 'disabled-button':!detailsControl.valid }"
+            >Next</button>
           </div>
           
-          <div class="quiz-try bg-white mt-2">
+          <div class="quiz-try bg-white mt-2" *ngIf="showTry">
             <h1 class="font-semibold text-xl mb-1 text-footer">What are the details of your problem?</h1>
             <p>Introduce the problem and expand on what you put with the title</p>
             <input type="text" placeholder="eg. is there an R function for finding an element in a vector?"
-                   [(ngModel)]="tryDetails" name="tryDetails" required #tryDetailsInput="ngModel">
-            <div *ngIf="tryDetailsInput.invalid && tryDetailsInput.touched">
+                   [formControl]="tryDetailsControl">
+            <div *ngIf="tryDetailsControl.invalid && tryDetailsControl.touched">
               <p class="error-message">Try details are required.</p>
             </div>
-            <button class="bg-primary text-white p-1 w-14 mt-1 rounded-lg">Next</button>
+            <button class="bg-primary text-white p-1 w-14 mt-1 rounded-lg" (click)="goToExpect()" 
+            [disabled]="!tryDetailsControl.valid"
+            [ngClass]="{ 'disabled-button':!tryDetailsControl.valid }"
+            >Next</button>
           </div>
-          <div class="expect bg-white p-2 my-1">
+          
+          <div class="expect bg-white p-2 my-1" *ngIf="showExpect">
             <h1 class="font-semibold text-xl mb-1 text-footer">What did you try and what are you expecting?</h1>
-            <p>Introduce the problem and expand on what you put ith the title</p>
+            <p>Introduce the problem and expand on what you put with the title</p>
             <input type="text" placeholder="eg. is there an R function for finding an element in a vector?"
-                   [(ngModel)]="expect" name="expect" required #expectInput="ngModel">
-            <div *ngIf="expectInput.invalid && expectInput.touched">
+                   [formControl]="expectControl">
+            <div *ngIf="expectControl.invalid && expectControl.touched">
               <p class="error-message">Expect details are required.</p>
             </div>
+            <button class="bg-primary text-white p-1 w-14 mt-1 rounded-lg" (click)="goToTags()" 
+            [disabled]="!expectControl.valid"
+            [ngClass]="{ 'disabled-button':!expectControl.valid }"
+            >Next</button>
           </div>
-
-          <div class="tags bg-white p-2 my-1">
+          
+          <div class="tags bg-white p-2 my-1" *ngIf="showTags">
             <h1 class="font-semibold text-xl mb-1 text-footer">Tags</h1>
-            <p>Add tags to  describe what your question is about</p>        
-            <input type="text" placeholder="Enter tags" [(ngModel)]="tags" name="tags" required #tagsInput="ngModel">
-            <div *ngIf="tagsInput.invalid && tagsInput.touched">
+            <p>Add tags to describe what your question is about</p>
+            <input type="text" placeholder="Enter tags" [formControl]="tagsControl">
+            <div *ngIf="tagsControl.invalid && tagsControl.touched">
               <p class="error-message">Tags are required.</p>
             </div>
-            <button class="bg-primary text-white p-1 w-14 mt-1 rounded-lg">Submit</button>
+          <div class="btn flex gap-4">
+            <button class="bg-primary text-white p-1 w-14 mt-1 rounded-lg" (click)="submitForm()" 
+            [disabled]="!tagsControl.valid"
+            [ngClass]="{ 'disabled-button':!tagsControl.valid }"
+            >Submit</button>
+            <button class="bg-secondary text-white p-1 w-14 mt-1 rounded-lg" (click)="resetForm()">Cancel</button>
           </div>
-
+          </div>
+          
+          
       
       </div>
 
@@ -127,4 +153,9 @@
    .error-message{
     color: red;
    }
+   .disabled-button {
+  opacity: 0.5;
+  cursor: not-allowed;
+
+}
   </style>

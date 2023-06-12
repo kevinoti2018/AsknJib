@@ -6,6 +6,7 @@ import { MaterialModule } from 'src/app/shared/material/material.module';
 import { TagsComponent } from '../tags/tags.component';
 import { AskComponent } from '../ask/ask.component';
 import { HomeComponent } from '../home/home.component';
+import { MyquestionsComponent } from '../myquestions/myquestions.component';
 
 
 
@@ -19,7 +20,8 @@ import { HomeComponent } from '../home/home.component';
      {path:'questions', component:HomeComponent},
      {path:'questions/ask', component:AskComponent},
      {path:"questions/tags",component:TagsComponent},
-     {path:'questions/:id', component:QuestionComponent}
+    //  {path:'questions/:id', component:QuestionComponent},
+     {path:'questions/:name', component:MyquestionsComponent}
     ])
   ]
 })

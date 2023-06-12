@@ -11,9 +11,10 @@ import { MaterialModule } from 'src/app/shared/material/material.module';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  isSidenavOpen = true;
+  isSidenavOpen = false;
 
   toggleSidenav(): void {
     this.isSidenavOpen = !this.isSidenavOpen;
   }
+  
 }

@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class QuestionComponent {
   answer!:string
-  isSidenavOpen = true;
+  isSidenavOpen = false;
 
   toggleSidenav(): void {
     this.isSidenavOpen = !this.isSidenavOpen;

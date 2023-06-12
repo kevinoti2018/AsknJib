@@ -1,45 +1,34 @@
-<!-- <mat-toolbar class="nav flex justify-between p-4 bg-secondaryContainer">
-    <div class="left text-2xl">
-        Logo
-    </div>
-    <div class="mid" class="flex  w-custom2 justify-between align-middle ">
-        <div class="left flex  w-36 justify-between p-2 align-middle" >
-            <p class="text-questionC text-md "><a href="">Questions</a></p>
-            <p class="text-questionC text-md "><a href="">About</a></p>
-        </div>
-        <div class="right p-2 w-custom1">
-            <input type="search" name="search" id="" placeholder="Search here .." class="w-full p-2 ring-content ring-1 rounded-md">
-        </div>
-    </div>
-    <div class="right w-customs  flex justify-between  ">
-        <button class="text-questionC text-xl font-semibold ">login</button>
-        <button class="px-3 py-1 bg-secondary text-white rounded-md font-semibold ">signup</button>
-    </div>
-</mat-toolbar> -->
-
 <mat-toolbar class="bg-secondaryContainer">
-    
-<div class="nav">
-    <div class="left">
-     <a routerLink=""> <h1><span class="text-primary">Ask</span><span class="text-secondary">&Jib</span></h1></a>
+    <div class="nav">
+      <div class="left">
+        <a routerLink="">
+          <h1>
+            <span class="text-primary">Ask</span><span class="text-secondary">&Jib</span>
+          </h1>
+        </a>
+      </div>
+      <div class="mid">
+        <div class="left">
+          <p class="text-questionC font-normal"><a href="/questions/ask">Ask</a></p>
+          <p class="text-questionC font-normal"><a routerLink="/questions">Questions</a></p>
+        </div>
+        <div class="right">
+          <input type="search" name="" id="" placeholder="Search here" class="">
+        </div>
+      </div>
+      <div class="right">
+        <button class="h-11 w-20 rounded-md mx-3 text-primary hover:bg-primary hover:text-white">
+          <a routerLink="/login">Login</a>
+        </button>
+        <button class="py-1 px-2 bg-secondary text-white h-10 w-28 rounded-xl hover:bg-primary">
+          <a routerLink="/signup">Signup</a>
+        </button>
+      </div>
     </div>
-    <div class="mid">
-       <div class="left">
-        <p class="text-questionC font-normal" ><a href="">About</a></p>
-        <p class="text-questionC font-normal" ><a routerLink="/questions">Questions</a></p>
-       </div>
-       <div class="right">
-        <input type="search" name="" id="" placeholder="Search here" class="">
-       </div>
-    </div>
-    <div class="right">
-        <button class="h-11 w-20 rounded-md mx-3 text-primary  hover:bg-primary hover:text-white"><a routerLink="/login">Login</a></button>
-        <button class="py-1 px-2 bg-secondary text-white h-10 w-28 rounded-xl  hover:bg-primary "><a routerLink="/signup">signup</a></button>
-    </div>
-</div>
-</mat-toolbar>
-<style>
-    .nav{
+  </mat-toolbar>
+  
+  <style>
+        .nav{
         width: 100%;
         display: flex;
         justify-content: space-between;
@@ -98,7 +87,41 @@
         font-size: 1.2rem;
         font-weight: bold;
     }
- 
-
-    
-</style>
+    /* Responsive styles for phone screens */
+    @media (max-width: 600px) {
+      .nav {
+        flex-direction: column;
+        align-items:center;
+        justify-content: center;
+        padding: 0.5rem;
+        gap: .5rem;
+      }
+  
+      .mid .left {
+        margin-bottom: 0.5rem;
+       
+       width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+      }
+  
+      .mid {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+       
+      }
+  
+      .right {
+        width: 100%;
+        justify-content: space-around;
+       
+      }
+   
+      .right button {
+        margin-right: 0.5rem;
+      }
+    }
+  </style>
+  
