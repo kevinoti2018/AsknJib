@@ -1,0 +1,30 @@
+<div class="register h-cust w-full flex justify-center align-middle">
+    <div class="forms bg-secondaryContainer  ">
+        <h2 class=" text-2xl mb-2 font-bold text-footer">Register User</h2>
+        
+        <form class="form bg-secondaryContainer" (ngSubmit)="createUser()"[formGroup]="registerForm">
+          <input type="text" formControlName="username" placeholder="Enter Your Username">
+          <div *ngIf="registerForm.get('username')?.invalid && (registerForm.get('username')?.dirty || registerForm.get('username')?.touched)">
+            <p class="err" *ngIf="registerForm.get('username')?.errors?.['required']">Username is required.</p>
+            <p class="err" *ngIf="registerForm.get('username')?.errors?.['minlength']">Username should be at least 3 characters long.</p>
+          </div>
+          <input type="email" formControlName="email" placeholder="Enter Your Email">
+          <div *ngIf="registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)">
+            <p class="err" *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</p>
+            <p class="err" *ngIf="registerForm.get('email')?.errors?.['email']">Invalid email format.</p>
+          </div>
+          <input type="password" formControlName="password" placeholder="Enter Your Password">
+          <div *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)">
+            <p class="err" *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</p>
+          </div>
+          <!-- <input type="password" formControlName="confirmPassword" placeholder="Confirm Your Password">
+          <div *ngIf="registerForm.get('confirmPassword')?.invalid && (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)">
+            <p class="err" *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Confirm Password is required.</p>
+          </div> -->
+          <button type="submit" class="bg-primary" >Register</button>
+          <p>Already have an account? <a routerLink="/login">Click here</a></p>
+        </form>
+        
+       </div>
+        
+</div>

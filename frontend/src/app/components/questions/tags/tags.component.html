@@ -1,0 +1,95 @@
+
+<mat-drawer-container class="container">
+    <mat-drawer #sidenav mode="side" [opened]="isSidenavOpen" class="sidenav bg-secondaryContainer p-1">
+      
+      <mat-nav-list>
+        <a mat-list-item routerLink="home">Home</a>
+        <a mat-list-item routerLink="tags">tags</a>
+     
+      </mat-nav-list>
+    </mat-drawer>
+  
+    <mat-drawer-content class="content">
+     
+      <mat-toolbar>
+        <button mat-icon-button (click)="toggleSidenav()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </mat-toolbar>
+      <router-outlet></router-outlet>
+      <div class="body-contents p-2  bg-white">
+        <div class="top">
+            <h1 class="text-footer font-bold text-xl">Tags</h1>
+            <p>A tag is a keyword or label that categorizes your question with other, similar questions. Using the right tags makes it easier for others to find and answer your question.</p>
+            <div class="tags flex  justify-between mt-2">
+                <input type="search" name="" id="" placeholder="search by tag" >
+                <div class="buttons">
+                    <mat-button-toggle-group class="outline-group" aria-label="Button toggle group">
+                        <mat-button-toggle class="outline-toggle" value="New">Popular</mat-button-toggle>
+                        <mat-button-toggle class="outline-toggle" value="unanswered">Name</mat-button-toggle>
+                        <mat-button-toggle class="outline-toggle" value="questions">New</mat-button-toggle>
+                      </mat-button-toggle-group>
+                      
+                </div>
+            </div>
+        </div>
+        <div class="bottom grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1">
+            <mat-card class="w-28">
+                <mat-card-header>
+                    <p class="py-1 px-2 bg-secondaryContainer rounded-xl">javascript</p>
+                </mat-card-header>
+                <mat-card-content class="text-sm ">
+                    Lorem ipsum dolor sit amet consectetur. Consectetur sodales felis luctus dignissim condimentum. Sit elementum accumsan nulla purus aenean tristique. Tempor accumsan nulla maecenas proin laoreet. Blandit tristique faucibus ut aliquet justo quam.
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="w-28">
+                <mat-card-header>
+                    <p class="py-1 px-2 bg-secondaryContainer rounded-xl ">javascript</p>
+                </mat-card-header>
+                <mat-card-content class="text-sm ">
+                    Lorem ipsum dolor sit amet consectetur. Consectetur sodales felis luctus dignissim condimentum. Sit elementum accumsan nulla purus aenean tristique. Tempor accumsan nulla maecenas proin laoreet. Blandit tristique faucibus ut aliquet justo quam.
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="w-28">
+                <mat-card-header>
+                    <p class="py-1 px-2 bg-secondaryContainer rounded-xl">javascript</p>
+                </mat-card-header>
+                <mat-card-content class="text-sm ">
+                    Lorem ipsum dolor sit amet consectetur. Consectetur sodales felis luctus dignissim condimentum. Sit elementum accumsan nulla purus aenean tristique. Tempor accumsan nulla maecenas proin laoreet. Blandit tristique faucibus ut aliquet justo quam.
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="w-28">
+                <mat-card-header>
+                    <p class="py-1 px-2 bg-secondaryContainer rounded-xl">javascript</p>
+                </mat-card-header>
+                <mat-card-content class="text-sm ">
+                    Lorem ipsum dolor sit amet consectetur. Consectetur sodales felis luctus dignissim condimentum. Sit elementum accumsan nulla purus aenean tristique. Tempor accumsan nulla maecenas proin laoreet. Blandit tristique faucibus ut aliquet justo quam.
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+      
+      </div>
+
+    </mat-drawer-content>
+  </mat-drawer-container>
+  
+
+
+  <style>
+    input{
+    /* width: 90%; */
+   
+    width: 20%;
+    background-color: #E3E6E8;
+    border-radius: .5rem;
+    padding: 0.5rem;
+    }
+
+
+    mat-card{
+        width: 15rem;
+    }
+    
+    
+  </style>

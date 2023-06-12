@@ -1,0 +1,26 @@
+<div class="login h-cust w-full flex justify-center align-middle">
+    <div class="f-container">
+        <div class="forms bg-secondaryContainer">
+          <h2 class=" text-2xl mb-2 font-bold text-footer">Login User</h2>
+        <form  (ngSubmit)="submit()" class="form " [formGroup]="loginForm">
+          <input type="email" formControlName="email" placeholder="Enter Your Email">
+          <div *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)">
+            <p class="err" *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</p>
+            <p class="err" *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</p>
+          </div>
+          <p> <a routerLink="/reset">Forgot Password?</a></p>
+          <input type="password" formControlName="password" placeholder="Enter Your Password">
+          <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+            <p class="err" *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</p>
+          </div>
+          <button type="submit" class="bg-primary">Login</button>
+          <p>Don't have an account? <a routerLink="/signup">Click here</a></p>
+          
+        </form>
+        </div>
+        
+      </div>
+      
+      
+      
+</div>

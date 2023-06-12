@@ -1,0 +1,38 @@
+<div class="hero grid sm:grid-cols-1">
+    <div class="left ">
+        <img src="../../../assets/hero.jpg" alt="hero" class="">
+    </div>
+    <div class="right bg-secondaryContainer flex-col justify-center align-middle">
+        <div class="content  flex-col  align-middle justify-evenly">
+            <h1 class="text-5xl  text-secondary">Ask</h1> <p class="text-2xl font-bold text-primary">Discover</p> <h1 class="text-4xl text-secondary ">Engage</h1> <h1 class="text-6xl  text-primary  ">Excell !!</h1>
+        </div> 
+        <div class="butcont">
+            <button class="rounded-lg w-48 py-2 px-2 bg-secondary text-white text-lg hover:bg-primary" routerLink="/login"> Get started</button>
+        </div>
+    </div>
+</div>
+<style>
+    .hero{
+        margin-top: 1rem;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        background-color: #fff;
+        
+        
+    }
+    .content{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        height: 70%;
+    }
+    .butcont{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        /* background-color: #fff; */
+        justify-content: center;
+    }
+</style>

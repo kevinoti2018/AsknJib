@@ -1,0 +1,91 @@
+.container {
+    position: relative;
+    /* height: 100vh; */
+  }
+  
+  .sidenav {
+    width: 200px; 
+    margin: 0.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* position: fixed; */
+    
+  }
+  
+  .content {
+    overflow: auto;
+    height: 100%;
+  }
+  .body-contents{
+     display: flex;
+     flex-direction: column;
+  }
+  .right .top{
+          display: flex;
+          flex-direction: column;
+          align-items: end;
+          padding: 0.5em;
+          gap: .3rem;
+      }
+      .t-bottom{
+          display: flex;
+          gap: 1rem;
+          align-items: center;
+      }
+      mat-card{
+          width: 94%;border: 1px solid #525960;
+          margin: .5rem auto;
+          display: flex;
+          flex-direction: column;
+          gap: .5rem;
+          height: auto;
+          border-radius: .5rem;
+  
+      }
+     .right .bottom mat-card .tops{
+          display:grid;
+          grid-template-columns: 1fr 2.8fr;
+          gap: .5rem;
+      }
+      .right .bottom .tops  .right{
+          /* background-color: aqua; */
+      }
+      .right .bottom mat-card .tops .left{
+          display: flex;
+          flex-direction: column;
+          /* background-color: red; */
+          height: 9rem;
+          align-items: center;
+          justify-content: center;
+          gap: .5rem;
+      }
+      .right .bottom mat-card .tops .left .answers{
+          border-radius: .5rem;
+          border: 1px solid #525960;
+      }
+      .right .bottom mat-card .tops .left .votes{
+          border-radius: .5rem;
+          border: 1px solid #525960;
+      }
+      .right .bottom .bottom{
+          display: grid;
+          grid-template-columns: 1.5fr 1fr 1fr;
+          gap: .2rem;
+          height: 20%;
+      }
+      .bottom .left{
+          display: flex;
+          flex-wrap: wrap;
+          /* justify-content: space-evenly; */
+       
+      }
+      .bottom .left .tag{
+          padding: .2rem 0.5rem;
+          width: 5rem;
+          font-size: .8rem;
+          border-radius: .5rem;
+          margin: 0 0.2rem;
+          text-align: center;
+      }

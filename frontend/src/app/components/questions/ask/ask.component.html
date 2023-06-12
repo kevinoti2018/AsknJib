@@ -1,0 +1,130 @@
+
+<mat-drawer-container class="container">
+    <mat-drawer #sidenav mode="side" [opened]="isSidenavOpen" class="sidenav bg-secondaryContainer p-1">
+      
+      <mat-nav-list>
+        <a mat-list-item routerLink="home">Home</a>
+        <a mat-list-item routerLink="tags">tags</a>
+     
+      </mat-nav-list>
+    </mat-drawer>
+  
+    <mat-drawer-content class="content">
+     
+      <mat-toolbar>
+        <button mat-icon-button (click)="toggleSidenav()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </mat-toolbar>
+      <router-outlet></router-outlet>
+      <div class="body-contents p-2 ">
+        <h1 class="font-bold text-2xl mb-2 text-footer">Ask a public question?</h1>
+        <div class="guidelines bg-secondaryContainer p-2 ">
+            <h1 class="font-semibold text-xl mb-1 text-footer">Question guidelines</h1>
+            <p class="text-content text-sm font-medium mb-1">You’re ready to  ask a technical question on this form will help guide you through the process.
+                Looking to ask a non-programming question? See the topics here to find a relevant site.</p>
+            <h3 class="font-bold">Steps</h3>
+            <mat-list class="text-sm">
+                <mat-list-item>Summarize your problem in a one-line title.</mat-list-item>
+                <mat-list-item>Describe your problem in more detail.</mat-list-item>
+                <mat-list-item>Describe what you tried and what you expected to happen.</mat-list-item>
+                <mat-list-item>Add “tags” which help surface your question to members of the community.</mat-list-item>
+                <mat-list-item>Review your question and post it to the site</mat-list-item>
+               </mat-list>
+        </div>
+
+        <div class="title-field bg-white mt-2">
+            <h1 class="font-semibold text-xl mb-1 text-footer">Title</h1>
+            <p>Be specific, imagine you are asking the question to someone else</p>
+            <input type="text" placeholder="eg. is there an R function for finding an element in a vector?"
+                   [(ngModel)]="title" name="title" required #titleInput="ngModel">
+            <div *ngIf="titleInput.invalid && titleInput.touched">
+              <p class="error-message">Title is required.</p>
+            </div>
+            <button class="bg-primary text-white p-1 w-14 mt-1 rounded-lg">Next</button>
+        </div>
+          
+          <div class="quiz-details bg-white mt-2">
+            <h1 class="font-semibold text-xl mb-1 text-footer">What are the details of your problem?</h1>
+            <p>Introduce the problem and expand on what you put with the title</p>
+            <input type="text" placeholder="eg. is there an R function for finding an element in a vector?"
+                   [(ngModel)]="details" name="details" required #detailsInput="ngModel">
+            <div *ngIf="detailsInput.invalid && detailsInput.touched">
+              <p class="error-message">Details are required.</p>
+            </div>
+            <button class="bg-primary text-white p-1 w-14 mt-1 rounded-lg">Next</button>
+          </div>
+          
+          <div class="quiz-try bg-white mt-2">
+            <h1 class="font-semibold text-xl mb-1 text-footer">What are the details of your problem?</h1>
+            <p>Introduce the problem and expand on what you put with the title</p>
+            <input type="text" placeholder="eg. is there an R function for finding an element in a vector?"
+                   [(ngModel)]="tryDetails" name="tryDetails" required #tryDetailsInput="ngModel">
+            <div *ngIf="tryDetailsInput.invalid && tryDetailsInput.touched">
+              <p class="error-message">Try details are required.</p>
+            </div>
+            <button class="bg-primary text-white p-1 w-14 mt-1 rounded-lg">Next</button>
+          </div>
+          <div class="expect bg-white p-2 my-1">
+            <h1 class="font-semibold text-xl mb-1 text-footer">What did you try and what are you expecting?</h1>
+            <p>Introduce the problem and expand on what you put ith the title</p>
+            <input type="text" placeholder="eg. is there an R function for finding an element in a vector?"
+                   [(ngModel)]="expect" name="expect" required #expectInput="ngModel">
+            <div *ngIf="expectInput.invalid && expectInput.touched">
+              <p class="error-message">Expect details are required.</p>
+            </div>
+          </div>
+
+          <div class="tags bg-white p-2 my-1">
+            <h1 class="font-semibold text-xl mb-1 text-footer">Tags</h1>
+            <p>Add tags to  describe what your question is about</p>        
+            <input type="text" placeholder="Enter tags" [(ngModel)]="tags" name="tags" required #tagsInput="ngModel">
+            <div *ngIf="tagsInput.invalid && tagsInput.touched">
+              <p class="error-message">Tags are required.</p>
+            </div>
+            <button class="bg-primary text-white p-1 w-14 mt-1 rounded-lg">Submit</button>
+          </div>
+
+      
+      </div>
+
+    </mat-drawer-content>
+  </mat-drawer-container>
+  
+
+
+  <style>
+   .guidelines{
+    width: 100%;
+    height: 15rem;
+    border-radius: .5rem;
+   }
+   .title-field,.quiz-details , .quiz-try,.expect, .tags{
+    
+    padding: 0.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+   }
+   .title-field input ,.quiz-details input,.quiz-try input, .expect input, .tags input{
+    width: 90%;
+    background-color: #E3E6E8;
+    border-radius: .5rem;
+    padding: 0.5rem;
+   }
+   .quiz-details input{
+    height: 4rem;
+   }
+   .quiz-try input{
+    height: 6rem;
+   }
+   .expect input{
+    height: 6rem;
+   }
+   input:focus{
+    outline: n;
+   }
+   .error-message{
+    color: red;
+   }
+  </style>

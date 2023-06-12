@@ -1,0 +1,104 @@
+<!-- <mat-toolbar class="nav flex justify-between p-4 bg-secondaryContainer">
+    <div class="left text-2xl">
+        Logo
+    </div>
+    <div class="mid" class="flex  w-custom2 justify-between align-middle ">
+        <div class="left flex  w-36 justify-between p-2 align-middle" >
+            <p class="text-questionC text-md "><a href="">Questions</a></p>
+            <p class="text-questionC text-md "><a href="">About</a></p>
+        </div>
+        <div class="right p-2 w-custom1">
+            <input type="search" name="search" id="" placeholder="Search here .." class="w-full p-2 ring-content ring-1 rounded-md">
+        </div>
+    </div>
+    <div class="right w-customs  flex justify-between  ">
+        <button class="text-questionC text-xl font-semibold ">login</button>
+        <button class="px-3 py-1 bg-secondary text-white rounded-md font-semibold ">signup</button>
+    </div>
+</mat-toolbar> -->
+
+<mat-toolbar class="bg-secondaryContainer">
+    
+<div class="nav">
+    <div class="left">
+     <a routerLink=""> <h1><span class="text-primary">Ask</span><span class="text-secondary">&Jib</span></h1></a>
+    </div>
+    <div class="mid">
+       <div class="left">
+        <p class="text-questionC font-normal" ><a href="">About</a></p>
+        <p class="text-questionC font-normal" ><a routerLink="/questions">Questions</a></p>
+       </div>
+       <div class="right">
+        <input type="search" name="" id="" placeholder="Search here" class="">
+       </div>
+    </div>
+    <div class="right">
+        <button class="h-11 w-20 rounded-md mx-3 text-primary  hover:bg-primary hover:text-white"><a routerLink="/login">Login</a></button>
+        <button class="py-1 px-2 bg-secondary text-white h-10 w-28 rounded-xl  hover:bg-primary "><a routerLink="/signup">signup</a></button>
+    </div>
+</div>
+</mat-toolbar>
+<style>
+    .nav{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        /* background-color: aqua; */
+        height: 100%;
+    }
+    .left h1{
+        font-size: 2rem;
+    }
+    .right{
+        height: 100%;
+        width: 12rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        /* background-color: #fff; */
+    }
+    .mid{
+        width: 32rem;
+        /* background-color: red; */
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+    }.mid .left{
+        display: flex;
+        width: 10rem;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+
+    }
+    .mid .right{
+        width: 21rem;
+        align-items: center;
+        display: flex;
+        padding: 0.5rem;
+    }
+    .mid .right input{
+        width: 100%;
+        padding: 0.5rem;
+        border-radius: 1rem;
+    }
+    input:focus{
+        outline: none;
+    }
+
+    .left{
+        height: 100%;
+        /* background-color: green; */
+        align-items: center;
+        display: flex;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+ 
+
+    
+</style>

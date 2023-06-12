@@ -1,0 +1,130 @@
+
+<mat-drawer-container class="container">
+    <mat-drawer #sidenav mode="side" [opened]="isSidenavOpen" class="sidenav bg-secondaryContainer p-1">
+      
+      <mat-nav-list>
+        <a mat-list-item routerLink="home">Home</a>
+        <a mat-list-item routerLink="tags">tags</a>
+     
+      </mat-nav-list>
+    </mat-drawer>
+  
+    <mat-drawer-content class="content">
+     
+      <mat-toolbar>
+        <button mat-icon-button (click)="toggleSidenav()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </mat-toolbar>
+      <router-outlet></router-outlet>
+      <div class="body-contents ">
+       <div class="content bg-white p-2">
+            <div class="top flex justify-between">
+                <div class="left ">
+                    <h1 class="text-3xl font-bold text-footer">How do i correct this code?</h1>
+                </div>
+                <div class="right">
+                    <button class="bg-primary py-1 px-2 text-white rounded-xl"><a routerLink="/questions/ask">Ask a question?</a></button>
+                </div>
+            </div>
+            <div class="sub flex gap-6  mt-4">
+                <h2 class="text-content">Asked <span class="text-footer font-bold"> 10 days ago</span></h2>
+                <h2 class="text-content">Modified <span class="text-footer font-bold">2 days ago</span></h2>
+            </div>
+            <div class="question mt-8">
+                <div class="left flex flex-col align-middle justify-center text-center">
+                    <span><mat-icon>arrow_circle_up</mat-icon></span>2 <span><mat-icon>arrow_circle_down</mat-icon></span>
+                </div>
+                <div class="right bg-secondaryContainer rounded-md p-2 text-content text-md">
+                    Lorem ipsum dolor sit amet consectetur. Enim tempor volutpat eu mauris quam bibendum. Suspendisse libero mattis massa id quam lorem. Nulla vitae bibendum convallis mi vulputate vel nisi nam tempus. Viverra cras in varius varius sed rhoncus semper tellus.
+                </div>
+            </div>
+            <div class="tried mt-4 ">
+                <h1 class="font-bold text-xl text-footer my-2">What I Tried</h1>
+                <div class="try bg-tertiaryContainer p-2 text-md">
+                    Lorem ipsum dolor sit amet consectetur. Enim tempor volutpat eu mauris quam bibendum. Suspendisse libero mattis massa id quam lorem. Nulla vitae bibendum convallis mi vulputate vel nisi nam tempus. Viverra cras in varius varius sed rhoncus semper tellus.
+                </div>
+            </div>
+            <div class="answers mt-8">
+                <h1 class="mb-4 font-bold text-footer text-xl">Answers</h1>
+               <div class="answer">
+                <div class="left flex flex-col align-middle justify-center text-center">
+                    <span><mat-icon>arrow_circle_up</mat-icon></span>2 <span><mat-icon>arrow_circle_down</mat-icon></span>
+                </div>
+                <div class="right bg-secondaryContainer rounded-md p-2 text-content text-md">
+                    Lorem ipsum dolor sit amet consectetur. Enim tempor volutpat eu mauris quam bibendum. Suspendisse libero mattis massa id quam lorem. Nulla vitae bibendum convallis mi vulputate vel nisi nam tempus. Viverra cras in varius varius sed rhoncus semper tellus.
+                </div>
+               </div>
+            </div>
+            <div class="response mt-6">
+                <h2 class="font-bold text-md text-footer">Your answer</h2>
+                <input type="text" placeholder="Enter your answer" [(ngModel)]="answer" name="answer" required #answerInput="ngModel">
+                <div *ngIf="answerInput.invalid && (answerInput.dirty || answerInput.touched)" class="error-message">
+                  <div *ngIf="answerInput.errors?.['required']">
+                    <div class="errors">Answer is required.</div>
+                  </div>
+                </div>
+                <button class="bg-primary text-white py-1 px-2 rounded-lg mt-2" [disabled]="!answer" [ngClass]="{ 'disabled-button': !answer }">Submit</button>
+              </div>
+              
+       </div>
+       <div class="end bg-secondaryContainer h-96">
+        <h1>Top Questions?</h1>
+    </div>
+      </div>
+
+    </mat-drawer-content>
+  </mat-drawer-container>
+  
+
+
+  <style>
+    .container {
+  position: relative;
+  /* height: 100vh; */
+}
+
+.sidenav {
+  width: 200px; 
+  margin: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* position: fixed; */
+  
+}
+.errors{
+    color: red;
+}
+.question, .answer {
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    /* margin-top: 0.5rem; */
+
+}
+.body-contents{
+    display: grid;
+    grid-template-columns: 1fr 10rem;
+    gap: 0.5rem;
+}
+
+input{
+    width: 98%;
+    background-color: #E3E6E8;
+    border-radius: .5rem;
+    padding: 0.5rem;
+    height: 6rem;
+}
+input:focus{
+    outline: none;
+}
+.disabled-button {
+
+  opacity: 0.5;
+  cursor: not-allowed;
+ 
+}
+
+
+  </style>
