@@ -17,6 +17,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ResetComponent } from './components/reset/reset.component';
 import { QuestionModule } from './components/questions/question/question.module';
+import { AdminsModule } from './components/admin/admins/admins.module';
+
 
 
 
@@ -34,6 +36,7 @@ import { QuestionModule } from './components/questions/question/question.module'
     RegisterComponent,
     ResetComponent,
 
+
    
   ],
   imports: [
@@ -43,6 +46,7 @@ import { QuestionModule } from './components/questions/question/question.module'
     FormsModule,
     ReactiveFormsModule,
     QuestionModule,
+    AdminsModule,
     AppRoutingModule,
   ],
   providers: [],

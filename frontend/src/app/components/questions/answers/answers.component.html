@@ -58,14 +58,15 @@
                 <div class="right bg-secondaryContainer rounded-md p-2 text-content text-md">
                     Lorem ipsum dolor sit amet consectetur. Enim tempor volutpat eu mauris quam bibendum. Suspendisse libero mattis massa id quam lorem. Nulla vitae bibendum convallis mi vulputate vel nisi nam tempus. Viverra cras in varius varius sed rhoncus semper tellus.
                 </div>
+                <button class="mt-2 p-2 bg-secondary text-white rounded-lg">accept</button>
                </div>
             </div>
             <div class="response mt-6 mb-2 p-2">
-              <h2 class="font-bold text-md text-footer">Your answer</h2>
-              <textarea placeholder="Enter your answer" [(ngModel)]="answer" name="answer" required #answerInput="ngModel"></textarea>
+              <h2 class="font-bold text-md text-footer">comment</h2>
+              <textarea placeholder="Enter your comment" [(ngModel)]="answer" name="answer" required #answerInput="ngModel"></textarea>
               <div *ngIf="answerInput.invalid && (answerInput.dirty || answerInput.touched)" class="error-message">
                 <div *ngIf="answerInput.errors?.['required']">
-                  <div class="errors">Answer is required.</div>
+                  <div class="errors">comment is required.</div>
                 </div>
               </div>
               <button class="bg-primary text-white py-1 px-2 rounded-lg mt-2" [disabled]="!answer" [ngClass]="{ 'disabled-button': !answer }">Submit</button>

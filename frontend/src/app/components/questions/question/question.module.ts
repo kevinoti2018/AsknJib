@@ -7,6 +7,7 @@ import { TagsComponent } from '../tags/tags.component';
 import { AskComponent } from '../ask/ask.component';
 import { HomeComponent } from '../home/home.component';
 import { MyquestionsComponent } from '../myquestions/myquestions.component';
+import { AnswersComponent } from '../answers/answers.component';
 
 
 
@@ -20,8 +21,10 @@ import { MyquestionsComponent } from '../myquestions/myquestions.component';
      {path:'questions', component:HomeComponent},
      {path:'questions/ask', component:AskComponent},
      {path:"questions/tags",component:TagsComponent},
+     {path:'questions/answers', component:AnswersComponent},
      {path:'questions/:id', component:QuestionComponent},
-     {path:'questions/:name', component:MyquestionsComponent}
+     {path:'questions/s/:name', component:MyquestionsComponent},
+    
     ])
   ]
 })
