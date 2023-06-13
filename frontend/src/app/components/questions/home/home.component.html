@@ -116,7 +116,7 @@
                             </div>
                         </div>
                         <div class="right">
-                         <mat-card-header class="text-2xl text-questionC">
+                         <mat-card-header class="lg:text-2xl text-questionC sm:text-md">
                              How do i finish this code?
                          </mat-card-header>
                          <mat-card-content class="text-content text-sm">
@@ -245,7 +245,10 @@
         margin: 0 0.2rem;
         text-align: center;
     }
-
+    mat-button-toggle-group,mat-button-toggle{
+        
+        border: 1px solid black;
+    }
     @media (max-width: 640px) {
     .end{
         visibility: hidden;
@@ -253,7 +256,7 @@
     }
     .body-contents{
         display: grid;
-        grid-column: 1fr;
+        grid-template-columns: 1fr;
         width: 100%;
         
     }
@@ -277,7 +280,35 @@
         grid-template-columns: 1fr;
         justify-content: center;
         align-items: center;
+        font-size: 1rem;
+        font-weight: 500;
     }
-
+    .right .top{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    mat-button-toggle-group,mat-button-toggle{
+        
+        border: 1px solid black;
+    }
+    mat-card-header{
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+    mat-card-content{
+        font-size: .8rem;
+        font-weight: 500;
+    }
+    /* .top .ask{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    } */
+    .t-bottom{
+        display: flex;
+        flex-direction: column;
+    }
 }
   </style>

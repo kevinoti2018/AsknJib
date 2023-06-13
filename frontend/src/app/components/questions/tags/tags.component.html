@@ -92,6 +92,30 @@
     mat-card{
         width: 15rem;
     }
+    mat-button-toggle-group,mat-button-toggle{
+        
+        border: 1px solid black;
+    }
+    @media (max-width: 640px) {
+        .tags{
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: .5rem;
+        }
+        input{
+            width: 90%;
+            margin-top: .5rem;
+        }
+        mat-card{
+            width: 100%;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        h1,p{
+            font-size: 1rem;
+            font-weight: 500;
+        }
+    }
     
     
   </style>
