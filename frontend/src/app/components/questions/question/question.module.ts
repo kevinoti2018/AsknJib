@@ -20,7 +20,7 @@ import { MyquestionsComponent } from '../myquestions/myquestions.component';
      {path:'questions', component:HomeComponent},
      {path:'questions/ask', component:AskComponent},
      {path:"questions/tags",component:TagsComponent},
-    //  {path:'questions/:id', component:QuestionComponent},
+     {path:'questions/:id', component:QuestionComponent},
      {path:'questions/:name', component:MyquestionsComponent}
     ])
   ]

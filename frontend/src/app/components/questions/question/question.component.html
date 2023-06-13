@@ -1,10 +1,12 @@
 
 <mat-drawer-container class="container">
-    <mat-drawer #sidenav mode="side" [opened]="isSidenavOpen" class="sidenav bg-secondaryContainer p-1">
+    <mat-drawer #sidenav mode="over" [opened]="isSidenavOpen" class="sidenav bg-secondaryContainer p-1">
       
       <mat-nav-list>
-        <a mat-list-item routerLink="home">Home</a>
-        <a mat-list-item routerLink="tags">tags</a>
+        <a mat-list-item routerLink="/questions">Home</a>
+        <a mat-list-item routerLink="/questions/tags">tags</a>
+        <a mat-list-item routerLink="/questions/ask">Ask a question</a>
+        <a mat-list-item routerLink="/questions/kevin">My questions</a>
      
       </mat-nav-list>
     </mat-drawer>
@@ -41,7 +43,7 @@
             </div>
             <div class="tried mt-4 ">
                 <h1 class="font-bold text-xl text-footer my-2">What I Tried</h1>
-                <div class="try bg-tertiaryContainer p-2 text-md">
+                <div class="try bg-tertiaryContainer p-2 text-md rounded-lg">
                     Lorem ipsum dolor sit amet consectetur. Enim tempor volutpat eu mauris quam bibendum. Suspendisse libero mattis massa id quam lorem. Nulla vitae bibendum convallis mi vulputate vel nisi nam tempus. Viverra cras in varius varius sed rhoncus semper tellus.
                 </div>
             </div>
@@ -56,16 +58,17 @@
                 </div>
                </div>
             </div>
-            <div class="response mt-6">
-                <h2 class="font-bold text-md text-footer">Your answer</h2>
-                <input type="text" placeholder="Enter your answer" [(ngModel)]="answer" name="answer" required #answerInput="ngModel">
-                <div *ngIf="answerInput.invalid && (answerInput.dirty || answerInput.touched)" class="error-message">
-                  <div *ngIf="answerInput.errors?.['required']">
-                    <div class="errors">Answer is required.</div>
-                  </div>
+            <div class="response mt-6 mb-2 p-2">
+              <h2 class="font-bold text-md text-footer">Your answer</h2>
+              <textarea placeholder="Enter your answer" [(ngModel)]="answer" name="answer" required #answerInput="ngModel"></textarea>
+              <div *ngIf="answerInput.invalid && (answerInput.dirty || answerInput.touched)" class="error-message">
+                <div *ngIf="answerInput.errors?.['required']">
+                  <div class="errors">Answer is required.</div>
                 </div>
-                <button class="bg-primary text-white py-1 px-2 rounded-lg mt-2" [disabled]="!answer" [ngClass]="{ 'disabled-button': !answer }">Submit</button>
               </div>
+              <button class="bg-primary text-white py-1 px-2 rounded-lg mt-2" [disabled]="!answer" [ngClass]="{ 'disabled-button': !answer }">Submit</button>
+            </div>
+            
               
        </div>
        <div class="end bg-secondaryContainer h-96">
@@ -109,14 +112,14 @@
     gap: 0.5rem;
 }
 
-input{
+textarea{
     width: 98%;
     background-color: #E3E6E8;
     border-radius: .5rem;
     padding: 0.5rem;
     height: 6rem;
 }
-input:focus{
+textarea:focus{
     outline: none;
 }
 .disabled-button {
@@ -124,6 +127,38 @@ input:focus{
   opacity: 0.5;
   cursor: not-allowed;
  
+}
+@media (max-width: 640px){
+  .content{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .content .top{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .5rem;
+  }
+  h1{
+    font-size: 1.2rem;
+  }
+  h2{
+    font-size: 1rem;
+  }
+  .end{
+    display: none;
+  }
+  .body-contents{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .question .right,
+  .tried .try,
+  .answers .right{
+    font-size: .9rem;
+    font-weight: 500;
+  }
 }
 
 

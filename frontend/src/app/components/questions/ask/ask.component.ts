@@ -29,6 +29,7 @@ export class AskComponent {
   showTry = false;
   showExpect = false;
   showTags = false;
+  
 
   goToDetails() {
     this.showDetails = true;
@@ -73,6 +74,11 @@ export class AskComponent {
     this.tryDetailsControl.reset();
     this.expectControl.reset();
     this.tagsControl.reset();
+
+    this.showDetails = false;
+    this.showTry = false;
+    this.showExpect = false;
+    this.showTags = false;
   }
   
   toggleSidenav(): void {

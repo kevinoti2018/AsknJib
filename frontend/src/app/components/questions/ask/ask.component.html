@@ -55,44 +55,48 @@
           <div class="quiz-details bg-white mt-2" *ngIf="showDetails">
             <h1 class="font-semibold text-xl mb-1 text-footer">What are the details of your problem?</h1>
             <p>Introduce the problem and expand on what you put with the title</p>
-            <input type="text" placeholder="eg. is there an R function for finding an element in a vector?"
-                   [formControl]="detailsControl">
+            <textarea placeholder="eg. is there an R function for finding an element in a vector?"
+            [formControl]="detailsControl" name="details"></textarea>
             <div *ngIf="detailsControl.invalid && detailsControl.touched">
               <p class="error-message">Details are required.</p>
             </div>
             <button class="bg-primary text-white p-1 w-14 mt-1 rounded-lg" (click)="goToTry()" 
-            [disabled]="!detailsControl.valid"
-            [ngClass]="{ 'disabled-button':!detailsControl.valid }"
+                    [disabled]="!detailsControl.valid"
+                    [ngClass]="{ 'disabled-button': !detailsControl.valid }"
             >Next</button>
           </div>
           
+          
           <div class="quiz-try bg-white mt-2" *ngIf="showTry">
-            <h1 class="font-semibold text-xl mb-1 text-footer">What are the details of your problem?</h1>
-            <p>Introduce the problem and expand on what you put with the title</p>
-            <input type="text" placeholder="eg. is there an R function for finding an element in a vector?"
-                   [formControl]="tryDetailsControl">
+            <h1 class="font-semibold text-xl mb-1 text-footer">What did you try and what are you expecting?</h1>
+            <p>Write what you tried and what you are expecting</p>
+            <textarea placeholder="eg. is there an R function for finding an element in a vector?"
+                      [formControl]="tryDetailsControl"></textarea>
             <div *ngIf="tryDetailsControl.invalid && tryDetailsControl.touched">
               <p class="error-message">Try details are required.</p>
             </div>
             <button class="bg-primary text-white p-1 w-14 mt-1 rounded-lg" (click)="goToExpect()" 
-            [disabled]="!tryDetailsControl.valid"
-            [ngClass]="{ 'disabled-button':!tryDetailsControl.valid }"
+                    [disabled]="!tryDetailsControl.valid"
+                    [ngClass]="{ 'disabled-button': !tryDetailsControl.valid }"
             >Next</button>
           </div>
+          
           
           <div class="expect bg-white p-2 my-1" *ngIf="showExpect">
             <h1 class="font-semibold text-xl mb-1 text-footer">What did you try and what are you expecting?</h1>
             <p>Introduce the problem and expand on what you put with the title</p>
-            <input type="text" placeholder="eg. is there an R function for finding an element in a vector?"
-                   [formControl]="expectControl">
+            <textarea placeholder="eg. is there an R function for finding an element in a vector?"
+                      [formControl]="expectControl"></textarea>
             <div *ngIf="expectControl.invalid && expectControl.touched">
               <p class="error-message">Expect details are required.</p>
             </div>
             <button class="bg-primary text-white p-1 w-14 mt-1 rounded-lg" (click)="goToTags()" 
-            [disabled]="!expectControl.valid"
-            [ngClass]="{ 'disabled-button':!expectControl.valid }"
+                    [disabled]="expectControl.invalid || expectControl.pending"
+                    [ngClass]="{ 'disabled-button': expectControl.invalid || expectControl.pending }"
             >Next</button>
           </div>
+          
+          
           
           <div class="tags bg-white p-2 my-1" *ngIf="showTags">
             <h1 class="font-semibold text-xl mb-1 text-footer">Tags</h1>
@@ -132,19 +136,19 @@
     display: flex;
     flex-direction: column;
    }
-   .title-field input ,.quiz-details input,.quiz-try input, .expect input, .tags input{
+   .title-field input ,.quiz-details textarea,.quiz-try textarea, .expect textarea, .tags input{
     width: 90%;
     background-color: #E3E6E8;
     border-radius: .5rem;
     padding: 0.5rem;
    }
-   .quiz-details input{
+   .quiz-details textarea{
     height: 4rem;
    }
-   .quiz-try input{
+   .quiz-try textarea{
     height: 6rem;
    }
-   .expect input{
+   .expect textarea{
     height: 6rem;
    }
    input:focus{
@@ -160,7 +164,7 @@
 }
 @media (max-width: 640px) {
   h1{
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 500;
   }
   p{
