@@ -13,7 +13,7 @@ export class TagsearchPipe implements PipeTransform {
     searchText = searchText.toLowerCase();
 
     return questions.filter(question => {
-      return question.tags.some(tag => tag.toLowerCase().includes(searchText));
+      // return question.tags.some(tag:string => tag.toLowerCase().includes(searchText));
     });
   }
 }
