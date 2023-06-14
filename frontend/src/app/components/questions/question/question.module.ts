@@ -22,8 +22,8 @@ import { AnswersComponent } from '../answers/answers.component';
      {path:'questions/ask', component:AskComponent},
      {path:"questions/tags",component:TagsComponent},
      {path:'questions/answers', component:AnswersComponent},
-     {path:'questions/:id', component:QuestionComponent},
-     {path:'questions/s/:name', component:MyquestionsComponent},
+     {path:'questions/specific/:id', component:QuestionComponent},
+     {path:'questions/:name', component:MyquestionsComponent},
     
     ])
   ]

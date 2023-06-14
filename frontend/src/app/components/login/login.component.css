@@ -9,7 +9,7 @@
 }
 .form{
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
     width: 26rem;
     gap: 1.3rem;
     border: none;
@@ -67,4 +67,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+@media (max-width: 640px){
+    .forms{
+        width: auto;
+    }
+    .form{
+        width: auto;
+        padding: 0.5rem;
+        
+    }
 }

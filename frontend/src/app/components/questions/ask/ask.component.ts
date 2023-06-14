@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/shared/material/material.module';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormControl, Validators } from '@angular/forms';
 
@@ -13,6 +13,9 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./ask.component.css']
 })
 export class AskComponent {
+  constructor(private router:Router){
+
+  }
   title: string = '';
   details: string = '';
   tryDetails: string = '';
@@ -63,7 +66,7 @@ export class AskComponent {
       expect: expect,
       tags: tags
     };
-  
+    this.router.navigateByUrl('/questions/kevin')
 
     console.log(formData);
   }

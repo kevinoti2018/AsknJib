@@ -66,3 +66,13 @@ h2{
     align-items: center;
     justify-content: center;
 }
+
+@media (max-width: 640px){
+    .forms{
+        width: auto;
+    }
+    .form{
+        width: auto;
+        padding: 0.5rem;
+    }
+}

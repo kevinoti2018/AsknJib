@@ -3,6 +3,7 @@
     /* height: 100vh; */
   }
   
+
   .sidenav {
     width: 200px; 
     margin: 0.2rem;
@@ -10,7 +11,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* position: fixed; */
+    height: 18rem;
+    gap: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #6B74CC;
     
   }
   

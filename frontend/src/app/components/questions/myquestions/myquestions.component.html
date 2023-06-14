@@ -5,6 +5,8 @@
             <a mat-list-item routerLink="/questions">Home</a>
             <a mat-list-item routerLink="/questions/tags">tags</a>
             <a mat-list-item routerLink="/questions/ask">Ask a question</a>
+            <a mat-list-item routerLink="/questions/answers">Answer</a>
+            <a mat-list-item routerLink="/questions/specific/1">question detail</a>
             <a mat-list-item routerLink="/questions/kevin">My questions</a>
             <a mat-list-item routerLink="/admin/users">Admin users</a>
             <a mat-list-item routerLink="/admin/question">Admin Quiz</a>
@@ -22,7 +24,11 @@
       <router-outlet></router-outlet>
       <div class="body-contents">
         <div class="right ">
-          
+            <div class="user flex justify-around bg-secondaryContainer p-2 w-3/5 ml-10" >
+                <p>Kevin Otieno</p>
+                <p>kelvinotix@gmail.com</p>
+                <button class="bg-secondary py-1 px-2 text-white rounded-lg" >update</button>
+            </div>
             <div class="bottom ">
                 <mat-card class=" bg-primaryContainer h-48 p-1 m-4  " >
                     <div class="tops">
@@ -146,7 +152,15 @@
 .sidenav {
   width: 200px; 
   margin: 0.2rem;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 18rem;
+  gap: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #6B74CC;
   /* position: fixed; */
   
 }
@@ -298,6 +312,17 @@ mat-nav-list{
     .t-bottom{
         display: flex;
         flex-direction: column;
+    }
+    .user{
+        width: auto;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: .3rem;
+        margin-bottom: .5rem;
+        border-radius: .5rem;
+        height: 9rem;
+        font-weight: 500;
     }
 }
   </style>

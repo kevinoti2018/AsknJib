@@ -6,6 +6,8 @@
             <a mat-list-item routerLink="/questions">Home</a>
             <a mat-list-item routerLink="/questions/tags">tags</a>
             <a mat-list-item routerLink="/questions/ask">Ask a question</a>
+            <a mat-list-item routerLink="/questions/answers">Answer</a>
+            <a mat-list-item routerLink="/questions/specific/1">question detail</a>
             <a mat-list-item routerLink="/questions/kevin">My questions</a>
             <a mat-list-item routerLink="/admin/users">Admin users</a>
             <a mat-list-item routerLink="/admin/question">Admin Quiz</a>
@@ -61,13 +63,8 @@
     }
 
 
-    mat-card{
-        width: 15rem;
-    }
-    mat-button-toggle-group,mat-button-toggle{
-        
-        border: 1px solid black;
-    }
+   
+ 
     @media (max-width: 640px) {
         .tags{
             display: grid;
@@ -87,6 +84,11 @@
             font-size: 1rem;
             font-weight: 500;
         }
+        .user{
+            width: auto;
+            padding: 0.5rem;
+        }
+
     }
     
     
