@@ -1,9 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-proofnum',
   templateUrl: './proofnum.component.html',
-  styleUrls: ['./proofnum.component.css']
+  imports:[CommonModule],
+  styleUrls: ['./proofnum.component.css'],
+  standalone:true
 })
 export class ProofnumComponent {
 

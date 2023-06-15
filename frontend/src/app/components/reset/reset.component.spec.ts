@@ -8,7 +8,7 @@ describe('ResetComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ResetComponent]
+      imports: [ResetComponent]
     });
     fixture = TestBed.createComponent(ResetComponent);
     component = fixture.componentInstance;

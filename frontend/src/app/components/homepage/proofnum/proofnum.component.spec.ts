@@ -8,7 +8,7 @@ describe('ProofnumComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ProofnumComponent]
+      imports: [ProofnumComponent]
     });
     fixture = TestBed.createComponent(ProofnumComponent);
     component = fixture.componentInstance;

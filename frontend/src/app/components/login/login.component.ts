@@ -1,18 +1,22 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { MaterialModule } from 'src/app/shared/material/material.module';
 
 @Component({
   selector: 'app-login',
+  imports: [CommonModule,MaterialModule,RouterModule,FormsModule,ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  standalone:true
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    private router:Router
+    // private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -29,7 +33,7 @@ export class LoginComponent implements OnInit {
         password: this.loginForm.get('password')?.value
       };
 
-     this.router.navigate(['/questions'])
+    //  this.router.navigate(['/questions'])
     }
   }
 }
