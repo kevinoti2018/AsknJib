@@ -27,21 +27,8 @@ import { TagsearchPipe } from './tagsearch.pipe';
 @NgModule({
   declarations: [
     AppComponent,
-    NavComponent,
-    HeroComponent,
-    FooterComponent,
-    LandingComponent,
-    TestimonialsComponent,
-    ProofnumComponent,
-    NotfoundComponent,
-    LoginComponent,
-    RegisterComponent,
-    ResetComponent,
     QuestionsearchPipe,
     TagsearchPipe,
-
-
-   
   ],
   imports: [
     BrowserModule,
@@ -49,9 +36,19 @@ import { TagsearchPipe } from './tagsearch.pipe';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    NotfoundComponent,
     QuestionModule,
     AdminsModule,
     AppRoutingModule,
+    LoginComponent,
+    RegisterComponent,
+    ResetComponent,
+    NavComponent,
+    HeroComponent,
+    FooterComponent,
+    LandingComponent,
+    TestimonialsComponent,
+    ProofnumComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

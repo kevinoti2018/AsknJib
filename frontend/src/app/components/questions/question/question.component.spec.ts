@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuestionComponent } from './question.component';
+import { ActivatedRoute } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('QuestionComponent', () => {
   let component: QuestionComponent;
@@ -8,7 +10,10 @@ describe('QuestionComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [QuestionComponent]
+      imports: [QuestionComponent,BrowserAnimationsModule],
+      providers:[{provide:ActivatedRoute,useValue:{
+
+      }}]
     });
     fixture = TestBed.createComponent(QuestionComponent);
     component = fixture.componentInstance;
@@ -19,3 +24,4 @@ describe('QuestionComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
