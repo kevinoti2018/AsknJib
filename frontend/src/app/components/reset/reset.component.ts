@@ -1,10 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-reset',
   templateUrl: './reset.component.html',
-  styleUrls: ['./reset.component.css']
+  imports:[ReactiveFormsModule,CommonModule],
+  styleUrls: ['./reset.component.css'],
+  standalone:true
 })
 export class ResetComponent implements OnInit {
   resetForm!: FormGroup;

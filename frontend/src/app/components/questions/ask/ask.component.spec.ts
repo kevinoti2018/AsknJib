@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AskComponent } from './ask.component';
+import { ActivatedRoute } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AskComponent', () => {
   let component: AskComponent;
@@ -8,7 +10,10 @@ describe('AskComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AskComponent]
+      imports: [AskComponent,BrowserAnimationsModule],
+      providers:[{provide:ActivatedRoute,useValue:{
+        
+      }}]
     });
     fixture = TestBed.createComponent(AskComponent);
     component = fixture.componentInstance;

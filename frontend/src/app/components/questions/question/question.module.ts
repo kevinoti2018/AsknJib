@@ -1,3 +1,4 @@
+import { AppModule } from './../../../app.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -8,6 +9,8 @@ import { AskComponent } from '../ask/ask.component';
 import { HomeComponent } from '../home/home.component';
 import { MyquestionsComponent } from '../myquestions/myquestions.component';
 import { AnswersComponent } from '../answers/answers.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 
@@ -17,6 +20,8 @@ import { AnswersComponent } from '../answers/answers.component';
   imports: [
     CommonModule,
     MaterialModule,
+    BrowserAnimationsModule,
+    BrowserModule,
     RouterModule.forChild([
      {path:'questions', component:HomeComponent},
      {path:'questions/ask', component:AskComponent},
@@ -27,5 +32,7 @@ import { AnswersComponent } from '../answers/answers.component';
     
     ])
   ]
-})
+
+}
+)
 export class QuestionModule { }
