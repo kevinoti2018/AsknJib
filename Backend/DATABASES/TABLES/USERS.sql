@@ -1,0 +1,8 @@
+CREATE TABLE USERS (
+    User_Id VARCHAR(100) NOT NULL PRIMARY KEY,
+    Username VARCHAR(200),
+    Email VARCHAR(50),
+    Password VARCHAR(200),
+    IsAdmin BIT NOT NULL DEFAULT 0,
+	isDeleted BIT NOT NULL DEFAULT 0
+);
