@@ -6,7 +6,7 @@ dotenv.config({path:path.resolve(__dirname, '../../.env')})
 export const sqlConfig = {
   user: process.env.DB_USER as string,
   password: "#Kyu@2019"  as string,
-  database: process.env.DB_NAME as string,
+  database: "AsknJib" ,
   server: process.env.DB_SERVER as string,
   pool: {
     max: 10,

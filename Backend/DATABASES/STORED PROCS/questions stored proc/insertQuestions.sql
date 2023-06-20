@@ -1,4 +1,12 @@
-CREATE OR ALTER PROCEDURE InsertQuestionWithTags (
+USE [AsknJib]
+GO
+/****** Object:  StoredProcedure [dbo].[insertQuestion]    Script Date: 19/06/2023 22:54:15 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+  ALTER   PROCEDURE [dbo].[insertQuestion] (
   @QuestionId VARCHAR(100),
   @Title VARCHAR(200),
   @Details TEXT,
@@ -32,4 +40,11 @@ BEGIN
   SELECT @QuestionId, T.TagId
   FROM @TagList TL
   JOIN TAGS T ON TL.Tag = T.TagName;
+
+  -- Return the combined data of questions and tags
+  SELECT Q.*, T.TagName
+  FROM QUESTIONS Q
+  JOIN QUESTIONTAGS QT ON Q.QuestionId = QT.QuestionId
+  JOIN TAGS T ON QT.TagId = T.TagId
+  WHERE Q.QuestionId = @QuestionId;
 END;
