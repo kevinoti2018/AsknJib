@@ -22,10 +22,10 @@ export const registerController= async(req:ExtendedRequest,res:Response)=>{
 
         //creates users id
         let User_Id=uid()
-        console.log(User_Id)
+        
         //gets users data from the body
         const {Username,Email,Password} = req.body
-        console.log(req.body)
+       
 
          //validate first
          const {error}= registrationSchema.validate(req.body)
@@ -60,7 +60,7 @@ export const loginUser = async (req: Request<{ Email: string; Password: string }
       if (!isValidPassword) {
         return res.status(401).json({ message: "Invalid email or password" });
       }
-      const { resetSuccess, Username, isDeleted,User_Id,...rest } = user;
+      const {  Username, isDeleted,User_Id,...rest } = user;
       console.log(user)
       const payload = rest;
       console.log(payload)
@@ -73,25 +73,49 @@ export const loginUser = async (req: Request<{ Email: string; Password: string }
   
 
 
-  export const resetPassword = async(req:Request<{Email:string,newPassword:string}>,res:Response)=>{
+  export const resetPassword = async (req: Request<{ Email: string, newPassword: string }>, res: Response): Promise<void> => {
     try {
-    const {Email,newPassword}= req.body
-    const {error} = resetPasswordSchema.validate(req.body)
-    if(error){
-     return res.status(404).json(error.details[0].message)
- }
-     const hashedPassword =  await bcrypt.hash(newPassword,10)
-      let result = await DatabaseHelper.exec('ResetsPassword',{Email,newPassword:hashedPassword})
+      const { Email, newPassword } = req.body;
+      const { error } = resetPasswordSchema.validate(req.body);
   
-    if(result.rowsAffected[0]>0){
-     let response = result.rowsAffected[0]
-     return res.status(200).json({message:"password reset successfully"})
-     console.log(response); 
-     
-    }else{
-     return res.status(404).json({message:"user does not exist"})
+      if (error) {
+        res.status(404).json(error.details[0].message);
+        return;
+      }
+  
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      const result = await DatabaseHelper.exec('ResetsPassword', { Email, newPassword: hashedPassword });
+  
+      if (result.rowsAffected[0] > 0) {
+        res.status(200).json({ message: "Password reset successfully" });
+      } else {
+        res.status(404).json({ message: "User does not exist" });
+      }
+    } catch (error: any) {
+      res.status(500).json(error.message);
     }
-    } catch (error:any) {
-      return res.status(500).json(error.message)
+  };
+  
+
+
+  export const getUsers = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const result = await DatabaseHelper.exec('GetUsers', {});
+      res.status(201).json(result.recordset);
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
     }
+  };
+  
+
+  export const deletUser = async(req:Request<{User_Id:string}>,res:Response)=>{
+    const {User_Id}= req.params
+    try{
+      const result = await DatabaseHelper.exec('DeleteUser', {User_Id});
+      res.status(201).json({message:"user deleted"});
+    }
+    catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+
   }
