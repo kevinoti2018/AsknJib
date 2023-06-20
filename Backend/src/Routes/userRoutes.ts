@@ -1,4 +1,4 @@
-import {deletUser, getUsers, loginUser, registerController, resetPassword} from '../Controllers/userControllers'
+import {deleteUser, getUsers, loginUser, registerController, resetPassword} from '../Controllers/userControllers'
 import { Router } from "express";
 
  export const router=Router()
@@ -7,4 +7,4 @@ import { Router } from "express";
  router.post('/login',loginUser)
  router.post('/reset',resetPassword)
  router.get('/allusers',getUsers)
- router.put('/deleteuser/:User_Id',deletUser)
+ router.put('/deleteuser/:User_Id',deleteUser)

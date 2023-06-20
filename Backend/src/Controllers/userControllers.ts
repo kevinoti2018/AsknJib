@@ -69,7 +69,7 @@ export const loginUser = async (req: Request<{ Email: string; Password: string }
     } catch (error: any) {
       res.status(500).json(error.message);
     }
-  };
+  }; 
   
 
 
@@ -107,15 +107,32 @@ export const loginUser = async (req: Request<{ Email: string; Password: string }
     }
   };
   
-
-  export const deletUser = async(req:Request<{User_Id:string}>,res:Response)=>{
-    const {User_Id}= req.params
-    try{
-      await DatabaseHelper.exec('DeleteUser', {User_Id});
-      res.status(201).json({message:"user deleted"});
-    }
-    catch (error) {
+  export const deleteUser = async (req: Request<{ User_Id: string }>, res: Response): Promise<void> => {
+    const { User_Id } = req.params;
+  
+    try {
+      const getUserResult = await DatabaseHelper.exec('GetUserById', { User_Id });
+      const user = getUserResult.recordset[0];
+  
+      if (!user) {
+        res.status(404).json({ message: 'User does not exist' });
+        return;
+      }
+  
+      const isDeleted = user.isDeleted;
+  
+      if (isDeleted === 1) {
+        res.status(404).json({ message: 'User does not exist' });
+        return;
+      }
+  
+      await DatabaseHelper.exec('DeleteUser', { User_Id });
+  
+      res.status(201).json({ message: 'User deleted' });
+    } catch (error) {
       res.status(500).json({ error: 'Internal Server Error' });
     }
+  };
+  
+  
 
-  }
