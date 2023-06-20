@@ -1,5 +1,5 @@
 CREATE TABLE ANSWERS (
-    AnswerId INT NOT NULL PRIMARY KEY,
+    AnswerId VARCHAR(100) PRIMARY KEY,
     Answer TEXT,
     VoteCount INT DEFAULT 0,
     QuestionId VARCHAR(100),

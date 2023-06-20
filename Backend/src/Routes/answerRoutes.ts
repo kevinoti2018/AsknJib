@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { insertAnswer } from "../Controllers/asnswersController";
+import { insertAnswer, updateAnswerAcceptedStatus } from "../Controllers/answersController";
 
-export const answerRoutes =  Router()
+export const answersroutes =  Router()
 
-answerRoutes.post('/answer/:QuestionId/:User_Id',insertAnswer)
+// answersroutes.post('/answer/:QuestionId/:User_Id',insertAnswer)
+answersroutes.patch('/accept/:AnswerId/:User_Id',updateAnswerAcceptedStatus)
