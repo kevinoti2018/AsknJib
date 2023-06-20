@@ -1,6 +1,6 @@
 
 CREATE OR ALTER PROCEDURE InsertAnswer (
-  @AnswerId INT,
+  @AnswerId VARCHAR(100),
   @Answer TEXT,
   @QuestionId VARCHAR(100),
   @CreatedDate DATETIME,
