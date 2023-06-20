@@ -1,4 +1,4 @@
-import {Response,Request, RequestHandler } from "express";
+import {Response,Request} from "express";
 import bcrypt from 'bcrypt';
 import {v4 as uid} from 'uuid'
 import jwt from 'jsonwebtoken'
@@ -111,7 +111,7 @@ export const loginUser = async (req: Request<{ Email: string; Password: string }
   export const deletUser = async(req:Request<{User_Id:string}>,res:Response)=>{
     const {User_Id}= req.params
     try{
-      const result = await DatabaseHelper.exec('DeleteUser', {User_Id});
+      await DatabaseHelper.exec('DeleteUser', {User_Id});
       res.status(201).json({message:"user deleted"});
     }
     catch (error) {
