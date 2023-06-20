@@ -3,5 +3,5 @@ import { insertAnswer, updateAnswerAcceptedStatus } from "../Controllers/answers
 
 export const answersroutes =  Router()
 
-// answersroutes.post('/answer/:QuestionId/:User_Id',insertAnswer)
+answersroutes.post('/answer/:QuestionId/:User_Id',insertAnswer)
 answersroutes.patch('/accept/:AnswerId/:User_Id',updateAnswerAcceptedStatus)

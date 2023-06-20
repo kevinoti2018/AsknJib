@@ -26,7 +26,7 @@ export const addComment = async (req: ExtendedRequest, res: Response): Promise<v
         AnswerId,
       };
   
-      const result = await DatabaseHelper.exec('AddComment', data);
+       await DatabaseHelper.exec('AddComment', data);
   
       // Retrieve the inserted recordset by calling GetCommentsByCommentId stored procedure
       const commentResult = await DatabaseHelper.exec('GetCommentsById', { CommentId });
