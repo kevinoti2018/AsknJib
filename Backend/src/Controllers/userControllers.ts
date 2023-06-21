@@ -11,39 +11,39 @@ interface ExtendedRequest extends Request{
     Username: string;
     Email: string;
     Password: string;
-    IsAdmin: number;
+    IsAdmin: boolean;
     isDeleted: number;
     }
 }
 
+export const registerController = async (req: ExtendedRequest, res: Response) => {
+  try {
+    // user id
+    let User_Id = uid();
+    // Get user data from the request body
+    const { Username, Email, Password } = req.body;
 
-export const registerController= async(req:ExtendedRequest,res:Response)=>{
-    try {
-
-        //creates users id
-        let User_Id=uid()
-        
-        //gets users data from the body
-        const {Username,Email,Password} = req.body
-       
-
-         //validate first
-         const {error}= registrationSchema.validate(req.body)
-         if(error){
-             return res.status(404).json(error.details[0].message)
-         }
-    
-        const hashedPassword = await bcrypt.hash(Password,10)
-
-        await DatabaseHelper.exec('insertUsers',{User_Id,Username,Email,Password:hashedPassword})
-        
-        return res.status(201).json({message:"user added"})
-
-
-    } catch (err:any) {
-       return res.status(500).json(err.message)
+    // Validate the request body
+    const { error } = registrationSchema.validate(req.body);
+    if (error) {
+      return res.status(404).json(error.details[0].message);
     }
-}
+
+    const hashedPassword = await bcrypt.hash(Password, 10);
+
+    await DatabaseHelper.exec('insertUser', {
+      User_Id: User_Id,
+      Username: Username,
+      Email: Email,
+      Password: hashedPassword,
+    });
+
+    return res.status(201).json({ message: 'User added' });
+  } catch (err: any) {
+    return res.status(500).json(err.message);
+  }
+};
+
 
 
 export const loginUser = async (req: Request<{ Email: string; Password: string }>, res: Response) => {
@@ -64,8 +64,8 @@ export const loginUser = async (req: Request<{ Email: string; Password: string }
       console.log(user)
       const payload = rest;
       console.log(payload)
-      const token = jwt.sign(payload,'ttttweywastring' as string,{expiresIn:'360000s'})
-      return res.json({mesage:"Login Successfull!!",token, role:user.isAdmin,username:user.username})
+      const token = jwt.sign(payload,'ttttweywastring' as string,{expiresIn:'3d'})
+      return res.status(200).json({mesage:"Login Successfull!!",token, role:user.isAdmin,username:user.username})
     } catch (error: any) {
       res.status(500).json(error.message);
     }
@@ -133,6 +133,7 @@ export const loginUser = async (req: Request<{ Email: string; Password: string }
       res.status(500).json({ error: 'Internal Server Error' });
     }
   };
+
   
   
 
