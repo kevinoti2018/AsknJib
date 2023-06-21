@@ -1,6 +1,16 @@
 import { Request, Response } from 'express';
 import {v4 as uid} from 'uuid'
 import { DatabaseHelper } from '../Helpers';
+export interface Answer {
+  AnswerId: string;
+  Answer: string;
+  VoteCount: number;
+  QuestionId: string;
+  CreatedDate: Date;
+  User_Id: string;
+  accepted: boolean;
+}
+
 
 interface ExtendedRequest extends Request {
     body:{
@@ -156,4 +166,3 @@ export const downvoteAnswer = async (req: Request<{ User_Id: string; AnswerId: s
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
