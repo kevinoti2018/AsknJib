@@ -1,4 +1,4 @@
-CREATE PROCEDURE [dbo].[updateQuestions] (
+CREATE PROCEDURE updateQuiz (
   @QuestionId VARCHAR(100),
   @Title VARCHAR(200),
   @Details TEXT,
@@ -6,7 +6,6 @@ CREATE PROCEDURE [dbo].[updateQuestions] (
   @Expect TEXT,
   @UpdateDate DATETIME,
   @User_Id VARCHAR(100),
-  @VoteCount INT,
   @Tags VARCHAR(MAX)
 )
 AS
@@ -20,8 +19,8 @@ BEGIN
       Try = @Try,
       Expect = @Expect,
       UpdateDate = @UpdateDate,
-      User_Id = @User_Id,
-      VoteCount = @VoteCount
+      User_Id = @User_Id
+     
   WHERE QuestionId = @QuestionId;
 
   -- Delete existing question-tag associations for the updated question
