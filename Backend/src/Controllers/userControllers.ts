@@ -60,7 +60,7 @@ export const loginUser = async (req: Request<{ Email: string; Password: string }
       if (!isValidPassword) {
         return res.status(401).json({ message: "Invalid email or password" });
       }
-      const {  Username, isDeleted,User_Id,...rest } = user;
+      const {  Username, isDeleted,...rest } = user;
       console.log(user)
       const payload = rest;
       console.log(payload)

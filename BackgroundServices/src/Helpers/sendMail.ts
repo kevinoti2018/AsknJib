@@ -8,8 +8,8 @@ let configOptions =  {
     service:"gmail",
     port:587,
     auth:{
-        user: process.env.EMAIL,
-        pass:process.env.PASSWORD
+        user: 'kelvinotix@gmail.com',
+        pass:'bgxufqhgyvvvgboy'
     }
 } 
     

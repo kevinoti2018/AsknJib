@@ -166,3 +166,24 @@ export const downvoteAnswer = async (req: Request<{ User_Id: string; AnswerId: s
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+
+
+export const getAnswerById = async (req: Request<{AnswerId:string}>, res: Response) => {
+  const { AnswerId } = req.params;
+
+  try {
+    const data = {
+      AnswerId
+    };
+
+    const result = await DatabaseHelper.exec('GetAnswerById', data);
+    const answer = result.recordset[0];
+    res.status(200).json(answer);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to retrieve answer by ID' });
+  }
+};
+
+

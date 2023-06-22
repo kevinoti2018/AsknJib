@@ -284,3 +284,33 @@ export const deleteQuestion = async (req: Request<{ QuestionId: string }>, res: 
 };
 
 
+
+export const getTopQuiz = async (req: Request, res: Response) => {
+  try {
+    const result = await DatabaseHelper.exec('GetQuestionWithMostAnswers', {});
+
+    if (result.recordset.length === 0) {
+      return res.status(404).json({ error: 'No question found' });
+    }
+
+    const questionId = result.recordset[0].QuestionId;
+    const tags = result.recordset.map((row: any) => row.TagName);
+    const questionWithTags = {
+      QuestionId: questionId,
+      Title: result.recordset[0].Title,
+      Details: result.recordset[0].Details,
+      Try: result.recordset[0].Try,
+      Expect: result.recordset[0].Expect,
+      UpdateDate: result.recordset[0].UpdateDate,
+      VoteCount: result.recordset[0].VoteCount,
+      Tags: tags,
+    };
+
+    res.status(200).json(questionWithTags);
+  } catch (error) {
+    console.error('Error retrieving question:', error);
+    res.status(500).json({ error: 'Failed to retrieve question' });
+  }
+};
+
+
