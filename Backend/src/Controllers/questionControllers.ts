@@ -42,7 +42,7 @@ interface ExtendedRequest extends Request {
     };
   }
   
-  export const insertQuestions = async (req: ExtendedRequest, res: Response): Promise<void> => {
+  export const insertQuestions = async (req: ExtendedRequest, res: Response) => {
     const { Title, Details, Try, Expect, Tags } = req.body;
     const { User_Id } = req.params;
   
@@ -80,12 +80,19 @@ interface ExtendedRequest extends Request {
     }
   };
 
-  export const updateQuestions = async (req: ExtendedRequest, res: Response): Promise<void> => {
-    const { Title, Details, Try, Expect, Tags } = req.body;
-    const { User_Id, QuestionId } = req.params;
-  
+  export const updateQuestions = async (req: ExtendedRequest, res: Response) => {
     try {
+      const {
+        Title,
+        Details,
+        Try,
+        Expect,
+        Tags
+      } = req.body;
+      console.log(req.body)
+      const { QuestionId, User_Id } = req.params;
       const UpdateDate = new Date().toISOString();
+      console.log(req.params)
       const data = {
         QuestionId,
         Title,
@@ -94,11 +101,13 @@ interface ExtendedRequest extends Request {
         Expect,
         UpdateDate,
         User_Id,
-        Tags,
+        Tags
       };
-      const result = await DatabaseHelper.exec('updateQuestions', data);
+  
+      const result = await DatabaseHelper.exec('updateQuiz', data);
+  
       const questionId = result.recordset[0].QuestionId;
-      const tags = result.recordset.map((row: any) => row.TagName);
+      const tags = result.recordset.map((row) => row.TagName);
       const questionWithTags = {
         QuestionId: questionId,
         Title: result.recordset[0].Title,
@@ -112,7 +121,8 @@ interface ExtendedRequest extends Request {
   
       res.status(200).json(questionWithTags);
     } catch (error) {
-      res.status(500).json({ error: 'Internal Server Error' });
+      console.error('Error updating question:', error);
+      res.status(500).json({ error: 'Failed to update question' });
     }
   };
   

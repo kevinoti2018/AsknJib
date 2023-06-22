@@ -5,7 +5,7 @@ import { SearchQuestion, deleteQuestion, getQuestions, getQuestionsByTag, getQue
 export const routes=Router()
 routes.get('/allquestions',verifyAdmin,getQuestions)
 routes.post('/ask/:User_Id',verifyLogin,insertQuestions)
-routes.put('/update/:QuestionId/User_Id',updateQuestions)
+routes.put('/update/:QuestionId/:User_Id',updateQuestions)
 routes.get('/userquestions/:User_Id',verifyLogin,getQuestionsByUserWithTags)
 routes.put('/deletequestion/:QuestionId',verifyLogin,deleteQuestion)
 routes.get('/tagquestion/:TagName',verifyLogin,getQuestionsByTag)

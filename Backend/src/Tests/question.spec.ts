@@ -17,6 +17,7 @@ describe('Question tests', () => {
     //   expect(response.body).toEqual({ message: 'Question deleted successfully' });
     // });
   
+    // ====== invalid question id========///
     it('Should return 404 if question does not exist', async () => {
         //wrong question id
       const nonExistingQuestionId = '789012';
@@ -26,7 +27,7 @@ describe('Question tests', () => {
       expect(response.status).toBe(404);
       expect(response.body).toEqual({ error: 'Question does not exist' });
     });
-
+// =========  wrong user id======////
     it('Should return "User question not found" when user questions are not found', async () => {
       const userId = 'non-existent-user-id';
     
