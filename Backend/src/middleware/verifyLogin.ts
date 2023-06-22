@@ -13,7 +13,7 @@ export const verifyLogin =  async (req:ExtendedRequest, res:Response,next:NextFu
         const token = req.headers['token'] as string
         
         if(!token){
-          return res.status(401).json({message:'Unathorized'})
+          return res.status(401).json({message:'Unauthorized'})
         } 
  
         //token  i need to check two things: is it expired, is it valid token
@@ -33,7 +33,7 @@ export const verifyAdmin =  async (req:ExtendedRequest, res:Response,next:NextFu
         const token = req.headers['token'] as string
         
         if(!token){
-          return res.status(401).json({message:'Unathorized'})
+          return res.status(401).json({message:'Unauthorized'})
         } 
  
         //token  i need to check two things: is it expired, is it valid token
