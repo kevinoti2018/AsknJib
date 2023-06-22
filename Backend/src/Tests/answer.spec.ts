@@ -1,6 +1,6 @@
 import request from 'supertest'
 import app from '../app'
-import {describe,it,expect,test} from 'vitest'
+import {describe,it,expect} from 'vitest'
 
 describe('answer tests',()=>{
     // test('should return success message when vote is casted successfully', async () => {
