@@ -11,7 +11,20 @@ interface Question {
   Expect: string;
   Tags: string[];
 }
-
+interface Quiz{
+  QuestionId: string;
+      Title: string;
+      Details: string;
+      Try: string;
+      Expect: string;
+      CreateDate: Date;
+      UpdateDate: Date;
+      User_Id: string;
+      VoteCount: number;
+      isDeleted: boolean;
+      answerCount: number;
+      Tags: string;
+}
 interface ExtendedRequest extends Request {
     body: {
       QuestionId: string;
@@ -66,33 +79,73 @@ interface ExtendedRequest extends Request {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   };
+
+  export const updateQuestions = async (req: ExtendedRequest, res: Response): Promise<void> => {
+    const { Title, Details, Try, Expect, Tags } = req.body;
+    const { User_Id, QuestionId } = req.params;
   
+    try {
+      const UpdateDate = new Date().toISOString();
+      const data = {
+        QuestionId,
+        Title,
+        Details,
+        Try,
+        Expect,
+        UpdateDate,
+        User_Id,
+        Tags,
+      };
+      const result = await DatabaseHelper.exec('updateQuestions', data);
+      const questionId = result.recordset[0].QuestionId;
+      const tags = result.recordset.map((row: any) => row.TagName);
+      const questionWithTags = {
+        QuestionId: questionId,
+        Title: result.recordset[0].Title,
+        Details: result.recordset[0].Details,
+        Try: result.recordset[0].Try,
+        Expect: result.recordset[0].Expect,
+        UpdateDate: result.recordset[0].UpdateDate,
+        VoteCount: result.recordset[0].VoteCount,
+        Tags: tags,
+      };
   
-
-  export const SearchQuestion = async(req:Request<{QuestionId:string}>,res:Response)=>{
-  const { QuestionId } = req.params;
-  console.log(req.params)
-
-  try {
-    const result = await DatabaseHelper.exec('GetQuestionById', {QuestionId});
-    const questionId = result.recordset[0].QuestionId;
-    const tags = result.recordset.map((row: any) => row.TagName);
-    const questionWithTags = {
-      QuestionId: questionId,
-      Title: result.recordset[0].Title,
-      Details: result.recordset[0].Details,
-      Try: result.recordset[0].Try,
-      Expect: result.recordset[0].Expect,
-      CreateDate: result.recordset[0].CreateDate, 
-      VoteCount: result.recordset[0].VoteCount,
-      Tags: tags,
-    };
-
-    res.status(200).json(questionWithTags);
-  } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-  }
+      res.status(200).json(questionWithTags);
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+  
+  export const SearchQuestion = async (req: Request<{ QuestionId: string }>, res: Response) => {
+    const { QuestionId } = req.params;
+    console.log(req.params);
+  
+    try {
+      const result = await DatabaseHelper.exec('GetQuestionById', { QuestionId });
+      
+      if (result.recordset.length === 0) {
+        return res.status(404).json({ message: 'Question not found' });
+      }
+      
+      const questionId = result.recordset[0].QuestionId;
+      const tags = result.recordset.map((row: any) => row.TagName);
+      const questionWithTags = {
+        QuestionId: questionId,
+        Title: result.recordset[0].Title,
+        Details: result.recordset[0].Details,
+        Try: result.recordset[0].Try,
+        Expect: result.recordset[0].Expect,
+        CreateDate: result.recordset[0].CreateDate,
+        VoteCount: result.recordset[0].VoteCount,
+        Tags: tags,
+      };
+  
+      res.status(200).json(questionWithTags);
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+  
 
  
   export const getQuestions = async (req: Request, res: Response) => {
@@ -134,23 +187,33 @@ interface ExtendedRequest extends Request {
     }
 };
 
-export const getQuestionsByTag = async (req:Request<{TagName:string}>, res:Response) => {
+export const getQuestionsByTag = async (req: Request<{ TagName: string }>, res: Response) => {
   const { TagName } = req.params;
 
   try {
     const result = await DatabaseHelper.exec('GetQuestionsByTag', { TagName });
+
+    if (result.recordset.length === 0) {
+      return res.status(404).json({ message: 'Not found' });
+    }
+
     res.json(result.recordset);
   } catch (error) {
-   
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 export const getQuestionsByUserWithTags = async (req: Request<{ User_Id: string }>, res: Response) => {
   const { User_Id } = req.params;
 
   try {
     const result = await DatabaseHelper.exec('GetQuestionsByUserWithTags', { User_Id });
+
+    if (result.recordset.length === 0) {
+      // User question not found
+      return res.status(404).json({ message: 'User question not found' });
+    }
 
     const questions: Question[] = [];
 
@@ -180,6 +243,7 @@ export const getQuestionsByUserWithTags = async (req: Request<{ User_Id: string 
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 
 export const deleteQuestion = async (req: Request<{ QuestionId: string }>, res: Response) => {
