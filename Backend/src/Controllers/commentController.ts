@@ -35,7 +35,6 @@ export const addComment = async (req: ExtendedRequest, res: Response): Promise<v
   
       res.json({ message: 'Comment added successfully', comment: insertedComment });
     } catch (error) {
-      console.error('Error executing stored procedure:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   };

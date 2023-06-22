@@ -6,26 +6,26 @@ import {describe,it,expect} from 'vitest'
 
 describe('Users Test Cases',()=>{
  //============================// register user========================================//
-    // it('Should register a user successfully', async () => {
-    //     // Define a mock user object
-    //     const mockUser = {
-    //       Username: 'brian1',
-    //       Email: 'kalusi1@gmail.com',
-    //       Password: '#Kyu@2020',
-    //     };
+    it('Should register a user successfully', async () => {
+        // Define a mock user object
+        const mockUser = {
+          Username: 'brian33',
+          Email: 'kalusi61@gmail.com',
+          Password: '#Kyu@2020',
+        };
     
-    //     // Make a request
-    //     const response = await request(app).post('/usersroutes/register').send(mockUser);
+        // Make a request
+        const response = await request(app).post('/usersroutes/register').send(mockUser);
     
-    //     // response status code is 201
-    //     expect(response.status).toBe(201);
+        // response status code is 201
+        expect(response.status).toBe(201);
     
-    //     // check if response content type is JSON
-    //     expect(response.headers['content-type']).toContain('application/json');
+        // check if response content type is JSON
+        expect(response.headers['content-type']).toContain('application/json');
     
-    //     // check  message
-    //     expect(response.body).toEqual({ message: 'User added' });
-    //   });
+        // check  message
+        expect(response.body).toEqual({ message: 'User added' });
+      });
 
 
 

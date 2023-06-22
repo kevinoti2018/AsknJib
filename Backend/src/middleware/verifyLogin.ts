@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
 import {Request, Response,NextFunction} from 'express'
 interface Decoded {
+    User_Id:string,
     Email:string,
     Password:string,
     isAdmin:boolean
