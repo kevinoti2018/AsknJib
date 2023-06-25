@@ -8,7 +8,7 @@ import { ResetComponent } from './components/reset/reset.component';
 
 const routes: Routes = [
   {path:'', component:LandingComponent},
-  {path:"login",component:LoginComponent},
+  {path:'login',component:LoginComponent},
   {path:'signup',component:RegisterComponent},
   {path:'reset', component:ResetComponent},
   {path:'**', component:NotfoundComponent},
