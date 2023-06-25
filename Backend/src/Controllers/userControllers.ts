@@ -16,6 +16,8 @@ interface ExtendedRequest extends Request{
     }
 }
 
+
+
 export const registerController = async (req: ExtendedRequest, res: Response) => {
   try {
     // user id
@@ -72,24 +74,41 @@ export const loginUser = async (req: Request<{ Email: string; Password: string }
   }; 
   
 
-
-  export const resetPassword = async (req: Request<{ Email: string, newPassword: string }>, res: Response): Promise<void> => {
+ 
+interface extRq extends Request  {
+    info?: {
+      email:string
+    }
+    body: {
+      newPassword:string
+    }
+}
+  
+  export const resetPassword = async (req: extRq, res: Response) => {
     try {
-      const { Email, newPassword } = req.body;
+      const { newPassword } = req.body;
       const { error } = resetPasswordSchema.validate(req.body);
   
       if (error) {
-        res.status(404).json(error.details[0].message);
+        res.status(400).json(error.details[0].message);
         return;
       }
+  
+      const Email = req.info?.email; // Extract email from the decoded token
+      if (!Email) {
+        res.status(400).json({ message: 'Invalid token' });
+        return;
+      }
+      console.log(Email);
+      
   
       const hashedPassword = await bcrypt.hash(newPassword, 10);
       const result = await DatabaseHelper.exec('ResetsPassword', { Email, newPassword: hashedPassword });
   
       if (result.rowsAffected[0] > 0) {
-        res.status(200).json({ message: "Password reset successfully" });
+        res.status(200).json({ message: 'Password reset successfully' });
       } else {
-        res.status(404).json({ message: "User does not exist" });
+        res.status(404).json({ message: 'User does not exist' });
       }
     } catch (error: any) {
       res.status(500).json(error.message);
@@ -98,7 +117,7 @@ export const loginUser = async (req: Request<{ Email: string; Password: string }
   
 
 
-  export const getUsers = async (req: Request, res: Response): Promise<void> => {
+  export const getUsers = async (req: Request, res: Response) => {
     try {
       const result = await DatabaseHelper.exec('GetUsers', {});
       res.status(201).json(result.recordset);

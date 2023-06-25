@@ -14,6 +14,7 @@ interface User {
 }
 
 const sendResetEmail = async () => {
+ 
   const pool = await mssql.connect(sqlConfig);
   const users: User[] = await (
     await pool.request().query("SELECT * FROM USERS WHERE ResetSuccess ='0'")

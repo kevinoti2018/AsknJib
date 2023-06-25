@@ -20,6 +20,7 @@ const sendWelcomeEmail = async () => {
   ).recordset;
 
   for (let user of users) {
+   
     const message = {
       from: process.env.EMAIL,
       to: user.Email,
