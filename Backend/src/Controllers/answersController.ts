@@ -13,20 +13,27 @@ export interface Answer {
 
 
 interface ExtendedRequest extends Request {
+  info?: {
+    User_Id: string;
+  };
     body:{
         AnswerId:string,
         Answer:string,
         QuestionId:string,
         CreatedDate: Date,
-        User_Id:string
+      
 
     }
 }
 
 export const insertAnswer = async (req: ExtendedRequest, res: Response) => {
-  const { QuestionId, User_Id } = req.params;
+  const { QuestionId } = req.params;
   const { Answer } = req.body;
-
+  const User_Id = req.info?.User_Id; // Extract User_Id from the decoded token
+  if (!User_Id) {
+    res.status(400).json({ message: 'Invalid token' });
+    return;
+  }
   try {
     const AnswerId = uid();
     const CreatedDate = new Date().toISOString();

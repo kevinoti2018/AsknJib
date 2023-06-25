@@ -3,18 +3,24 @@ import { v4 as uid } from 'uuid';
 import { DatabaseHelper } from '../Helpers';
 
 interface ExtendedRequest extends Request {
+  info?: {
+    User_Id: string;
+  };
   body: {
     CommentId: string;
     Comment: string;
-    User_Id: string;
     AnswerId: string;
   };
 }
 
 export const addComment = async (req: ExtendedRequest, res: Response): Promise<void> => {
-    const { User_Id, AnswerId } = req.params;
+    const { AnswerId } = req.params;
     const { Comment } = req.body;
-  
+    const User_Id = req.info?.User_Id; // Extract User_Id from the decoded token
+    if (!User_Id) {
+      res.status(400).json({ message: 'Invalid token' });
+      return;
+    }
     try {
       const CommentId = uid();
       const CreationDate = new Date().toISOString();

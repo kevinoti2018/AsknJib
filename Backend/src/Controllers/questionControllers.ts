@@ -26,60 +26,72 @@ interface Quiz{
       Tags: string;
 }
 interface ExtendedRequest extends Request {
-    body: {
-      QuestionId: string;
-      Title: string;
-      Details: string;
-      Try: string;
-      Expect: string;
-      CreateDate: Date;
-      UpdateDate: Date;
-      User_Id: string;
-      VoteCount: number;
-      isDeleted: boolean;
-      answerCount: number;
-      Tags: string;
-    };
-  }
-  
-  export const insertQuestions = async (req: ExtendedRequest, res: Response) => {
-    const { Title, Details, Try, Expect, Tags } = req.body;
-    const { User_Id } = req.params;
-  
-    try {
-      const QuestionId = uid();
-      const CreateDate = new Date().toISOString();
-      const data = {
-        QuestionId,
-        Title,
-        Details,
-        Try,
-        Expect,
-        CreateDate,
-        User_Id,
-        Tags,
-      };
-      const result = await DatabaseHelper.exec('insertQuestion', data);
-      const questionId = result.recordset[0].QuestionId;
-      const tags = result.recordset.map((row: any) => row.TagName);
-      const questionWithTags = {
-        QuestionId: questionId,
-        Title: result.recordset[0].Title,
-        Details: result.recordset[0].Details,
-        Try: result.recordset[0].Try,
-        Expect: result.recordset[0].Expect,
-        CreateDate: result.recordset[0].CreateDate, 
-        VoteCount: result.recordset[0].VoteCount,
-        Tags: tags,
-      };
-  
-      res.status(200).json(questionWithTags);
-    } catch (error) {
-      console.error('Error executing stored procedure:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
+  info?: {
+    User_Id: string;
   };
 
+  body: {
+    QuestionId: string;
+    Title: string;
+    Details: string;
+    Try: string;
+    Expect: string;
+    CreateDate: Date;
+    UpdateDate: Date;
+    VoteCount: number;
+    isDeleted: boolean;
+    answerCount: number;
+    Tags: string;
+  };
+}
+
+export const insertQuestions = async (req: ExtendedRequest, res: Response) => {
+  const { Title, Details, Try, Expect, Tags } = req.body;
+
+  const User_Id = req.info?.User_Id; // Extract User_Id from the decoded token
+  if (!User_Id) {
+    res.status(400).json({ message: 'Invalid token' });
+    return;
+  }
+  console.log(User_Id);
+  
+
+  try {
+    const QuestionId = uid();
+    const CreateDate = new Date().toISOString();
+    const data = {
+      QuestionId,
+      Title,
+      Details,
+      Try,
+      Expect,
+      CreateDate,
+      User_Id,
+      Tags,
+    };
+
+    const result = await DatabaseHelper.exec('insertQuestion', data);
+    const questionId = result.recordset[0].QuestionId;
+    const tags = result.recordset.map((row: any) => row.TagName);
+    const questionWithTags = {
+      QuestionId: questionId,
+      Title: result.recordset[0].Title,
+      Details: result.recordset[0].Details,
+      Try: result.recordset[0].Try,
+      Expect: result.recordset[0].Expect,
+      CreateDate: result.recordset[0].CreateDate,
+      VoteCount: result.recordset[0].VoteCount,
+      Tags: tags,
+    };
+
+    res.status(200).json(questionWithTags);
+  } catch (error) {
+    console.error('Error executing stored procedure:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+  
   export const updateQuestions = async (req: ExtendedRequest, res: Response) => {
     try {
       const {
@@ -89,8 +101,12 @@ interface ExtendedRequest extends Request {
         Expect,
         Tags
       } = req.body;
-      console.log(req.body)
-      const { QuestionId, User_Id } = req.params;
+      const User_Id = req.info?.User_Id; // Extract User_Id from the decoded token
+      if (!User_Id) {
+        res.status(400).json({ message: 'Invalid token' });
+        return;
+      }
+      const { QuestionId} = req.params;
       const UpdateDate = new Date().toISOString();
       console.log(req.params)
       const data = {
@@ -214,9 +230,21 @@ export const getQuestionsByTag = async (req: Request<{ TagName: string }>, res: 
 };
 
 
-export const getQuestionsByUserWithTags = async (req: Request<{ User_Id: string }>, res: Response) => {
-  const { User_Id } = req.params;
+interface extRq extends Request  {
+  info?: {
+    User_Id:string
+  }
+  
+}
 
+
+export const getQuestionsByUserWithTags = async (req: extRq, res: Response) => {
+
+  const User_Id = req.info?.User_Id; // Extract User_Id from the decoded token
+  if (!User_Id) {
+    res.status(400).json({ message: 'Invalid token' });
+    return;
+  }
   try {
     const result = await DatabaseHelper.exec('GetQuestionsByUserWithTags', { User_Id });
 

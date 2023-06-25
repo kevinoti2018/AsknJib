@@ -84,7 +84,7 @@ interface extRq extends Request  {
     }
 }
   
-  export const resetPassword = async (req: extRq, res: Response): Promise<void> => {
+  export const resetPassword = async (req: extRq, res: Response) => {
     try {
       const { newPassword } = req.body;
       const { error } = resetPasswordSchema.validate(req.body);

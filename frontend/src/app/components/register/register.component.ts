@@ -1,6 +1,8 @@
+import { User } from './../../interface/user';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -14,6 +16,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private userService:UserService
 
   ) {}
 
@@ -29,13 +32,25 @@ export class RegisterComponent implements OnInit {
 
   createUser(): void {
     if (this.registerForm.valid) {
-      const newUser = {
-        username: this.registerForm.get('username')?.value,
-        email: this.registerForm.get('email')?.value,
-        password: this.registerForm.get('password')?.value
+      const userData:User = {
+        Username: this.registerForm.get('username')?.value,
+        Email: this.registerForm.get('email')?.value,
+        Password: this.registerForm.get('password')?.value
       };
 
+      this.userService.registerUser(userData).subscribe(
+        (response)=>{
+          console.log(' user created',response)
+
+        },
+        (error) => {
+          console.log('Error creating user:', error);
+        }
+
+      )
      
     }
   }
+
+
 }
