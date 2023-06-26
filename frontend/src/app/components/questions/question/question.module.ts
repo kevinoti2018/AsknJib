@@ -25,9 +25,9 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     HttpClientModule,
     RouterModule.forChild([
-     {path:'questions', component:HomeComponent},
-     {path:'questions/ask', component:AskComponent},
-     {path:"questions/tags",component:TagsComponent},
+     {path:'questions', loadComponent:()=>import('../home/home.component').then(c=>c.HomeComponent)},
+     {path:'questions/ask', loadComponent:()=>import('../ask/ask.component').then(c=>c.AskComponent)},
+     {path:"questions/tags",loadComponent:()=>import('../tags/tags.component').then(c=>c.TagsComponent)},
      {path:'questions/answers', component:AnswersComponent},
      {path:'questions/specific/:id', component:QuestionComponent},
      {path:'questions/:name', component:MyquestionsComponent},

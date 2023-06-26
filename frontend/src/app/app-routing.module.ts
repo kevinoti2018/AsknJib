@@ -9,9 +9,9 @@ import { ResetComponent } from './components/reset/reset.component';
 
 const routes: Routes = [
   {path:'', component:LandingComponent},
-  {path:'login',component:LoginComponent},
-  {path:'signup',component:RegisterComponent},
-  {path:'reset', component:ResetComponent},
+  {path:'login',loadComponent:()=>import('./components/login/login.component').then(c=>c.LoginComponent)},
+  {path:'signup',loadComponent:()=>import('./components/register/register.component').then(c=>c.RegisterComponent)},
+  {path:'reset',loadComponent:()=>import('./components/reset/reset.component').then(c=>c.ResetComponent)},
   {path:'**', component:NotfoundComponent},
  
 ];

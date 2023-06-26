@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { RouterModule } from '@angular/router';
-import { UsersComponent } from '../users/users.component';
-import { AllquizComponent } from '../allquiz/allquiz.component';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -15,8 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
     MaterialModule,
     HttpClientModule,
     RouterModule.forChild([
-      {path:'admin/users',component:UsersComponent},
-      {path:'admin/question',component:AllquizComponent}
+      {path:'admin/users',loadComponent:()=>import('../users/users.component').then(c=>c.UsersComponent)},
+      {path:'admin/question',loadComponent:()=>import('../allquiz/allquiz.component').then(c=>c.AllquizComponent)}
     ])
   ]
 })
