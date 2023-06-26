@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import {v4 as uid} from 'uuid'
 import jwt from 'jsonwebtoken'
 import { DatabaseHelper } from "../Helpers";
-import { registrationSchema, resetPasswordSchema } from "../Helpers/joiauth";
+import { forgotPasswordSchema, registrationSchema, resetPasswordSchema } from "../Helpers/joiauth";
 
 interface ExtendedRequest extends Request{
     body:{
@@ -83,7 +83,21 @@ interface extRq extends Request  {
       newPassword:string
     }
 }
+  export const forgotPassword = async(req:Request<{Email:string}>,res:Response)=>{
+    try {
+      const {Email} =req.body
+      const { error } = forgotPasswordSchema.validate(req.body);
+      await DatabaseHelper.exec('UpdateForgotStatus', { Email});
+      res.status(200).json({message:"An email has been sent"})
   
+      if (error) {
+        res.status(400).json(error.details[0].message);
+        return;
+      }
+    } catch (error:any) {
+      res.status(500).json(error.message);
+    }
+  }
   export const resetPassword = async (req: extRq, res: Response) => {
     try {
       const { newPassword } = req.body;
