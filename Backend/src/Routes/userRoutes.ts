@@ -6,6 +6,7 @@ import { verifyAdmin, verifyEmail, verifyLogin } from '../middleware/verifyLogin
 
  router.post('/register',registerController)
  router.post('/login',loginUser)
+
  router.post('/reset/:token',verifyEmail,resetPassword)
  router.get('/allusers',verifyLogin,getUsers)
  router.put('/deleteuser/:User_Id',verifyAdmin,deleteUser)
