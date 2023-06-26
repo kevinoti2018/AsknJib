@@ -21,7 +21,11 @@ export class UserService {
   }
 
   getUsers(){
-  return this.httpClient.get<User[]>(`${this.baseUrl}/register`)
+  return this.httpClient.get<User[]>('localhost:4000/usersroutes/allusers')
   }
   
+
+  deleteUser(User_Id:string){
+    return this.httpClient.delete('localhost:4000/usersroutes/deleteuser')
+  }
 }

@@ -1,4 +1,4 @@
-import {deleteUser, getUsers, loginUser, registerController, resetPassword} from '../Controllers/userControllers'
+import {deleteUser, forgotPassword, getUsers, loginUser, registerController, resetPassword} from '../Controllers/userControllers'
 import { Router } from "express";
 import { verifyAdmin, verifyEmail, verifyLogin } from '../middleware/verifyLogin';
 
@@ -6,7 +6,7 @@ import { verifyAdmin, verifyEmail, verifyLogin } from '../middleware/verifyLogin
 
  router.post('/register',registerController)
  router.post('/login',loginUser)
-
+ router.post('/forgot',forgotPassword)
  router.post('/reset/:token',verifyEmail,resetPassword)
  router.get('/allusers',verifyLogin,getUsers)
  router.put('/deleteuser/:User_Id',verifyAdmin,deleteUser)

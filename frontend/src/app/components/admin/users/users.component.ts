@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { RouterModule } from '@angular/router';
@@ -12,7 +12,7 @@ import { User } from 'src/app/interface/user';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
-export class UsersComponent {
+export class UsersComponent implements OnInit {
  
   isSidenavOpen = false;
   users:User[]=[]
@@ -21,16 +21,30 @@ export class UsersComponent {
     this.isSidenavOpen = !this.isSidenavOpen;
   }
   constructor(private userService:UserService){}
-
+  ngOnInit(): void {
+    this.getUsers()
+  }
   getUsers(){
     this.userService.getUsers().subscribe(
       (response)=>{
         this.users= response
+        console.log(response)
       },
       (error)=>{
         console.log(error)
       }
     )
+  }
+
+  deleteUser(User_Id:string){
+   this.userService.deleteUser(User_Id).subscribe(
+    (response)=>{
+
+    },
+    (error)=>{
+      console.log(error)
+    }
+   )
   }
 
 }
