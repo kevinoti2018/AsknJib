@@ -179,7 +179,7 @@ export const insertQuestions = async (req: ExtendedRequest, res: Response) => {
         const pageNumber: number = Number(req.query.pageNumber) || 1;
         const pageSize: number = Number(req.query.pageSize) || 10;
 
-        const result = await DatabaseHelper.exec('GetAllQuestionsWithTags', {
+        const result = await DatabaseHelper.exec('GetAllQuestionsWithTags2', {
             PageNumber: pageNumber,
             PageSize: pageSize,
         });

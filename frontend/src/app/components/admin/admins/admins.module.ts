@@ -4,8 +4,6 @@ import { MaterialModule } from 'src/app/shared/material/material.module';
 import { RouterModule } from '@angular/router';
 import { UsersComponent } from '../users/users.component';
 import { AllquizComponent } from '../allquiz/allquiz.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
 

@@ -5,7 +5,7 @@ import { SearchQuestion, deleteQuestion, getQuestions, getQuestionsByTag, getQue
 export const routes=Router()
 routes.get('/topquiz',getTopQuiz)
 
-routes.get('/allquestions',getQuestions)
+routes.get('/allquestions/:pageNumber/:pageSize',getQuestions)
 routes.post('/ask',verifyLogin,insertQuestions)
 routes.put('/update/:QuestionId',verifyLogin,updateQuestions)
 routes.get('/userquestions',verifyLogin,getQuestionsByUserWithTags)
