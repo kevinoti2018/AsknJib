@@ -14,6 +14,8 @@ export const resetPasswordSchema = joi.object({
     newPassword:joi.string().pattern(new  RegExp(`^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$`))
     })
 
-
+export const forgotPasswordSchema = joi.object({
+    Email:joi.string().email().required(),
+})
 
     

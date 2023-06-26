@@ -6,6 +6,7 @@ import { UsersComponent } from '../users/users.component';
 import { AllquizComponent } from '../allquiz/allquiz.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -14,6 +15,7 @@ import { BrowserModule } from '@angular/platform-browser';
   imports: [
     CommonModule,
     MaterialModule,
+    HttpClientModule,
     RouterModule.forChild([
       {path:'admin/users',component:UsersComponent},
       {path:'admin/question',component:AllquizComponent}
