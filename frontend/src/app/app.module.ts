@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -20,6 +21,9 @@ import { QuestionModule } from './components/questions/question/question.module'
 import { AdminsModule } from './components/admin/admins/admins.module';
 import { QuestionsearchPipe } from './questionsearch.pipe';
 import { TagsearchPipe } from './tagsearch.pipe';
+import { StoreModule } from '@ngrx/store';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorService } from './interceptor.service';
 
 
 
@@ -29,6 +33,7 @@ import { TagsearchPipe } from './tagsearch.pipe';
     AppComponent,
     QuestionsearchPipe,
     TagsearchPipe,
+   
   ],
   imports: [
     BrowserModule,
@@ -46,8 +51,9 @@ import { TagsearchPipe } from './tagsearch.pipe';
     LandingComponent,
     TestimonialsComponent,
     ProofnumComponent,
+    StoreModule.forRoot({}, {}),
   ],
-  providers: [],
+  providers: [{provide:HTTP_INTERCEPTORS,useClass:InterceptorService,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
