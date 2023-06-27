@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -12,14 +13,14 @@ import { LandingComponent } from './components/homepage/landing/landing.componen
 import { TestimonialsComponent } from './components/homepage/testimonials/testimonials.component';
 import { ProofnumComponent } from './components/homepage/proofnum/proofnum.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ResetComponent } from './components/reset/reset.component';
 import { QuestionModule } from './components/questions/question/question.module';
 import { AdminsModule } from './components/admin/admins/admins.module';
 import { QuestionsearchPipe } from './questionsearch.pipe';
 import { TagsearchPipe } from './tagsearch.pipe';
+import { StoreModule } from '@ngrx/store';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorService } from './interceptor.service';
 
 
 
@@ -29,6 +30,7 @@ import { TagsearchPipe } from './tagsearch.pipe';
     AppComponent,
     QuestionsearchPipe,
     TagsearchPipe,
+   
   ],
   imports: [
     BrowserModule,
@@ -40,17 +42,15 @@ import { TagsearchPipe } from './tagsearch.pipe';
     QuestionModule,
     AdminsModule,
     AppRoutingModule,
-    LoginComponent,
-    RegisterComponent,
-    ResetComponent,
     NavComponent,
     HeroComponent,
     FooterComponent,
     LandingComponent,
     TestimonialsComponent,
     ProofnumComponent,
+    StoreModule.forRoot({}, {}),
   ],
-  providers: [],
+  providers: [{provide:HTTP_INTERCEPTORS,useClass:InterceptorService,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

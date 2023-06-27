@@ -1,0 +1,10 @@
+CREATE OR ALTER PROCEDURE GetUsernameById
+    @User_Id VARCHAR(100)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT Username
+    FROM USERS
+    WHERE User_Id = @User_Id;
+END;

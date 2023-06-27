@@ -17,7 +17,7 @@ const sendResetEmail = async () => {
  
   const pool = await mssql.connect(sqlConfig);
   const users: User[] = await (
-    await pool.request().query("SELECT * FROM USERS WHERE ResetSuccess ='0'")
+    await pool.request().query("SELECT * FROM USERS WHERE ResetSuccess ='1'")
   ).recordset;
 
   const resetSuccessMessage = 'Your password has been successfully reset.';
@@ -35,7 +35,7 @@ const sendResetEmail = async () => {
       await pool
         .request()
         .query(
-          `UPDATE USERS SET ResetSuccess =' 1 'WHERE User_Id ='${user.User_Id}'`
+          `UPDATE USERS SET ResetSuccess =' 0'WHERE User_Id ='${user.User_Id}'`
         );
       console.log(resetSuccessMessage);
     } catch (error) {

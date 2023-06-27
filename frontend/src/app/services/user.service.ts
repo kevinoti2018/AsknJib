@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
   user:Login[]=[]
-  private baseUrl = 'localhost:4000/usersroutes'
+  private baseUrl = 'http://localhost:4000/usersroutes'
   constructor(private httpClient:HttpClient) { }
 
   registerUser(userData: User): Observable<RegisterSuccess> {
@@ -16,16 +16,25 @@ export class UserService {
   }
 
   loginUser(userData:Login):Observable<LoginSuccess>{
-    return this.httpClient.post<LoginSuccess>(`${this.baseUrl}/register`,userData);
+    return this.httpClient.post<LoginSuccess>(`${this.baseUrl}/login`,userData);
 
   }
 
   getUsers(){
-  return this.httpClient.get<User[]>('localhost:4000/usersroutes/allusers')
+  return this.httpClient.get<User[]>('http://localhost:4000/usersroutes/allusers');
   }
-  
+ 
 
   deleteUser(User_Id:string){
-    return this.httpClient.delete('localhost:4000/usersroutes/deleteuser')
+    return this.httpClient.delete('localhost:4000/usersroutes/deleteuser');
+  }
+ 
+
+  forgotUser(Email:string){
+    return this.httpClient.post(`${this.baseUrl}/forgot`,Email)
+  }
+  
+  resePassword(Password:string){
+    return this.httpClient.post(`${this.baseUrl}/forgot`,Password)
   }
 }

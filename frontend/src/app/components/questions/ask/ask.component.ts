@@ -1,9 +1,11 @@
+import { Asks } from './../../../interface/ask';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormControl, Validators } from '@angular/forms';
+import { QuestionsService } from 'src/app/services/questions.service';
 
 @Component({
   selector: 'app-ask',
@@ -13,7 +15,7 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./ask.component.css']
 })
 export class AskComponent {
-  constructor(private router:Router){
+  constructor(private router:Router, private questionsService:QuestionsService){
 
   }
   title: string = '';
@@ -54,21 +56,30 @@ export class AskComponent {
     
     const title = this.titleControl.value;
     const details = this.detailsControl.value;
-    const tryDetails = this.tryDetailsControl.value;
+    const Try = this.tryDetailsControl.value;
     const expect = this.expectControl.value;
     const tags = this.tagsControl.value;
   
 
-    const formData = {
-      title: title,
-      details: details,
-      tryDetails: tryDetails,
-      expect: expect,
-      tags: tags
+    const formData:Asks = {
+      Title: title,
+      Details: details,
+      Try:Try,
+      Expect: expect,
+      Tags: tags
     };
-    this.router.navigateByUrl('/questions/kevin')
+    // this.router.navigateByUrl('/questions/kevin')
 
     console.log(formData);
+
+    this.questionsService.askQuestion(formData).subscribe(
+      (response)=>{
+        console.log('success')
+      }
+      , (error)=>{
+        console.log(error)
+      }
+    )
   }
   
   resetForm() {

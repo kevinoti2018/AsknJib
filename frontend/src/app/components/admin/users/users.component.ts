@@ -39,7 +39,8 @@ export class UsersComponent implements OnInit {
   deleteUser(User_Id:string){
    this.userService.deleteUser(User_Id).subscribe(
     (response)=>{
-
+      console.log("User deleted");
+      
     },
     (error)=>{
       console.log(error)

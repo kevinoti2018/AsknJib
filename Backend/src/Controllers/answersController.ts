@@ -124,24 +124,23 @@ export const getAnswersByUserId = async (req: Request<{User_Id:string}>, res: Re
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
 export const upvoteAnswer = async (req: Request<{ User_Id: string; AnswerId: string }>, res: Response) => {
   try {
     const { User_Id, AnswerId } = req.params;
 
-    const result = await DatabaseHelper.exec('UpvoteAnswer1', {
+    const result = await DatabaseHelper.exec('upvoteAnswers', {
       User_Id,
       AnswerId
     });
 
     const message = result.recordset[0].Result;
 
-    if (message === 'User has already voted for this answer.' || message === 'You cannot vote on your own answer.') {
+    if (message === 'User has already upvoted this answer.' || message === 'You cannot vote on your own answer.') {
       res.status(400).json({ message });
-    } else if (message === 'No vote cast.') {
-      res.status(400).json({ message });
+    } else if (message === 'Upvote recorded successfully.') {
+      res.status(200).json({ message: 'Vote cast successfully.' });
     } else {
-      res.status(200).json({ message: 'Vote casted successfully.' });
+      res.status(400).json({ message: 'No vote cast.' });
     }
    
   } catch (error) {
@@ -150,12 +149,11 @@ export const upvoteAnswer = async (req: Request<{ User_Id: string; AnswerId: str
 };
 
 
-
 export const downvoteAnswer = async (req: Request<{ User_Id: string; AnswerId: string }>, res: Response) => {
   try {
     const { User_Id, AnswerId } = req.params;
 
-    const result = await DatabaseHelper.exec('DownvoteAnswer1', {
+    const result = await DatabaseHelper.exec('DownvoteAnswers1', {
       User_Id,
       AnswerId,
     });
@@ -164,10 +162,10 @@ export const downvoteAnswer = async (req: Request<{ User_Id: string; AnswerId: s
 
     if (message === 'User has already voted for this answer.' || message === 'You cannot vote on your own answer.') {
       res.status(400).json({ message });
-    } else if (message === 'No vote cast.') {
-      res.status(400).json({ message });
+    } else if (message === 'Downvote recorded successfully.') {
+      res.status(200).json({ message: 'Vote cast successfully.' });
     } else {
-      res.status(200).json({ message: 'Vote casted successfully.' });
+      res.status(400).json({ message: 'No vote cast.' });
     }
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });

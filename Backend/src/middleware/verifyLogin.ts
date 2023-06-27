@@ -63,7 +63,7 @@ export const verifyAdmin =  async (req:ExtendedRequest, res:Response,next:NextFu
 export const verifyEmail = async (req: ExtendedRequest1, res: Response, next: NextFunction) => {
     try {
         const token = req.params['token'] as string;
-  
+        // console.log(token)
       if (!token) {
         return res.status(401).json({ message: 'Unauthorized' });
       }
@@ -71,7 +71,7 @@ export const verifyEmail = async (req: ExtendedRequest1, res: Response, next: Ne
       // Verify the token to check if it's expired and valid
       const decodedData = jwt.verify(token, 'twitterstring' as string) as Decoded1;
       req.info = decodedData;
-      console.log(decodedData);
+      // console.log(decodedData);
     } catch (error: any) {
       return res.status(403).json({ message: error.message });
     }

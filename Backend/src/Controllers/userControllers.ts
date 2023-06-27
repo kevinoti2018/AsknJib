@@ -67,7 +67,7 @@ export const loginUser = async (req: Request<{ Email: string; Password: string }
       const payload = rest;
       console.log(payload)
       const token = jwt.sign(payload,'ttttweywastring' as string,{expiresIn:'3d'})
-      return res.status(200).json({mesage:"Login Successfull!!",token, role:user.isAdmin,username:user.username})
+      return res.status(200).json({mesage:"Login Successfull!!",token, role:user.IsAdmin,username:user.Username})
     } catch (error: any) {
       res.status(500).json(error.message);
     }
@@ -75,59 +75,70 @@ export const loginUser = async (req: Request<{ Email: string; Password: string }
   
 
  
-interface extRq extends Request  {
-    info?: {
-      email:string
+
+export const forgotPassword = async (req: Request<{ Email: string }>, res: Response) => {
+  try {
+    const { Email } = req.body;
+    const { error } = forgotPasswordSchema.validate(req.body);
+
+    if (error) {
+      res.status(400).json(error.details[0].message);
+      return;
     }
-    body: {
-      newPassword:string
+
+    const result = await DatabaseHelper.exec('UpdateForgotStatus', { Email });
+    const rowsAffected = result.rowsAffected[0];
+
+    if (rowsAffected === 0) {
+      res.status(404).json({ error: 'Email not found' });
+      return;
     }
-}
-  export const forgotPassword = async(req:Request<{Email:string}>,res:Response)=>{
-    try {
-      const {Email} =req.body
-      const { error } = forgotPasswordSchema.validate(req.body);
-      await DatabaseHelper.exec('UpdateForgotStatus', { Email});
-      res.status(200).json({message:"An email has been sent"})
-  
-      if (error) {
-        res.status(400).json(error.details[0].message);
-        return;
-      }
-    } catch (error:any) {
-      res.status(500).json(error.message);
-    }
+
+    res.status(200).json({ message: 'An email has been sent' });
+  } catch (error: any) {
+    res.status(500).json(error.message);
   }
-  export const resetPassword = async (req: extRq, res: Response) => {
-    try {
-      const { newPassword } = req.body;
-      const { error } = resetPasswordSchema.validate(req.body);
-  
-      if (error) {
-        res.status(400).json(error.details[0].message);
-        return;
-      }
-  
-      const Email = req.info?.email; // Extract email from the decoded token
-      if (!Email) {
-        res.status(400).json({ message: 'Invalid token' });
-        return;
-      }
-      console.log(Email);
-      
-  
-      const hashedPassword = await bcrypt.hash(newPassword, 10);
-      const result = await DatabaseHelper.exec('ResetsPassword', { Email, newPassword: hashedPassword });
-  
-      if (result.rowsAffected[0] > 0) {
-        res.status(200).json({ message: 'Password reset successfully' });
-      } else {
-        res.status(404).json({ message: 'User does not exist' });
-      }
-    } catch (error: any) {
-      res.status(500).json(error.message);
+}
+
+
+
+interface extRq extends Request  {
+  info?:{
+    Email:string
+  }
+  body: {
+    newPassword:string
+  }
+}
+export const resetPassword = async (req: extRq, res: Response) => {
+  try {
+    const { newPassword } = req.body;
+    const { error } = resetPasswordSchema.validate(req.body);
+
+    if (error) {
+      res.status(400).json(error.details[0].message);
+      return;
     }
-  };
+    const { Email } = req.info || {}; // Extract email from the decoded token
+    console.log(Email);
+    if (!Email) {
+      res.status(400).json({ message: 'Invalid token' });
+      return;
+    }
+    console.log(Email);
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const result = await DatabaseHelper.exec('ResetsPassword', { Email, newPassword: hashedPassword });
+
+    if (result.rowsAffected[0] > 0) {
+      res.status(200).json({ message: 'Password reset successfully' });
+    } else {
+      res.status(404).json({ message: 'User does not exist' });
+    }
+  } catch (error: any) {
+    res.status(500).json(error.message);
+  }
+};
   
 
 
@@ -167,6 +178,25 @@ interface extRq extends Request  {
     }
   };
 
+
+  export const getUserById = async (req: Request, res: Response) => {
+    const { User_Id } = req.body;
+  
+    try {
+    let result=  await DatabaseHelper.exec('GetUsernameById', { User_Id });
+  
+      if (result.recordset.length === 0) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      const username = result.recordset[0].Username;
+      res.json({ username });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+  
   
   
 

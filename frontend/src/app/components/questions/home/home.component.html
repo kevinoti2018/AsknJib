@@ -7,8 +7,8 @@
         <a mat-list-item routerLink="/questions/tags">tags</a>
         <a mat-list-item routerLink="/questions/ask">Ask a question</a>
         <a mat-list-item routerLink="/questions/answers">Answer</a>
-        <a mat-list-item routerLink="/questions/specific/1">question detail</a>
-        <a mat-list-item routerLink="/questions/kevin">My questions</a>
+        <a mat-list-item routerLink="/questions/:QuestionId">question detail</a>
+        <a mat-list-item routerLink="/questions/mine">My questions</a>
         <a mat-list-item routerLink="/admin/users">Admin users</a>
         <a mat-list-item routerLink="/admin/question">Admin Quiz</a>
          
@@ -46,105 +46,42 @@
             </div>
     
             <div class="bottom "> 
+                <div class="div" *ngFor="let question of questions">
+                   
+               
                 <mat-card class=" bg-primaryContainer h-48 p-1 m-4  " >
                     <div class="tops sm:grid-cols-1">
                         <div class="left">
                             <div class="votes px-2 py-1 ">
-                                <h2>0 votes</h2>
+                                <h2>{{question.VoteCount}}votes</h2>
                             </div>
                             <div class="answers px-2 py-1">
-                                <h2>0 answers</h2>
+                                <h2>{{question.AnswerCount}} answers</h2>
                             </div>
                         </div>
                         <div class="right">
                          <mat-card-header class="text-2xl text-questionC">
-                             How do i finish this code?
+                            <h3 (click)="getSingleQuiz(question.QuestionId)">{{ question.Title }}</h3>
                          </mat-card-header>
                          <mat-card-content class="text-content text-sm">
-                            Lorem ipsum dolor sit amet consectetur. Vestibulum scelerisque enim morbi viverra adipiscing nulla dui pretium molestie. Magna at integer fermentum tellus gravida magna blandit condimentum. Ac tristique id sem eu. Pharetra adipiscing semper id pellentesque volutpat gravida adipiscing.
+                           {{question.Details}}
                          </mat-card-content>
                         </div>
                     </div>
                     <div class="bottom">
                         <div class="left">
-                            <div class="tag bg-secondaryContainer text-questionC">javascript</div>
-                            <div class="tag bg-secondaryContainer text-questionC">javascript</div>
-                            <!-- <div class="tag bg-secondaryContainer text-questionC">javascript</div> -->
+                            <li *ngFor="let tag of question.Tags" class="tag bg-secondaryContainer text-question list-none">{{ tag }}</li>
                         </div>
                         <div class="mid">
                             <div class="name text-secondary font-bold">Kevin Otieno</div>
                         </div>
                         <div class="right text-content font-bold">
-                            asked june 7
+                            Time Elapsed: {{ question.TimeElapsed }}
                         </div>
                     </div>
                 </mat-card>
-                <mat-card class=" bg-primaryContainer h-48 p-1 m-4  " >
-                    <div class="tops">
-                        <div class="left">
-                            <div class="votes px-2 py-1 ">
-                                <h2>0 votes</h2>
-                            </div>
-                            <div class="answers px-2 py-1">
-                                <h2>0 answers</h2>
-                            </div>
-                        </div>
-                        <div class="right">
-                         <mat-card-header class="text-2xl text-questionC">
-                             How do i finish this code?
-                         </mat-card-header>
-                         <mat-card-content class="text-content text-sm">
-                            Lorem ipsum dolor sit amet consectetur. Vestibulum scelerisque enim morbi viverra adipiscing nulla dui pretium molestie. Magna at integer fermentum tellus gravida magna blandit condimentum. Ac tristique id sem eu. Pharetra adipiscing semper id pellentesque volutpat gravida adipiscing.
-                         </mat-card-content>
-                        </div>
-                    </div>
-                    <div class="bottom">
-                        <div class="left">
-                            <div class="tag bg-secondaryContainer text-questionC">javascript</div>
-                            <div class="tag bg-secondaryContainer text-questionC">javascript</div>
-                            <!-- <div class="tag bg-secondaryContainer text-questionC">javascript</div> -->
-                        </div>
-                        <div class="mid">
-                            <div class="name text-secondary font-bold">Kevin Otieno</div>
-                        </div>
-                        <div class="right text-content font-bold">
-                            asked june 7
-                        </div>
-                    </div>
-                </mat-card>
-                <mat-card class=" bg-primaryContainer h-48 p-1 m-4  " >
-                    <div class="tops">
-                        <div class="left">
-                            <div class="votes px-2 py-1 ">
-                                <h2>0 votes</h2>
-                            </div>
-                            <div class="answers px-2 py-1">
-                                <h2>0 answers</h2>
-                            </div>
-                        </div>
-                        <div class="right">
-                         <mat-card-header class="lg:text-2xl text-questionC sm:text-md">
-                             How do i finish this code?
-                         </mat-card-header>
-                         <mat-card-content class="text-content text-sm">
-                            Lorem ipsum dolor sit amet consectetur. Vestibulum scelerisque enim morbi viverra adipiscing nulla dui pretium molestie. Magna at integer fermentum tellus gravida magna blandit condimentum. Ac tristique id sem eu. Pharetra adipiscing semper id pellentesque volutpat gravida adipiscing.
-                         </mat-card-content>
-                        </div>
-                    </div>
-                    <div class="bottom">
-                        <div class="left">
-                            <div class="tag bg-secondaryContainer text-questionC">javascript</div>
-                            <div class="tag bg-secondaryContainer text-questionC">javascript</div>
-                            <!-- <div class="tag bg-secondaryContainer text-questionC">javascript</div> -->
-                        </div>
-                        <div class="mid">
-                            <div class="name text-secondary font-bold">Kevin Otieno</div>
-                        </div>
-                        <div class="right text-content font-bold">
-                            asked june 7
-                        </div>
-                    </div>
-                </mat-card>
+            </div>
+                
              
             </div>
            
@@ -158,173 +95,3 @@
     </mat-drawer-content>
   </mat-drawer-container>
   
-
-
-  <style>
-    .container {
-  position: relative;
-  /* height: 100vh; */
-}
-
-.sidenav {
-    width: 200px; 
-    margin: 0.2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 18rem;
-    gap: 1rem;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #6B74CC;
-    /* position: fixed; */
-    
-  }
-.sidenav mat-list-item:hover{
-    color: #F2740D;
-}
-
-.content {
-  overflow: auto;
-  /* height: 100%; */
-}
-.body-contents{
-    display: grid;
-    grid-template-columns: 1fr 10rem;
-    gap: 0.5rem;
-}
-.right .top{
-        display: flex;
-        flex-direction: column;
-        align-items: end;
-        padding: 0.5em;
-        gap: .3rem;
-    }
-    .t-bottom{
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-    }
-    mat-card{
-        width: 94%;border: 1px solid #525960;
-        margin: .5rem auto;
-        display: flex;
-        flex-direction: column;
-        gap: .5rem;
-        height: auto;
-        border-radius: .5rem;
-
-    }
-   .right .bottom mat-card .tops{
-        display:grid;
-        grid-template-columns: 1fr 2.8fr;
-        gap: .5rem;
-    }
-    .right .bottom .tops  .right{
-        /* background-color: aqua; */
-    }
-    .right .bottom mat-card .tops .left{
-        display: flex;
-        flex-direction: column;
-        /* background-color: red; */
-        height: 9rem;
-        align-items: center;
-        justify-content: center;
-        gap: .5rem;
-    }
-    .right .bottom mat-card .tops .left .answers{
-        border-radius: .5rem;
-        border: 1px solid #525960;
-    }
-    .right .bottom mat-card .tops .left .votes{
-        border-radius: .5rem;
-        border: 1px solid #525960;
-    }
-    .right .bottom .bottom{
-        display: grid;
-        grid-template-columns: 1.5fr 1fr 1fr;
-        gap: .2rem;
-        height: 20%;
-    }
-    .bottom .left{
-        display: flex;
-        flex-wrap: wrap;
-        /* justify-content: space-evenly; */
-     
-    }
-    .bottom .left .tag{
-        padding: .2rem 0.5rem;
-        width: 5rem;
-        font-size: .8rem;
-        border-radius: .5rem;
-        margin: 0 0.2rem;
-        text-align: center;
-    }
-    mat-button-toggle-group,mat-button-toggle{
-        
-        border: 1px solid black;
-    }
-    @media (max-width: 640px) {
-    .end{
-        visibility: hidden;
-       
-    }
-    .body-contents{
-        display: grid;
-        grid-template-columns: 1fr;
-        width: 100%;
-        
-    }
-    mat-card{
-        width: 100%;
-        /* background: #000; */
-        display: grid;
-        grid-template-columns: 1fr;
-    }
-    .right .bottom mat-card .tops{
-        display: grid;
-        grid-template-columns: 1fr;
-    }
-    .right .bottom mat-card .tops .left{
-        display: flex;
-        /* background-color: red; */
-        height: 3rem;
-    }
-    .right .bottom .bottom{
-        display: grid;
-        grid-template-columns: 1fr;
-        justify-content: center;
-        align-items: center;
-        font-size: 1rem;
-        font-weight: 500;
-    }
-    .right .top{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    mat-button-toggle-group,mat-button-toggle{
-        
-        border: 1px solid black;
-    }
-    mat-card-header{
-        font-size: 1.2rem;
-        font-weight: 500;
-    }
-    mat-card-content{
-        font-size: .8rem;
-        font-weight: 500;
-    }
-    /* .top .ask{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    } */
-    .t-bottom{
-        display: flex;
-        flex-direction: column;
-    }
-}
-  </style>

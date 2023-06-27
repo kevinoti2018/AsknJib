@@ -4,9 +4,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { QuestionComponent } from './question.component';
 import { MaterialModule } from 'src/app/shared/material/material.module';
-import { TagsComponent } from '../tags/tags.component';
-import { AskComponent } from '../ask/ask.component';
-import { HomeComponent } from '../home/home.component';
 import { MyquestionsComponent } from '../myquestions/myquestions.component';
 import { AnswersComponent } from '../answers/answers.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,11 +22,11 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     HttpClientModule,
     RouterModule.forChild([
-     {path:'questions', component:HomeComponent},
-     {path:'questions/ask', component:AskComponent},
-     {path:"questions/tags",component:TagsComponent},
+     {path:'questions', loadComponent:()=>import('../home/home.component').then(c=>c.HomeComponent)},
+     {path:'questions/ask', loadComponent:()=>import('../ask/ask.component').then(c=>c.AskComponent)},
+     {path:"questions/tags",loadComponent:()=>import('../tags/tags.component').then(c=>c.TagsComponent)},
      {path:'questions/answers', component:AnswersComponent},
-     {path:'questions/specific/:id', component:QuestionComponent},
+     {path:'questions/:QuestionId', component:QuestionComponent},
      {path:'questions/:name', component:MyquestionsComponent},
     
     ])
