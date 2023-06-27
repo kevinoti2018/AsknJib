@@ -21,11 +21,20 @@ export class UserService {
   }
 
   getUsers(){
-  return this.httpClient.get<User[]>('http://localhost:4000/usersroutes/allusers')
+  return this.httpClient.get<User[]>('http://localhost:4000/usersroutes/allusers');
   }
-  
+ 
 
   deleteUser(User_Id:string){
-    return this.httpClient.delete('localhost:4000/usersroutes/deleteuser')
+    return this.httpClient.delete('localhost:4000/usersroutes/deleteuser');
+  }
+ 
+
+  forgotUser(Email:string){
+    return this.httpClient.post(`${this.baseUrl}/forgot`,Email)
+  }
+  
+  resePassword(Password:string){
+    return this.httpClient.post(`${this.baseUrl}/forgot`,Password)
   }
 }
