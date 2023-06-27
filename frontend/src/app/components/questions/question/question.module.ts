@@ -29,7 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
      {path:'questions/ask', loadComponent:()=>import('../ask/ask.component').then(c=>c.AskComponent)},
      {path:"questions/tags",loadComponent:()=>import('../tags/tags.component').then(c=>c.TagsComponent)},
      {path:'questions/answers', component:AnswersComponent},
-     {path:'questions/specific/:id', component:QuestionComponent},
+     {path:'questions/:QuestionId', component:QuestionComponent},
      {path:'questions/:name', component:MyquestionsComponent},
     
     ])
