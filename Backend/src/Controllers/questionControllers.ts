@@ -312,6 +312,7 @@ export const getQuestionsByUserWithTags = async (req: extRq, res: Response) => {
           VoteCount: row.VoteCount,
           CreateDate: row.CreateDate,
           UpdateDate: row.UpdateDate,
+          User_Id:row.User_Id
         };
         
 

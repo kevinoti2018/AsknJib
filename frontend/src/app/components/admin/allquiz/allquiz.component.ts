@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { RouterModule } from '@angular/router';
-import { Question, Questions } from 'src/app/interface/questions';
-import { UserService } from 'src/app/services/user.service';
+import {  Questions } from 'src/app/interface/questions';
 import { QuestionsService } from 'src/app/services/questions.service';
 
 @Component({

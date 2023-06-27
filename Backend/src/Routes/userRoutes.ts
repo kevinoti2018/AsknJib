@@ -8,5 +8,5 @@ import { verifyAdmin, verifyEmail, verifyLogin } from '../middleware/verifyLogin
  router.post('/login',loginUser)
  router.post('/forgot',forgotPassword)
  router.post('/reset/:token',verifyEmail,resetPassword)
- router.get('/allusers',getUsers)
+ router.get('/allusers',verifyLogin,getUsers)
  router.put('/deleteuser/:User_Id',verifyAdmin,deleteUser)

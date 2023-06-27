@@ -13,10 +13,7 @@ import { LandingComponent } from './components/homepage/landing/landing.componen
 import { TestimonialsComponent } from './components/homepage/testimonials/testimonials.component';
 import { ProofnumComponent } from './components/homepage/proofnum/proofnum.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ResetComponent } from './components/reset/reset.component';
 import { QuestionModule } from './components/questions/question/question.module';
 import { AdminsModule } from './components/admin/admins/admins.module';
 import { QuestionsearchPipe } from './questionsearch.pipe';
