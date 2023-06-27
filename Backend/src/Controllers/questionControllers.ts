@@ -59,12 +59,17 @@ export const insertQuestions = async (req: ExtendedRequest, res: Response) => {
     res.status(400).json({ message: 'Invalid token' });
     return;
   }
-  console.log(User_Id);
-  
 
   try {
     const QuestionId = uid();
     const CreateDate = new Date().toISOString();
+
+    // Preprocess the Tags data
+    const preprocessedTags = Tags
+      .split(',')
+      .map((tag: string) => tag.trim()) // Trim whitespace
+      .filter((tag: string) => tag !== ''); // Remove empty tags
+
     const data = {
       QuestionId,
       Title,
@@ -73,7 +78,8 @@ export const insertQuestions = async (req: ExtendedRequest, res: Response) => {
       Expect,
       CreateDate,
       User_Id,
-      Tags,
+      VoteCount: 0, // Assuming the initial vote count is 0
+      Tags: preprocessedTags.join(','),
     };
 
     const result = await DatabaseHelper.exec('insertQuestion', data);
@@ -96,6 +102,7 @@ export const insertQuestions = async (req: ExtendedRequest, res: Response) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
   
   export const updateQuestions = async (req: ExtendedRequest, res: Response) => {
