@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Question } from '../interface/questions';
+import { Question, Questions } from '../interface/questions';
+import { Asks } from '../interface/ask';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +9,33 @@ import { Question } from '../interface/questions';
 export class QuestionsService {
 
   constructor(private httpClient:HttpClient) { }
-  private baseUrl ='localhost:4000/questions'
+  private baseUrl ='http://localhost:4000/questions'
 
   getAllQuestions() {
-    return this.httpClient.get<Question[]>('http://localhost:4000/questions/allquestions');
+    return this.httpClient.get<Questions[]>('http://localhost:4000/questions/allquestions');
   }
+  getTopQuestion(){
+    return this.httpClient.get('http://localhost:4000/questions/topquiz')
+  }
+  askQuestion(formData:Asks){
+    return this.httpClient.post('http://localhost:4000/questions/ask',formData)
+  }
+  updateQuestion(Question:Question){
+    return this.httpClient.put(`http://localhost:4000/questions/update/:QuestionId`,Question)
+  }
+  userQuestions(){
+    return this.httpClient.get<Questions[]>(`http://localhost:4000/questions/userquestions`)
+  }
+  deleteQuestion(QuestionId:string){
+    return this.httpClient.delete(`${this.baseUrl}/deletequestion/${QuestionId}`)
+  }
+
+  tagQuestions(){
+    return this.httpClient.get<Questions[]>(`${this.baseUrl}/tagquestion`)
+  }
+  questionDetail(QuestionId:string){
+    return this.httpClient.get<Questions>(`http://localhost:4000/questions/allquestions/${QuestionId}`)
+  }
+
+  
 }  
