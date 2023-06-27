@@ -9,7 +9,13 @@ interface Question {
   Details: string;
   Try: string;
   Expect: string;
+  AnswerCount:number,
+  VoteCount:number
   Tags: string[];
+  CreateDate: Date
+  UpdateDate: Date
+  User_Id:string
+
 }
 interface Quiz{
   QuestionId: string;
@@ -147,74 +153,99 @@ export const insertQuestions = async (req: ExtendedRequest, res: Response) => {
     console.log(req.params);
   
     try {
-      const result = await DatabaseHelper.exec('GetQuestionById', { QuestionId });
-      
-      if (result.recordset.length === 0) {
+      const result = await DatabaseHelper.exec('GetQuestionbyId2', { QuestionId });
+  
+      if (result.recordsets.length === 0) {
         return res.status(404).json({ message: 'Question not found' });
       }
-      
-      const questionId = result.recordset[0].QuestionId;
-      const tags = result.recordset.map((row: any) => row.TagName);
-      const questionWithTags = {
-        QuestionId: questionId,
-        Title: result.recordset[0].Title,
-        Details: result.recordset[0].Details,
-        Try: result.recordset[0].Try,
-        Expect: result.recordset[0].Expect,
-        CreateDate: result.recordset[0].CreateDate,
-        VoteCount: result.recordset[0].VoteCount,
-        Tags: tags,
+  
+      const [questionRecordset, commentRecordset, answerRecordset] = result.recordsets;
+  
+      const questionWithCommentsAndAnswers = {
+        QuestionId: questionRecordset[0].QuestionId,
+        Title: questionRecordset[0].Title,
+        Details: questionRecordset[0].Details,
+        Try: questionRecordset[0].Try,
+        Expect: questionRecordset[0].Expect,
+        CreateDate: questionRecordset[0].CreateDate,
+        UpdateDate: questionRecordset[0].UpdateDate,
+        User_Id: questionRecordset[0].User_Id,
+        VoteCount: questionRecordset[0].VoteCount,
+        isDeleted: questionRecordset[0].isDeleted,
+        AnswerCount: questionRecordset[0].AnswerCount,
+        Comments: commentRecordset.map((row: any) => ({
+          CommentId: row.CommentId,
+          Comment: row.Comment,
+          CreationDate: row.CreationDate,
+          User_Id: row.User_Id
+        })),
+        Answers: answerRecordset.map((row: any) => ({
+          AnswerId: row.AnswerId,
+          Answer: row.Answer,
+          VoteCount: row.VoteCount,
+          QuestionId: row.QuestionId,
+          CreatedDate: row.CreatedDate,
+          User_Id: row.User_Id,
+          accepted: row.accepted
+        }))
       };
   
-      res.status(200).json(questionWithTags);
+      res.status(200).json(questionWithCommentsAndAnswers);
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+  
+  
+
+  export const getQuestions = async (req: Request, res: Response) => {
+    try {
+      const pageNumber: number = Number(req.query.pageNumber) || 1;
+      const pageSize: number = Number(req.query.pageSize) || 10;
+  
+      const result = await DatabaseHelper.exec('GetAllQuestions', {
+        PageNumber: pageNumber,
+        PageSize: pageSize,
+      });
+  
+      const questions: Question[] = [];
+      const questionMap: Map<string, Question> = new Map();
+  
+      result.recordset.forEach((row: any) => {
+        const questionId: string = row.questionId;
+  
+        if (questionMap.has(questionId)) {
+          const existingQuestion = questionMap.get(questionId) as Question;
+          existingQuestion.Tags.push(row.TagName);
+        } else {
+          const question: Question = {
+            QuestionId: questionId,
+            Title: row.Title,
+            Details: row.Details,
+            Try: row.Try,
+            Expect: row.Expect,
+            Tags: [row.TagName],
+            VoteCount: row.VoteCount,
+            AnswerCount: row.AnswerCount,
+            UpdateDate: row.UpdateDate,
+            CreateDate: row.CreateDate,
+            User_Id: row.User_Id, 
+          };
+  
+          questions.push(question);
+          questionMap.set(questionId, question);
+        }
+      });
+  
+      res.json(questions);
     } catch (error) {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   };
   
 
- 
-  export const getQuestions = async (req: Request, res: Response) => {
-    try {
-        const pageNumber: number = Number(req.query.pageNumber) || 1;
-        const pageSize: number = Number(req.query.pageSize) || 10;
-
-        const result = await DatabaseHelper.exec('GetAllQuestionsWithTags2', {
-            PageNumber: pageNumber,
-            PageSize: pageSize,
-        });
-
-        const questions: Question[] = [];
-
-        result.recordset.forEach((row: any) => {
-            const questionId: string = row.QuestionId;
-
-            const existingQuestion = questions.find((q) => q.QuestionId === questionId);
-
-            if (existingQuestion) {
-                existingQuestion.Tags.push(row.TagName);
-            } else {
-                const question: Question = {
-                    QuestionId: questionId,
-                    Title: row.Title,
-                    Details: row.Details,
-                    Try: row.Try,
-                    Expect: row.Expect,
-                    Tags: [row.TagName],
-                };
-
-                questions.push(question);
-            }
-        });
-
-        res.json(questions);
-    } catch (error) {
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
-
 export const getQuestionsByTag = async (req: Request<{ TagName: string }>, res: Response) => {
-  const { TagName } = req.params;
+  const { TagName } = req.body;
 
   try {
     const result = await DatabaseHelper.exec('GetQuestionsByTag', { TagName });
@@ -269,8 +300,13 @@ export const getQuestionsByUserWithTags = async (req: extRq, res: Response) => {
           Details: row.Details,
           Try: row.Try,
           Expect: row.Expect,
+          AnswerCount: row.AnswerCount,
           Tags: [row.TagName],
+          VoteCount: row.VoteCount,
+          CreateDate: row.CreateDate,
+          UpdateDate: row.UpdateDate,
         };
+        
 
         questions.push(question);
       }
@@ -338,6 +374,81 @@ export const getTopQuiz = async (req: Request, res: Response) => {
   } catch (error) {
     console.error('Error retrieving question:', error);
     res.status(500).json({ error: 'Failed to retrieve question' });
+  }
+};
+
+
+interface extRq1 extends Request  {
+  info?: {
+    User_Id:string
+  }
+  params:{
+    Question_Id:string
+  }
+  
+}
+
+export const downvoteQuestion = async (req:extRq1, res:Response) => {
+  try {
+    const { QuestionId } = req.body;
+    const User_Id = req.info?.User_Id; // Extract User_Id from the decoded token
+    if (!User_Id) {
+      res.status(400).json({ message: 'Invalid token' });
+      return;
+    }
+
+    // Call the stored procedure and pass the parameters
+    const result = await DatabaseHelper.exec('DownvoteQuestion2', {
+      User_Id,
+      QuestionId,
+    });
+
+    // Check the result from the stored procedure
+    const message = result.recordset[0].Message;
+
+    if (message === 'Downvote successful') {
+      res.status(200).json({ message: 'Vote cast successfully.' });
+    } else {
+      res.status(400).json({ message });
+    }
+  } catch (error:any) {
+    if (error.number === 50001) {
+      res.status(400).json({ message: error.message });
+    } else if (error.number === 50002) {
+      res.status(400).json({ message: error.message });
+    } else {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
+};
+
+export const upvoteQuestion = async (req:extRq1, res:Response) => {
+  try {
+    const { QuestionId } = req.body;
+    const User_Id = req.info?.User_Id; // Extract User_Id from the decoded token
+    if (!User_Id) {
+      res.status(400).json({ message: 'Invalid token' });
+      return;
+    }
+    const result = await DatabaseHelper.exec('UpvoteQuestion2', {
+      User_Id,
+      QuestionId,
+    });
+    const message = result.recordset[0].Message;
+
+    if (message === 'Upvote successful') {
+      res.status(200).json({ message: 'Vote cast successfully.' });
+    } else {
+      res.status(400).json({ message });
+    }
+  } catch (error:any) {
+    if (error.number === 50001) {
+      res.status(400).json({ message: error.message });
+    } else if (error.number === 50002) {
+      res.status(400).json({ message: error.message });
+    } else {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
   }
 };
 

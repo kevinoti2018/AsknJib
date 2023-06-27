@@ -1,14 +1,22 @@
-
-CREATE OR ALTER PROCEDURE GetQuestionById (
-  @QuestionId VARCHAR(100)
+CREATE PROCEDURE GetQuestionbyId2
+(
+    @QuestionId VARCHAR(100)
 )
 AS
 BEGIN
-  SET NOCOUNT ON;
+    -- Retrieve the question
+    SELECT *
+    FROM QUESTIONS
+    WHERE questionId = @QuestionId;
 
-  SELECT Q.QuestionId, Q.Title, Q.Details, Q.Try, Q.Expect, T.TagName
-  FROM QUESTIONS Q
-  LEFT JOIN QUESTIONTAGS QT ON Q.QuestionId = QT.QuestionId
-  LEFT JOIN TAGS T ON QT.TagId = T.TagId
-  WHERE Q.QuestionId = @QuestionId;
+    -- Retrieve the comments for the answers of the question
+    SELECT C.*
+    FROM COMMENT C
+    INNER JOIN ANSWERS A ON C.AnswerId = A.AnswerId
+    WHERE A.QuestionId = @QuestionId;
+
+    -- Retrieve the answers for the question
+    SELECT *
+    FROM ANSWERS
+    WHERE QuestionId = @QuestionId;
 END;

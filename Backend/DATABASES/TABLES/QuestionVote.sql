@@ -1,0 +1,8 @@
+CREATE TABLE QuestionVote (
+    VoteId INT IDENTITY(1, 1) PRIMARY KEY,
+    User_Id VARCHAR(100) NOT NULL,
+    QuestionId VARCHAR(100) NOT NULL,
+    VoteType VARCHAR(10) NOT NULL,
+    CONSTRAINT FK_User_Question FOREIGN KEY (User_Id) REFERENCES USERS(User_Id),
+    CONSTRAINT FK_QuestionVote_Question FOREIGN KEY (QuestionId) REFERENCES QUESTIONS(questionId)
+);

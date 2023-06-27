@@ -1,5 +1,7 @@
-export interface Ask {
-    title:string
-    details:string
-    tryDetails:string
+export interface Asks {
+    Title:string
+    Details:string
+    Try:string
+    Expect:string
+    Tags:string
 }

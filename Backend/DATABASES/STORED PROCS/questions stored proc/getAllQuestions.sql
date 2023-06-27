@@ -1,17 +1,18 @@
-
-CREATE OR ALTER PROCEDURE GetAllQuestionsWithTags
+CREATE OR ALTER PROCEDURE GetAllQuestions
     @PageNumber INT,
     @PageSize INT
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    SELECT Q.QuestionId, Q.Title, Q.Details, Q.Try, Q.Expect,Q.VoteCount, T.TagName
-    FROM QUESTIONS Q
-    JOIN QUESTIONTAGS QT ON Q.QuestionId = QT.QuestionId
-    JOIN TAGS T ON QT.TagId = T.TagId
-    WHERE Q.isDeleted = 0
-    ORDER BY Q.QuestionId
-    OFFSET (@PageNumber - 1) * @PageSize ROWS
-    FETCH NEXT @PageSize ROWS ONLY;
+    SELECT Q.questionId, Q.Title, Q.Details, Q.Try, Q.Expect, Q.CreateDate, Q.UpdateDate, Q.User_Id, Q.VoteCount, Q.isDeleted, Q.AnswerCount, T.TagName
+    FROM (
+        SELECT ROW_NUMBER() OVER (ORDER BY Q.questionId) AS RowNum, Q.questionId, Q.Title, Q.Details, Q.Try, Q.Expect, Q.CreateDate, Q.UpdateDate, Q.User_Id, Q.VoteCount, Q.isDeleted, Q.AnswerCount
+        FROM QUESTIONS Q
+        WHERE Q.isDeleted = 0
+    ) AS Q
+    LEFT JOIN QUESTIONTAGS QT ON Q.questionId = QT.QuestionId
+    LEFT JOIN TAGS T ON QT.TagId = T.TagId
+    WHERE Q.RowNum > (@PageNumber - 1) * @PageSize AND Q.RowNum <= (@PageNumber * @PageSize)
+    ORDER BY Q.RowNum;
 END;
