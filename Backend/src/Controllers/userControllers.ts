@@ -110,36 +110,35 @@ interface extRq extends Request  {
     newPassword:string
   }
 }
-  export const resetPassword = async (req: extRq, res: Response) => {
-    try {
-      const { newPassword } = req.body;
-      const { error } = resetPasswordSchema.validate(req.body);
-  
-      if (error) {
-        res.status(400).json(error.details[0].message);
-        return;
-      }
-      const Email = req.info; // Extract email from the decoded token
-      console.log(Email)
-      if (!Email) {
-        res.status(400).json({ message: 'Invalid token' });
-        return;
-      }
-      console.log(Email);
-      
-  
-      const hashedPassword = await bcrypt.hash(newPassword, 10);
-      const result = await DatabaseHelper.exec('ResetsPassword', { Email, newPassword: hashedPassword });
-  
-      if (result.rowsAffected[0] > 0) {
-        res.status(200).json({ message: 'Password reset successfully' });
-      } else {
-        res.status(404).json({ message: 'User does not exist' });
-      }
-    } catch (error: any) {
-      res.status(500).json(error.message);
+export const resetPassword = async (req: extRq, res: Response) => {
+  try {
+    const { newPassword } = req.body;
+    const { error } = resetPasswordSchema.validate(req.body);
+
+    if (error) {
+      res.status(400).json(error.details[0].message);
+      return;
     }
-  };
+    const { Email } = req.info || {}; // Extract email from the decoded token
+    console.log(Email);
+    if (!Email) {
+      res.status(400).json({ message: 'Invalid token' });
+      return;
+    }
+    console.log(Email);
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const result = await DatabaseHelper.exec('ResetsPassword', { Email, newPassword: hashedPassword });
+
+    if (result.rowsAffected[0] > 0) {
+      res.status(200).json({ message: 'Password reset successfully' });
+    } else {
+      res.status(404).json({ message: 'User does not exist' });
+    }
+  } catch (error: any) {
+    res.status(500).json(error.message);
+  }
+};
   
 
 
@@ -179,6 +178,25 @@ interface extRq extends Request  {
     }
   };
 
+
+  export const getUserById = async (req: Request, res: Response) => {
+    const { User_Id } = req.body;
+  
+    try {
+    let result=  await DatabaseHelper.exec('GetUsernameById', { User_Id });
+  
+      if (result.recordset.length === 0) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      const username = result.recordset[0].Username;
+      res.json({ username });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+  
   
   
 
