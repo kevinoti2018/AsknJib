@@ -1,4 +1,4 @@
-CREATE PROCEDURE DownvoteAnswers1
+CREATE PROCEDURE DownvoteAnswers2
     @User_Id VARCHAR(100),
     @AnswerId VARCHAR(100)
 AS
@@ -23,12 +23,9 @@ BEGIN
             INSERT INTO VOTES (User_Id, AnswerId, VoteType)
             VALUES (@User_Id, @AnswerId, 'downvote');
 
-            -- Decrement the VoteCount in the ANSWERS table, retain as 0 if already 0 or negative
+            -- Decrement the VoteCount in the ANSWERS table
             UPDATE ANSWERS
-            SET VoteCount = CASE
-                WHEN VoteCount <= 0 THEN 0
-                ELSE VoteCount - 1
-                END
+            SET VoteCount = VoteCount - 1
             WHERE AnswerId = @AnswerId;
 
             -- Return success status
@@ -59,10 +56,7 @@ BEGIN
 
             -- Decrement the VoteCount in the ANSWERS table
             UPDATE ANSWERS
-            SET VoteCount = CASE
-                WHEN VoteCount <= 0 THEN 0
-                ELSE VoteCount - 1
-                END
+            SET VoteCount = VoteCount - 1
             WHERE AnswerId = @AnswerId;
 
             -- Return success status

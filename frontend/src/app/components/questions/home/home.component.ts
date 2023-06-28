@@ -5,6 +5,9 @@ import { MaterialModule } from 'src/app/shared/material/material.module';
 import { QuestionsService } from 'src/app/services/questions.service';
 import {  Questions } from 'src/app/interface/questions';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/State/appState';
+import { getQuestions, userQuestion } from 'src/app/State/Actions/questionActions';
 
 @Component({
   selector: 'app-home',
@@ -20,22 +23,25 @@ export class HomeComponent implements OnInit {
   toggleSidenav(): void {
     this.isSidenavOpen = !this.isSidenavOpen;
   }
-  constructor(private questionService:QuestionsService,
-    private router:Router
+  constructor(
+    private router:Router,
+    private store:Store<AppState>,
     ){}
 ngOnInit(): void {
-  this.getAllQuestions()
+  this.store.dispatch(getQuestions())
+  this.store.select('question').subscribe(
+    (response)=>{
+      this.questions= response.questions
+    }
+  )
+  this.store.dispatch(userQuestion())
+  this.store.select('question').subscribe(
+    (response)=>{
+      this.questions =response.questions
+    }
+  )
 }
-  getAllQuestions(){
-    this.questionService.getAllQuestions().subscribe(
-      (response)=>{
-        this.questions=response
-      },
-      (error)=>{
-        console.log(error)
-      }
-    )
-  }
+
   getSingleQuiz(QuestionId: string) {
     this.router.navigate(['/questions', QuestionId]);
   }

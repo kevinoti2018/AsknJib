@@ -1,7 +1,10 @@
-import { User } from './../../interface/user';
+import { Register, User } from './../../interface/user';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import {  RegisterUser } from 'src/app/State/Actions/userActions';
+import { AppState } from 'src/app/State/appState';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -14,9 +17,11 @@ import { UserService } from 'src/app/services/user.service';
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
 
+
   constructor(
     private fb: FormBuilder,
-    private userService:UserService
+    private userService:UserService,
+    private store:Store<AppState>,
 
   ) {}
 
@@ -32,22 +37,23 @@ export class RegisterComponent implements OnInit {
 
   createUser(): void {
     if (this.registerForm.valid) {
-      const userData:User = {
+      const newUser:Register= {
         Username: this.registerForm.get('username')?.value,
         Email: this.registerForm.get('email')?.value,
         Password: this.registerForm.get('password')?.value
       };
 
-      this.userService.registerUser(userData).subscribe(
-        (response)=>{
-          console.log(' user created',response)
+      // this.userService.registerUser(userData).subscribe(
+      //   (response)=>{
+      //     console.log(' user created',response)
 
-        },
-        (error) => {
-          console.log('Error creating user:', error);
-        }
+      //   },
+      //   (error) => {
+      //     console.log('Error creating user:', error);
+      //   }
 
-      )
+      // )
+      this.store.dispatch(RegisterUser({newUser}))
      
     }
   }

@@ -26,9 +26,7 @@ export interface Question {
 
 
 
-
-  export interface Root {
-    QuestionId: string
+    export interface Questions1 {
     Title: string
     Details: string
     Try: string
@@ -36,18 +34,11 @@ export interface Question {
     CreateDate: string
     UpdateDate: any
     User_Id: string
+    Username: string
     VoteCount: number
     isDeleted: boolean
     AnswerCount: number
-    Comments: Comment[]
     Answers: Answer[]
-  }
-  
-  export interface Comment {
-    CommentId: string
-    Comment: string
-    CreationDate: string
-    User_Id: string
   }
   
   export interface Answer {
@@ -57,6 +48,16 @@ export interface Question {
     QuestionId: string
     CreatedDate: string
     User_Id: string
+    Username: string
     accepted: boolean
+    Comments: Comment[]
+  }
+  
+  export interface Comment {
+    CommentId: string
+    Comment: string
+    CreationDate: string
+    User_Id: string
+    Username: string
   }
   

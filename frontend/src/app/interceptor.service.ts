@@ -10,7 +10,7 @@ export class InterceptorService implements HttpInterceptor{
   constructor() { }
   intercept(req:HttpRequest<any>,next:HttpHandler):Observable<HttpEvent<any>>{
     let token = localStorage.getItem('token') as string
-   if(req.url !==''&& req.url!==''){
+   if(req.url !=='http://localhost:4000/usersroutes/login'&& req.url!=='http://localhost:4000/usersroutes/register'){
     let modifiedReq= req.clone({headers:new HttpHeaders().append('token',token)})
     return next.handle(modifiedReq)
    }

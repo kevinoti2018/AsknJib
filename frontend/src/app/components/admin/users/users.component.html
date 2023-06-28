@@ -27,6 +27,13 @@
        
        <div class="users flex flex-col gap-2">
         <h1 class="text-questionC text-3xl font-bold mb-4" >users</h1>
+        <div class="userz" *ngFor="let user of users ">
+            <div class="user flex justify-around bg-secondaryContainer p-2">
+                <p>{{user.Username}}</p>
+                <p>{{user.Email}}</p>
+                <button class="bg-secondary py-1 px-2 text-white rounded-lg"  >delete</button>
+            </div>
+        </div>
         <div class="user flex justify-around bg-secondaryContainer p-2">
             <p>Kevin Otieno</p>
             <p>kelvinotix@gmail.com</p>

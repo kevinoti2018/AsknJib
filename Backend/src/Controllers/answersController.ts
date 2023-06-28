@@ -29,7 +29,7 @@ interface ExtendedRequest extends Request {
 export const insertAnswer = async (req: ExtendedRequest, res: Response) => {
   const { QuestionId } = req.params;
   const { Answer } = req.body;
-  const User_Id = req.info?.User_Id; // Extract User_Id from the decoded token
+  const User_Id = req.info?.User_Id; 
   if (!User_Id) {
     res.status(400).json({ message: 'Invalid token' });
     return;
@@ -53,7 +53,7 @@ export const insertAnswer = async (req: ExtendedRequest, res: Response) => {
     if (result.recordset.length === 0) {
       res.status(404).json({ error: 'Answer not found' });
     } else {
-      res.json({ message: 'Answer inserted successfully', answer: result.recordset[0] });
+      res.json({ answer: result.recordset[0] });
     }
   } catch (error) {
     console.error('Error executing stored procedure:', error);

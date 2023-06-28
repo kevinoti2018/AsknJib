@@ -8,6 +8,11 @@ export interface User {
     isDeleted?: boolean;
   }
   
+  export interface Register{
+    Username: string;
+    Email: string;
+    Password:string
+  }
 export interface Login{
     Email:string
     Password:string

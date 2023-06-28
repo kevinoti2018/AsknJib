@@ -71,7 +71,7 @@
           
           
           <div class="quiz-try bg-white mt-2" *ngIf="showTry">
-            <h1 class="font-semibold text-xl mb-1 text-footer">What did you try and what are you expecting?</h1>
+            <h1 class="font-semibold text-xl mb-1 text-footer">What did you try?</h1>
             <p>Write what you tried and what you are expecting</p>
             <textarea placeholder="eg. is there an R function for finding an element in a vector?"
                       [formControl]="tryDetailsControl"></textarea>
@@ -86,7 +86,7 @@
           
           
           <div class="expect bg-white p-2 my-1" *ngIf="showExpect">
-            <h1 class="font-semibold text-xl mb-1 text-footer">What did you try and what are you expecting?</h1>
+            <h1 class="font-semibold text-xl mb-1 text-footer">what are you expecting?</h1>
             <p>Introduce the problem and expand on what you put with the title</p>
             <textarea placeholder="eg. is there an R function for finding an element in a vector?"
                       [formControl]="expectControl"></textarea>

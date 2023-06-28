@@ -30,11 +30,11 @@ export class UserService {
   }
  
 
-  forgotUser(Email:string){
+  forgotUser(Email:ResetEmail){
     return this.httpClient.post(`${this.baseUrl}/forgot`,Email)
   }
   
-  resePassword(Password:string){
-    return this.httpClient.post(`${this.baseUrl}/forgot`,Password)
+  resetPassword(newPassword:string){
+    return this.httpClient.post(`${this.baseUrl}/reset/:token`,newPassword)
   }
 }
