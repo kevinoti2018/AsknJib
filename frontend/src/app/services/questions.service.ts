@@ -27,7 +27,7 @@ export class QuestionsService {
     return this.httpClient.get<Questions[]>(`http://localhost:4000/questions/userquestions`)
   }
   deleteQuestion(QuestionId:string){
-    return this.httpClient.delete(`${this.baseUrl}/deletequestion/${QuestionId}`)
+    return this.httpClient.delete(`http://localhost:4000/questions/deletequestion/${QuestionId}`)
   }
 
   tagQuestions(){
@@ -36,6 +36,13 @@ export class QuestionsService {
   questionDetail(QuestionId:string){
     return this.httpClient.get<Questions1>(`http://localhost:4000/questions/allquestions/${QuestionId}`)
   }
+  
+  upvoteQuestion(QuestionId:string){
+    return this.httpClient.patch(`http://localhost:4000/questions/upvote`,{QuestionId})
+  }
 
+  downvoteQuestion(QuestionId:string){
+    return this.httpClient.patch(`http://localhost:4000/questions/downvote`,{QuestionId})
+  }
   
 }  

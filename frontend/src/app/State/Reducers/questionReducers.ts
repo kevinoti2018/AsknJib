@@ -5,9 +5,10 @@ import { Asks } from 'src/app/interface/ask';
 
 export interface QuestionsState {
   questions: Questions[];
+  questions1: Questions[];
   getQuestionsSuccess: string;
   getQuestionsFailure: string;
-  singleQuestion: Questions1|null;
+  singleQuestion: Questions1 | null;
   getSingleQuestionSuccess: string;
   getSingleQuestionsFailure: string;
   deleteQuestionsSuccess: string;
@@ -16,16 +17,20 @@ export interface QuestionsState {
   updateQuestionFailure: string;
   askQuestionSuccess: string;
   askQuestionFailure: string;
-  QuestionId:string
-  formData:Asks|null
-  userQuestionsSuccess:string,
-  userQuestionsFailure:string
-  
+  QuestionId: string;
+  formData: Asks | null;
+  userQuestionsSuccess: string;
+  userQuestionsFailure: string;
+  upvoteQuestionSuccess: string;
+  upvoteQuestionFailure: string;
+  downvoteQuestionFailure: string;
+  downVoteQuestionSuccess: string;
 }
 
 export const initialState: QuestionsState = {
   questions: [],
   getQuestionsSuccess: '',
+  questions1: [],
   getQuestionsFailure: '',
   singleQuestion: null,
   getSingleQuestionSuccess: '',
@@ -34,17 +39,21 @@ export const initialState: QuestionsState = {
   deleteQuestionsFailure: '',
   updateQuestionSuccess: '',
   updateQuestionFailure: '',
-  QuestionId:'',
-  formData:null,
+  QuestionId: '',
+  formData: null,
   askQuestionSuccess: '',
   askQuestionFailure: '',
-  userQuestionsSuccess:'',
-  userQuestionsFailure:''
+  userQuestionsSuccess: '',
+  userQuestionsFailure: '',
+  upvoteQuestionSuccess: '',
+  upvoteQuestionFailure: '',
+  downvoteQuestionFailure: '',
+  downVoteQuestionSuccess: '',
 };
 
 export const questionsReducer = createReducer(
   initialState,
-  on(QuestionActions.getQuestionsSuccess, (state,action) => ({
+  on(QuestionActions.getQuestionsSuccess, (state, action) => ({
     ...state,
     questions: action.questions,
     getQuestionsSuccess: 'Success',
@@ -57,12 +66,11 @@ export const questionsReducer = createReducer(
   })),
   on(QuestionActions.getSingleQuestion, (state, { QuestionId }) => ({
     ...state,
-    QuestionId:QuestionId,
+    QuestionId: QuestionId,
     getQuestionsSuccess: '',
     getQuestionsFailure: '',
   })),
-
-  on(QuestionActions.getSingleQuestionSuccess, (state,{singleQuestion}) => ({
+  on(QuestionActions.getSingleQuestionSuccess, (state, { singleQuestion }) => ({
     ...state,
     singleQuestion,
     getSingleQuestionSuccess: 'Success',
@@ -103,9 +111,9 @@ export const questionsReducer = createReducer(
     askQuestionSuccess: '',
     askQuestionFailure: error,
   })),
-  on(QuestionActions.userQuestionSuccess, (state,action) => ({
+  on(QuestionActions.userQuestionSuccess, (state, action) => ({
     ...state,
-    questions: action.questions,
+    questions1: action.questions1,
     askQuestionSuccess: 'Success',
     askQuestionFailure: '',
   })),
@@ -113,5 +121,21 @@ export const questionsReducer = createReducer(
     ...state,
     askQuestionSuccess: '',
     askQuestionFailure: error,
+  })),
+  on(QuestionActions.UpvoteQuestionSuccess, (state, { message }) => ({
+    ...state,
+    upvoteQuestionSuccess: message,
+  })),
+  on(QuestionActions.UpvoteQuestionFailure, (state, { error }) => ({
+    ...state,
+    upvoteQuestionFailure: error,
+  })),
+  on(QuestionActions.DownvoteQuestionFailure, (state, { error }) => ({
+    ...state,
+    downvoteQuestionFailure: error,
+  })),
+  on(QuestionActions.DownvoteQuestionSuccess, (state, { message }) => ({
+    ...state,
+    downVoteQuestionSuccess: message,
   }))
 );

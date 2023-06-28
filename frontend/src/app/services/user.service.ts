@@ -37,4 +37,7 @@ export class UserService {
   resetPassword(newPassword:string){
     return this.httpClient.post(`${this.baseUrl}/reset/:token`,newPassword)
   }
+  getUser(){
+    return this.httpClient.get('localhost:4000/usersroutes/user')
+  }
 }

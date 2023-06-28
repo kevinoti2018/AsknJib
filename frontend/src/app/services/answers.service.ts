@@ -16,5 +16,13 @@ export class AnswersService {
   answeQuestion(Answer:string, QuestionId:string){
     return this.httpclient.post(`${this.baseUrl}/answer/${QuestionId}`,{Answer})
   }
+
+  upvoteAnswer(AnswerId:string){
+    return this.httpclient.patch(`http://localhost:4000/answers/upvote`,{AnswerId})
+  }
+
+  downvoteAnswer(AnswerId:string){
+    return this.httpclient.patch(`http://localhost:4000/answers/downvote`,{AnswerId})
+  }
   
 }

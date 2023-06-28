@@ -21,6 +21,7 @@ export interface Question {
     VoteCount: number
     AnswerCount: number
     CreateDate: string
+    Username:string
     TimeElapsed?: string;
   }
 
@@ -30,6 +31,7 @@ export interface Question {
     Title: string
     Details: string
     Try: string
+    QuestionId:string
     Expect: string
     CreateDate: string
     UpdateDate: any

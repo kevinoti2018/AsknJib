@@ -24,9 +24,17 @@ export const askQuestion = createAction('[Questions] Ask Question', props<{ form
 export const askQuestionSuccess = createAction('[Questions] Ask Question Success', props<{ message: string }>());
 export const askQuestionFailure = createAction('[Questions] Ask Question Failure', props<{ error: string }>());
 
+export const UpvoteQuestion=createAction('[Answer] vote',props<{QuestionId:string}>())
+export const UpvoteQuestionSuccess = createAction('[Answer] answer vote Success',props<{message:string}>())
+export const UpvoteQuestionFailure = createAction('[Answer] answer vote Failure',props<{error:string}>())
+
+export const DownvoteQuestion=createAction('[Answer] answer question',props<{QuestionId:string}>() )
+export const DownvoteQuestionSuccess = createAction('[Answer] answer vote Success',props<{message:string}>())
+export const DownvoteQuestionFailure = createAction('[Answer] answer vote Failure',props<{error:string}>())
+
 
 
 export const userQuestion = createAction('[Questions] User Question', );
-export const userQuestionSuccess = createAction('[Questions] User Question Success',  props<{ questions: Questions[] }>());
+export const userQuestionSuccess = createAction('[Questions] User Question Success',  props<{ questions1: Questions[] }>());
 export const userQuestionFailure = createAction('[Questions] User Question Failure', props<{ error: string }>());
 

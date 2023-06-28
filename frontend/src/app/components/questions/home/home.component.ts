@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/shared/material/material.module';
-import { QuestionsService } from 'src/app/services/questions.service';
 import {  Questions } from 'src/app/interface/questions';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -34,12 +33,14 @@ ngOnInit(): void {
       this.questions= response.questions
     }
   )
-  this.store.dispatch(userQuestion())
-  this.store.select('question').subscribe(
-    (response)=>{
-      this.questions =response.questions
-    }
-  )
+  // this.store.dispatch(userQuestion())
+  // this.store.select('question').subscribe(
+  //   (response)=>{
+  //     this.questions =response.questions1
+  //     console.log(response);
+      
+  //   }
+  // )
 }
 
   getSingleQuiz(QuestionId: string) {

@@ -25,6 +25,14 @@ interface ExtendedRequest extends Request {
 
     }
 }
+interface ExtendedRequest1 extends Request {
+  info?: {
+    User_Id: string;
+  };
+    body:{
+        AnswerId:string,     
+    }
+}
 
 export const insertAnswer = async (req: ExtendedRequest, res: Response) => {
   const { QuestionId } = req.params;
@@ -63,22 +71,19 @@ export const insertAnswer = async (req: ExtendedRequest, res: Response) => {
 
 
 
-export const updateAnswerAcceptedStatus = async (req: Request<{ AnswerId: string, User_Id: string }>, res: Response): Promise<void> => {
-  const { AnswerId,User_Id } = req.params;
-
+export const updateAnswerAcceptedStatus = async (req: ExtendedRequest1, res: Response): Promise<void> => {
+  const User_Id = req.info?.User_Id as string;
+  const { AnswerId } = req.body;
 
   try {
     // Get the question's user ID
     const result = await DatabaseHelper.exec('GetQuestionUser', { AnswerId });
     const questionUser = result.recordset[0]?.User_Id;
-    
 
     if (questionUser !== User_Id) {
       res.status(403).json({ error: 'Unauthorized: User does not have permission to accept this answer' });
       return;
     }
-
-    // Update the answer's accepted status
     await DatabaseHelper.exec('UpdateAnswerAcceptedStatus', { AnswerId, User_Id });
     res.status(201).json({ message: 'Answer accepted status updated successfully' });
   } catch (error) {
@@ -124,9 +129,10 @@ export const getAnswersByUserId = async (req: Request<{User_Id:string}>, res: Re
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-export const upvoteAnswer = async (req: Request<{ User_Id: string; AnswerId: string }>, res: Response) => {
+export const upvoteAnswer = async (req: ExtendedRequest1 , res: Response) => {
   try {
-    const { User_Id, AnswerId } = req.params;
+    const User_Id = req.info?.User_Id as string;  
+    const { AnswerId } = req.body;
 
     const result = await DatabaseHelper.exec('upvoteAnswers', {
       User_Id,
@@ -149,13 +155,14 @@ export const upvoteAnswer = async (req: Request<{ User_Id: string; AnswerId: str
 };
 
 
-export const downvoteAnswer = async (req: Request<{ User_Id: string; AnswerId: string }>, res: Response) => {
+export const downvoteAnswer = async (req:ExtendedRequest1 , res: Response) => {
   try {
-    const { User_Id, AnswerId } = req.params;
+    const User_Id = req.info?.User_Id as string; 
+    const { AnswerId } = req.body;
 
     const result = await DatabaseHelper.exec('DownvoteAnswers1', {
-      User_Id,
       AnswerId,
+      User_Id
     });
 
     const message = result.recordset[0].Result;

@@ -27,107 +27,27 @@
       <div class="body-contents">
         <div class="right ">
           
-            <div class="bottom ">
+            <div class="bottom " *ngFor="let question of questions">
                 <mat-card class=" bg-primaryContainer h-48 p-1 m-4  " >
-                    <div class="tops">
-                        <div class="left">
-                            <div class="votes px-2 py-1 ">
-                                <h2>0 votes</h2>
-                            </div>
-                            <div class="answers px-2 py-1">
-                                <h2>0 answers</h2>
-                            </div>
-                        </div>
-                        <div class="right">
-                         <mat-card-header class="text-2xl text-questionC">
-                             How do i finish this code?
-                         </mat-card-header>
-                         <mat-card-content class="text-content text-sm">
-                            Lorem ipsum dolor sit amet consectetur. Vestibulum scelerisque enim morbi viverra adipiscing nulla dui pretium molestie. Magna at integer fermentum tellus gravida magna blandit condimentum. Ac tristique id sem eu. Pharetra adipiscing semper id pellentesque volutpat gravida adipiscing.
-                         </mat-card-content>
-                        </div>
-                    </div>
+                   
+                    <mat-card-header class="text-2xl text-questionC flex align-middle justify-center">
+                        {{question.Title}}
+                    </mat-card-header>
                     <div class="bottom">
                         <div class="left">
                            
-                            <button class="tag bg-secondary text-white  px-2 py-1">delete</button>
-                            <!-- <div class="tag bg-secondaryContainer text-questionC">javascript</div> -->
+                            <button class="tag bg-secondary text-white  px-2 py-1 hover:bg-primary p-10" (click)="deleteQuestion(question.QuestionId)">delete</button>
                         </div>
                         <div class="mid">
-                            <div class="name text-secondary font-bold">Kevin Otieno</div>
+                            <div class="name text-secondary font-bold">{{question.Username}}</div>
                         </div>
                         <div class="right text-content font-bold">
-                            asked june 7
-                        </div>
-                    </div>
-                </mat-card>
-                <mat-card class=" bg-primaryContainer h-48 p-1 m-4  " >
-                    <div class="tops">
-                        <div class="left">
-                            <div class="votes px-2 py-1 ">
-                                <h2>0 votes</h2>
-                            </div>
-                            <div class="answers px-2 py-1">
-                                <h2>0 answers</h2>
-                            </div>
-                        </div>
-                        <div class="right">
-                         <mat-card-header class="text-2xl text-questionC">
-                             How do i finish this code?
-                         </mat-card-header>
-                         <mat-card-content class="text-content text-sm">
-                            Lorem ipsum dolor sit amet consectetur. Vestibulum scelerisque enim morbi viverra adipiscing nulla dui pretium molestie. Magna at integer fermentum tellus gravida magna blandit condimentum. Ac tristique id sem eu. Pharetra adipiscing semper id pellentesque volutpat gravida adipiscing.
-                         </mat-card-content>
-                        </div>
-                    </div>
-                    <div class="bottom">
-                        <div class="left">
-                           
-                            <button class="tag bg-secondary text-white  px-2 py-1">delete</button>
-                            <!-- <div class="tag bg-secondaryContainer text-questionC">javascript</div> -->
-                        </div>
-                        <div class="mid">
-                            <div class="name text-secondary font-bold">Kevin Otieno</div>
-                        </div>
-                        <div class="right text-content font-bold">
-                            asked june 7
-                        </div>
-                    </div>
-                </mat-card>
-                <mat-card class=" bg-primaryContainer h-48 p-1 m-4  " >
-                    <div class="tops">
-                        <div class="left">
-                            <div class="votes px-2 py-1 ">
-                                <h2>0 votes</h2>
-                            </div>
-                            <div class="answers px-2 py-1">
-                                <h2>0 answers</h2>
-                            </div>
-                        </div>
-                        <div class="right">
-                         <mat-card-header class="text-2xl text-questionC">
-                             How do i finish this code?
-                         </mat-card-header>
-                         <mat-card-content class="text-content text-sm">
-                            Lorem ipsum dolor sit amet consectetur. Vestibulum scelerisque enim morbi viverra adipiscing nulla dui pretium molestie. Magna at integer fermentum tellus gravida magna blandit condimentum. Ac tristique id sem eu. Pharetra adipiscing semper id pellentesque volutpat gravida adipiscing.
-                         </mat-card-content>
-                        </div>
-                    </div>
-                    <div class="bottom">
-                        <div class="left">
-                         
-                            <button class="tag bg-secondary text-white px-2 py-1">delete</button>
-                            <!-- <div class="tag bg-secondaryContainer text-questionC">javascript</div> -->
-                        </div>
-                        <div class="mid">
-                            <div class="name text-secondary font-bold">Kevin Otieno</div>
-                        </div>
-                        <div class="right text-content font-bold">
-                            asked june 7
+                            {{question.CreateDate | date}}
                         </div>
                     </div>
                 </mat-card>
              
+              
             </div>
            
        </div>

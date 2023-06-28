@@ -73,10 +73,10 @@
                             <li *ngFor="let tag of question.Tags" class="tag bg-secondaryContainer text-question list-none">{{ tag }}</li>
                         </div>
                         <div class="mid">
-                            <div class="name text-secondary font-bold">Kevin Otieno</div>
+                            <div class="name text-secondary font-bold">{{question.Username}}</div>
                         </div>
                         <div class="right text-content font-bold">
-                            Time Elapsed: {{ question.TimeElapsed }}
+                        {{ question.CreateDate | date}}
                         </div>
                     </div>
                 </mat-card>

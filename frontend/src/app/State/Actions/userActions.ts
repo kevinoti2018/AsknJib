@@ -1,5 +1,5 @@
 import { createAction,props } from "@ngrx/store";
-import { Login, Register, ResetEmail, ResetPassword, User } from "src/app/interface/user";
+import { Login, Register, ResetEmail, ResetPassword, User, User1 } from "src/app/interface/user";
 
 
 
@@ -23,6 +23,10 @@ export const ForgotUserFailure =createAction('[ForgotComponent] Forgot password'
 export const getUsers=createAction('[Home] Getusers')
 export const getUsersSuccess = createAction('[Home] Get users success', props<{ users: User[] }>());
 export const getUsersFailure=createAction('[Home] Getusers failure,,props<{message:string}>()')
+
+export const getUser = createAction('[Home] Getusers');
+export const getUserSuccess = createAction('[Home] Get users success', props<{ user1: User }>());
+export const getUserFailure = createAction('[Home] Getusers failure', props<{ error: string }>());
 
 
 

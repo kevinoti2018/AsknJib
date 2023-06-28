@@ -11,6 +11,6 @@ routes.get('/allquestions/:QuestionId',verifyLogin,SearchQuestion)
 routes.post('/ask',verifyLogin,insertQuestions)
 routes.put('/update/:QuestionId',verifyLogin,updateQuestions)
 routes.get('/userquestions',verifyLogin,getQuestionsByUserWithTags)
-routes.put('/deletequestion/:QuestionId',verifyAdmin,deleteQuestion)
+routes.delete('/deletequestion/:QuestionId',verifyLogin,deleteQuestion)
 routes.get('/tagquestion',verifyLogin,getQuestionsByTag)
 

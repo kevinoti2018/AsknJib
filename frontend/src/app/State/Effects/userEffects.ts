@@ -5,6 +5,7 @@ import * as UserActions from '../Actions/userActions'
 import { mergeMap, tap, map, catchError, of } from "rxjs";
 import { AuthService } from "src/app/services/auth.service";
 import { Router } from "@angular/router";
+import { User1 } from "src/app/interface/user";
 
 @Injectable()
 export class UserEffects{
@@ -64,7 +65,7 @@ export class UserEffects{
       });
 
 
-      getUser$ = createEffect(() => {
+      getUsers$ = createEffect(() => {
         return this.action$.pipe(
           ofType(UserActions.getUsers),
           mergeMap((action) => {
@@ -75,6 +76,18 @@ export class UserEffects{
           })
         );
       });
+
+      // getUser$ = createEffect(() => {
+      //   return this.action$.pipe(
+      //     ofType(UserActions.getUser),
+      //     mergeMap((action) => {
+      //       return this.userService.getUser().pipe(
+      //         map((user1) => UserActions.getUserSuccess({user1})),
+      //         catchError((error) => of(UserActions.getUserFailure({error:error.message})))
+      //       );
+      //     })
+      //   );
+      // });
 
       deletUser$ = createEffect(() => {
         return this.action$.pipe(

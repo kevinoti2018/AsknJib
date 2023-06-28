@@ -40,7 +40,7 @@
             </div>
             <div class="question mt-8">
                 <div class="left flex flex-col align-middle justify-center text-center">
-                    <span><mat-icon>arrow_circle_up</mat-icon></span>{{question?.VoteCount}}<span><mat-icon>arrow_circle_down</mat-icon></span>
+                    <span (click)="UpvoteQuestion(question!.QuestionId)"><mat-icon >arrow_circle_up</mat-icon></span>{{question?.VoteCount}}<span (click)="DownvoteQuestion(question!.QuestionId)"><mat-icon>arrow_circle_down</mat-icon></span>
                 </div>
                 <div class="right bg-secondaryContainer rounded-md p-2 text-content text-md">
                     {{question?.Details}}
@@ -66,7 +66,7 @@
 
                <div class="answer">
                 <div class="left flex flex-col align-middle justify-center text-center">
-                    <span><mat-icon>arrow_circle_up</mat-icon></span>{{answer.VoteCount}} <span><mat-icon>arrow_circle_down</mat-icon></span>
+                    <button (click)="UpvoteAnswer(answer.AnswerId)"><mat-icon>arrow_circle_up</mat-icon></button>{{answer.VoteCount}} <button (click)="DownvoteAnswer(answer.AnswerId)"><mat-icon>arrow_circle_down</mat-icon></button>
                 </div>
                 <div class="right bg-secondaryContainer rounded-md p-2 text-content text-md">
                   <p> {{answer.Answer}}</p>

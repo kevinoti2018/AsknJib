@@ -7,6 +7,14 @@ export interface User {
     IsAdmin?: boolean;
     isDeleted?: boolean;
   }
+  export interface User1 {
+    User_Id: string;
+    Username: string;
+    Email: string;
+    IsAdmin: boolean;
+    isDeleted: boolean;
+  }
+  
   
   export interface Register{
     Username: string;

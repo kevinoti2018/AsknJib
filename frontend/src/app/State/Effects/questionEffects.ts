@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { QuestionsService } from 'src/app/services/questions.service';
 import * as QuestionActions from '../Actions/questionActions'
-import { catchError, map, mergeMap, of } from 'rxjs';
+import { catchError, map, mergeMap, of, tap } from 'rxjs';
+import { getQuestions, getSingleQuestion } from '../Actions/questionActions';
+import { Store } from '@ngrx/store';
+import { AppState } from '../appState';
 @Injectable()
 export class QuestionEffects{
-    constructor(private action$:Actions,private questionService:QuestionsService){}
+    constructor(private action$:Actions,private questionService:QuestionsService,  private store:Store<AppState>){}
 
     getQuestions$=createEffect(()=>{
         return this.action$.pipe(
@@ -77,14 +80,57 @@ export class QuestionEffects{
             ofType(QuestionActions.userQuestion),
             mergeMap(action=>{
                 return this.questionService.userQuestions().pipe(
-                    map(questions=>{
-                        return QuestionActions.userQuestionSuccess({questions})
+                    map(questions1=>{
+                        return QuestionActions.userQuestionSuccess({questions1})
                     }),
                     catchError(error=> of( QuestionActions.getQuestionsFailure({error:error})))
                 )
+            }),
+            tap(action=>{
+              this.store.dispatch(getQuestions())
             })
         )
     })
+
+    downVoteQuestion$ = createEffect(() => {
+      let QuestionId = ''
+      return this.action$.pipe(
+        
+        ofType(QuestionActions.DownvoteQuestion),
+        mergeMap((action) => {
+          QuestionId=action.QuestionId
+          return this.questionService.downvoteQuestion(action.QuestionId).pipe(
+          map((response: any) => QuestionActions.DownvoteQuestionSuccess({ message: response.message })),
+            catchError((error: any) => of(QuestionActions.DownvoteQuestionFailure({ error: error })))
+          );
+        }),
+        tap(action => {
+          this.store.dispatch(getSingleQuestion({QuestionId}))
+    
+        })
+       
+      );
+    });
+
+    upVoteQuestion$ = createEffect(() => {
+      let QuestionId = ''
+      return this.action$.pipe(
+        
+        ofType(QuestionActions.UpvoteQuestion),
+        mergeMap((action) => {
+          QuestionId=action.QuestionId
+          return this.questionService.upvoteQuestion(action.QuestionId).pipe(
+          map((response: any) => QuestionActions.UpvoteQuestionSuccess({ message: response.message })),
+            catchError((error: any) => of(QuestionActions.UpvoteQuestionFailure({ error: error })))
+          );
+        }),
+        tap(action => {
+          this.store.dispatch(getSingleQuestion({QuestionId}))
+    
+        })
+       
+      );
+    });
 
     }
 

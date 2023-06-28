@@ -7,8 +7,8 @@ import {  Questions1 } from 'src/app/interface/questions';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/State/appState';
-import { getSingleQuestion } from 'src/app/State/Actions/questionActions';
-import { AnswerQuestion } from 'src/app/State/Actions/answerActions';
+import { DownvoteQuestion, UpvoteQuestion, getSingleQuestion } from 'src/app/State/Actions/questionActions';
+import { AnswerQuestion, DownvoteAnswer, UpvoteAnswer} from 'src/app/State/Actions/answerActions';
 import { CommentAnswer } from 'src/app/State/Actions/commentAction';
 
 @Component({
@@ -57,6 +57,18 @@ export class QuestionComponent implements OnInit {
    
     this.store.dispatch(AnswerQuestion({ Answer, QuestionId }));
 
+    }
+    UpvoteQuestion(QuestionId:string){
+      this.store.dispatch(UpvoteQuestion({QuestionId}))      
+    }
+    DownvoteQuestion(QuestionId:string){
+      this.store.dispatch(DownvoteQuestion({QuestionId}))
+    }
+    UpvoteAnswer(AnswerId:string){
+      this.store.dispatch(UpvoteAnswer({AnswerId}))
+    }
+    DownvoteAnswer(AnswerId:string){
+      this.store.dispatch(DownvoteAnswer({AnswerId}))
     }
 
    

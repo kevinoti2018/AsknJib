@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import * as UserActions from '../Actions/userActions';
-import { User } from 'src/app/interface/user';
+import { User, User1 } from 'src/app/interface/user';
 
 export interface UserInterface {
   registrationSuccessMessage: string;
@@ -15,7 +15,10 @@ export interface UserInterface {
   getuserFailureMessage: string;
   deleteuserSuccessMessage: string;
   deleteuserFailureMessage: string;
-  users:User[]
+  userSuccessMessage: string;
+  userFailureMessage: string;
+  users: User[];
+  user: User|null;
 }
 
 const initialState: UserInterface = {
@@ -29,9 +32,12 @@ const initialState: UserInterface = {
   forgotFailureMessage: '',
   getuserSuccessMessage: '',
   getuserFailureMessage: '',
+  userSuccessMessage: '',
+  userFailureMessage: '',
   deleteuserSuccessMessage: '',
   deleteuserFailureMessage: '',
-  users:[]
+  users: [],
+  user:null,
 };
 
 export const userReducers = createReducer(
@@ -75,8 +81,7 @@ export const userReducers = createReducer(
     ...state,
     forgotSuccessMessage: '',
     forgotFailureMessage: error,
-  }))
-,
+  })),
   on(UserActions.DeleteUserSuccess, (state, { message }) => ({
     ...state,
     deleteuserSuccessMessage: message,
@@ -89,13 +94,19 @@ export const userReducers = createReducer(
   })),
   on(UserActions.getUsersSuccess, (state, { users }) => ({
     ...state,
-    getSuccessMessage: '',
-    deleteuserFailureMessage: '',
+    users: users,
+    getuserSuccessMessage: '',
+    getuserFailureMessage: '',
   })),
-  on(UserActions.DeleteUserFailure, (state, { error }) => ({
+  on(UserActions.getUserSuccess, (state, { user1 }) => ({
+    ...state,
+    user: user1,
+    getuserSuccessMessage: '',
+    getuserFailureMessage: '',
+  })),
+  on(UserActions.getUserFailure, (state, { error }) => ({
     ...state,
     getuserSuccessMessage: '',
-  getuserFailureMessage: error,
+    getuserFailureMessage: error,
   }))
 );
-
