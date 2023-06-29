@@ -2,15 +2,10 @@
 <mat-drawer-container class="container">
     <mat-drawer #sidenav mode="over" [opened]="isSidenavOpen" class="sidenav bg-secondaryContainer p-1">
         <mat-nav-list>
-        <a mat-list-item routerLink="/questions">Home</a>
-        <a mat-list-item routerLink="/questions/tags">tags</a>
-        <a mat-list-item routerLink="/questions/ask">Ask a question</a>
-        <a mat-list-item routerLink="/questions/answers">Answer</a>
-        <a mat-list-item routerLink="/questions/specific/1">question detail</a>
-        <a mat-list-item routerLink="/questions/kevin">My questions</a>
-        <a mat-list-item routerLink="/admin/users">Admin users</a>
-        <a mat-list-item routerLink="/admin/question">Admin Quiz</a>
-         
+          <a mat-list-item routerLink="/questions">Home</a>
+          <a mat-list-item routerLink="/questions/tags">tags</a>
+          <a mat-list-item routerLink="/questions/ask">Ask a question</a>
+          <a mat-list-item routerLink="/questions/answers">My Questionsr</a>
           </mat-nav-list>
     </mat-drawer>
   
@@ -27,7 +22,8 @@
             <h1 class="text-footer font-bold text-xl">Tags</h1>
             <p>A tag is a keyword or label that categorizes your question with other, similar questions. Using the right tags makes it easier for others to find and answer your question.</p>
             <div class="tags flex  justify-between mt-2">
-                <input type="search" name="" id="" placeholder="search by tag" >
+                <input type="search" name="" id="" placeholder="search by tag" [(ngModel)]="filterTag" >
+                <p>Filter by : {{filterTag}}</p>
                 <div class="buttons">
                     <mat-button-toggle-group class="outline-group" aria-label="Button toggle group">
                         <mat-button-toggle class="outline-toggle" value="New">Popular</mat-button-toggle>
@@ -38,40 +34,41 @@
                 </div>
             </div>
         </div>
-        <div class="bottom grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1">
-            <mat-card class="w-28">
-                <mat-card-header>
-                    <p class="py-1 px-2 bg-secondaryContainer rounded-xl">javascript</p>
-                </mat-card-header>
-                <mat-card-content class="text-sm ">
-                    Lorem ipsum dolor sit amet consectetur. Consectetur sodales felis luctus dignissim condimentum. Sit elementum accumsan nulla purus aenean tristique. Tempor accumsan nulla maecenas proin laoreet. Blandit tristique faucibus ut aliquet justo quam.
-                </mat-card-content>
-            </mat-card>
-            <mat-card class="w-28">
-                <mat-card-header>
-                    <p class="py-1 px-2 bg-secondaryContainer rounded-xl ">javascript</p>
-                </mat-card-header>
-                <mat-card-content class="text-sm ">
-                    Lorem ipsum dolor sit amet consectetur. Consectetur sodales felis luctus dignissim condimentum. Sit elementum accumsan nulla purus aenean tristique. Tempor accumsan nulla maecenas proin laoreet. Blandit tristique faucibus ut aliquet justo quam.
-                </mat-card-content>
-            </mat-card>
-            <mat-card class="w-28">
-                <mat-card-header>
-                    <p class="py-1 px-2 bg-secondaryContainer rounded-xl">javascript</p>
-                </mat-card-header>
-                <mat-card-content class="text-sm ">
-                    Lorem ipsum dolor sit amet consectetur. Consectetur sodales felis luctus dignissim condimentum. Sit elementum accumsan nulla purus aenean tristique. Tempor accumsan nulla maecenas proin laoreet. Blandit tristique faucibus ut aliquet justo quam.
-                </mat-card-content>
-            </mat-card>
-            <mat-card class="w-28">
-                <mat-card-header>
-                    <p class="py-1 px-2 bg-secondaryContainer rounded-xl">javascript</p>
-                </mat-card-header>
-                <mat-card-content class="text-sm ">
-                    Lorem ipsum dolor sit amet consectetur. Consectetur sodales felis luctus dignissim condimentum. Sit elementum accumsan nulla purus aenean tristique. Tempor accumsan nulla maecenas proin laoreet. Blandit tristique faucibus ut aliquet justo quam.
-                </mat-card-content>
-            </mat-card>
+        <div class="cont h-cust">
+            <div class="try  grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1"  *ngIf="filterTagArray.length; else empty ">
+                <div class="quiz"  *ngFor="let question of filterTagArray">
+                  <mat-card class=" bg-primaryContainer h-48 p-1 m-4  " >
+                      <div class="tops sm:grid-cols-1">
+                          
+                          <div class="right">
+                           <mat-card-header class="text-2xl text-questionC">
+                              <h3 (click)="getSingleQuiz(question.QuestionId)">{{ question.Title }}</h3>
+                           </mat-card-header>
+                           <mat-card-content class="text-content text-sm">
+                             {{question.Details}}
+                           </mat-card-content>
+                          </div>
+                      </div>
+                      <div class="bottom">
+                          <div class="left">
+                              <li *ngFor="let tag of question.Tags" class="tag bg-secondaryContainer text-question list-none">{{ tag }}</li>
+                          </div>
+                          <div class="mid">
+                              <div class="name text-secondary font-bold">{{question.Username}}</div>
+                          </div>
+                          <div class="right text-content font-bold">
+                          {{ question.CreateDate | date}}
+                          </div>
+                      </div>
+                  </mat-card>
+                </div>
+          </div>
+          <ng-template #empty>
+              <p> No tags for that Question 🤒</p>
+          </ng-template>
         </div>
+   
+      
 
       
       </div>

@@ -39,7 +39,8 @@ export interface Question {
     VoteCount: number
     isDeleted: boolean
     AnswerCount: number
-    Answers: Answer[]
+    Answers: Answer[],
+    Tags:[]
   }
   
   export interface Answer {

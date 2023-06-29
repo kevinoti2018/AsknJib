@@ -15,7 +15,7 @@ interface Question {
   CreateDate: Date
   UpdateDate: Date
   User_Id:string,
-  UserName:string
+  Username:string
 
 }
 interface Quiz{

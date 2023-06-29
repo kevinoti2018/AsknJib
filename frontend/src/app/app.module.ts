@@ -32,6 +32,8 @@ import { answerReducer } from './State/Reducers/answerReducers';
 import { CommentReducer } from './State/Reducers/commentReducer';
 import { CommentEffects } from './State/Effects/commentEffects';
 import { SearchByTitlePipe } from './search-by-title.pipe';
+import { LatestPipe } from './pipes/latest.pipe';
+
 
 
 
@@ -40,8 +42,10 @@ import { SearchByTitlePipe } from './search-by-title.pipe';
   declarations: [
     AppComponent,
     QuestionsearchPipe,
-    TagsearchPipe,
+    
     SearchByTitlePipe,
+
+    
    
   ],
   imports: [
@@ -50,14 +54,16 @@ import { SearchByTitlePipe } from './search-by-title.pipe';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    NotfoundComponent,
     QuestionModule,
     AdminsModule,
     AppRoutingModule,
+    NotfoundComponent,
     NavComponent,
     HeroComponent,
+    TagsearchPipe,
     FooterComponent,
     LandingComponent,
+    LatestPipe,
     TestimonialsComponent,
     ProofnumComponent,
     StoreModule.forRoot({user:userReducers, question:questionsReducer,answer:answerReducer,comment:CommentReducer}, {}),

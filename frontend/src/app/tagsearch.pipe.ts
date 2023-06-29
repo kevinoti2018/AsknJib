@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Question } from './interface/questions';
 
 @Pipe({
-  name: 'tagsearch'
+  name: 'tagsearch',
+  standalone:true
 })
 export class TagsearchPipe implements PipeTransform {
   transform(questions: any[], searchText: string): Question[] {
@@ -13,7 +14,7 @@ export class TagsearchPipe implements PipeTransform {
     searchText = searchText.toLowerCase();
 
     return questions.filter(question => {
-      // return question.tags.some(tag:string => tag.toLowerCase().includes(searchText));
+     
     });
   }
 }

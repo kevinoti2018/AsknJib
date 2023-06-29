@@ -41,6 +41,9 @@ export class MyquestionsComponent implements OnInit {
       }
     )
   }
+  updateQuestion(QuestionId: string) {
+    this.router.navigate(['/questions/upd', QuestionId]);
+  }
   getSingleQuiz(QuestionId: string) {
     this.router.navigate(['/questions', QuestionId]);
   }
@@ -48,4 +51,5 @@ export class MyquestionsComponent implements OnInit {
     this.store.dispatch(deleteQuestion({QuestionId}))
     
   }
+
 }

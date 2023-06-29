@@ -3,14 +3,10 @@
       
      
         <mat-nav-list>
-         <a mat-list-item routerLink="/questions">Home</a>
-        <a mat-list-item routerLink="/questions/tags">tags</a>
-        <a mat-list-item routerLink="/questions/ask">Ask a question</a>
-        <a mat-list-item routerLink="/questions/answers">Answer</a>
-        <a mat-list-item routerLink="/questions/:QuestionId">question detail</a>
-        <a mat-list-item routerLink="/questions/mine">My questions</a>
-        <a mat-list-item routerLink="/admin/users">Admin users</a>
-        <a mat-list-item routerLink="/admin/question">Admin Quiz</a>
+          <a mat-list-item routerLink="/questions">Home</a>
+          <a mat-list-item routerLink="/questions/tags">tags</a>
+          <a mat-list-item routerLink="/questions/ask">Ask a question</a>
+          <a mat-list-item routerLink="/questions/answers">My Questionsr</a>
          
           </mat-nav-list>
      
@@ -32,56 +28,62 @@
                     <button class="bg-primary text-white px-2 py-1 rounded-xl hover:bg-secondary mb-2" ><a routerLink="ask">Ask a question?</a></button>
                 </div>
               <div class="t-bottom ">
-                <div class="t-left">
-                  <mat-button-toggle-group >
-                    <mat-button-toggle value="New" (click)="handleNewButtonClick()">New</mat-button-toggle>
+                <div class="t-left" >
+                  <mat-button-toggle-group  >
+                    <mat-button-toggle value="New"  (click)="handleNewButtonClick1()">Oldest</mat-button-toggle>
                     <mat-button-toggle value="unanswered" (click)="handleUnansweredButtonClick()">Unanswered</mat-button-toggle>
                     <mat-button-toggle value="questions" (click)="handleQuestionsButtonClick()">Questions</mat-button-toggle>
                   </mat-button-toggle-group>
                   
                 </div>
                 <div class="t-right">
-                    <button class="px-3 py-2 bg-secondaryContainer text-questionC rounded-xl">filter</button>
+                    <button class="px-3 py-2 bg-secondaryContainer text-questionC rounded-xl" (click)="handleNewButtonClick()">filter</button>
                 </div>
               </div>
             </div>
     
-            <div class="bottom "> 
-                <div class="div" *ngFor="let question of questions ">
+            <div class="bottom " > 
+              <div class="all" *ngIf="questions.length ; empty">
+                <div class="div" *ngFor="let question of questions  " >
                    
                
-                <mat-card class=" bg-primaryContainer h-48 p-1 m-4  " >
-                    <div class="tops sm:grid-cols-1">
-                        <div class="left">
-                            <div class="votes px-2 py-1 ">
-                                <h2>{{question.VoteCount}}votes</h2>
-                            </div>
-                            <div class="answers px-2 py-1">
-                                <h2>{{question.AnswerCount}} answers</h2>
-                            </div>
-                        </div>
-                        <div class="right">
-                         <mat-card-header class="text-2xl text-questionC">
-                            <h3 (click)="getSingleQuiz(question.QuestionId)">{{ question.Title }}</h3>
-                         </mat-card-header>
-                         <mat-card-content class="text-content text-sm">
-                           {{question.Details}}
-                         </mat-card-content>
-                        </div>
-                    </div>
-                    <div class="bottom">
-                        <div class="left">
-                            <li *ngFor="let tag of question.Tags" class="tag bg-secondaryContainer text-question list-none">{{ tag }}</li>
-                        </div>
-                        <div class="mid">
-                            <div class="name text-secondary font-bold">{{question.Username}}</div>
-                        </div>
-                        <div class="right text-content font-bold">
-                        {{ question.CreateDate | date}}
-                        </div>
-                    </div>
-                </mat-card>
-            </div>
+                  <mat-card class=" bg-primaryContainer h-48 p-1 m-4  " >
+                      <div class="tops sm:grid-cols-1">
+                          <div class="left">
+                              <div class="votes px-2 py-1 ">
+                                  <h2>{{question.VoteCount}}votes</h2>
+                              </div>
+                              <div class="answers px-2 py-1">
+                                  <h2>{{question.AnswerCount}} answers</h2>
+                              </div>
+                          </div>
+                          <div class="right">
+                           <mat-card-header class="text-2xl text-questionC">
+                              <h3 (click)="getSingleQuiz(question.QuestionId)">{{ question.Title }}</h3>
+                           </mat-card-header>
+                           <mat-card-content class="text-content text-sm">
+                             {{question.Details}}
+                           </mat-card-content>
+                          </div>
+                      </div>
+                      <div class="bottom">
+                          <div class="left">
+                              <li *ngFor="let tag of question.Tags" class="tag bg-secondaryContainer text-question list-none">{{ tag }}</li>
+                          </div>
+                          <div class="mid">
+                              <div class="name text-secondary font-bold">{{question.Username}}</div>
+                          </div>
+                          <div class="right text-content font-bold">
+                          {{ question.CreateDate | date}}
+                          </div>
+                      </div>
+                  </mat-card>
+              </div>
+              </div>
+           
+              <ng-template #empty>
+                  <p> No Questions found 🤒</p>
+              </ng-template>
                 
              
             </div>
