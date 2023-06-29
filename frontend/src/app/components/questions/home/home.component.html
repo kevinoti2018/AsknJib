@@ -41,9 +41,19 @@
                 </div>
               </div>
             </div>
-    
+            <div class="page  overflow-hidden  flex  justify-between">
+              <mat-paginator [length]="50"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10]"
+              aria-label="Select page"
+              (page)="handlePageChange($event)">
+            </mat-paginator>
+
+            </div>
             <div class="bottom " > 
-              <div class="all" *ngIf="questions.length ; empty">
+             
+             
+              <div class="all " *ngIf="questions.length ; empty">
                 <div class="div" *ngFor="let question of questions  " >
                    
                
@@ -80,18 +90,18 @@
                   </mat-card>
               </div>
               </div>
-           
+              
               <ng-template #empty>
                   <p> No Questions found 🤒</p>
               </ng-template>
                 
-             
+            
             </div>
            
        </div>
        <div class="end bg-secondaryContainer h-96 p-2">
         <h1>Top Questions?</h1>
-        <p class="text-primary"> what is this error?</p>
+        <p class="text-primary" (click)="getSingleQuiz(questions1!.QuestionId)">{{questions1?.Title}}</p>
     </div>
       </div>
 

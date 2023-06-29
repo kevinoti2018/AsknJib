@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/State/appState';
 import { DownvoteQuestion, UpvoteQuestion, getSingleQuestion } from 'src/app/State/Actions/questionActions';
-import { AnswerQuestion, DownvoteAnswer, UpvoteAnswer} from 'src/app/State/Actions/answerActions';
+import { AcceptAnswer, AnswerQuestion, DownvoteAnswer, UpvoteAnswer} from 'src/app/State/Actions/answerActions';
 import { CommentAnswer } from 'src/app/State/Actions/commentAction';
 
 @Component({
@@ -51,7 +51,9 @@ export class QuestionComponent implements OnInit {
     )
   }
   
-
+acceptAnswer(AnswerId:string){
+  this.store.dispatch(AcceptAnswer({AnswerId,QuestionId:this.QuestionId}))
+}
   get answerFormControl() {
     return this.answerForm.get('answer');
   }
