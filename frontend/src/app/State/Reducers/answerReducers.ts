@@ -43,6 +43,10 @@ export const answerReducer = createReducer(
     ...state,
     upvoteAnswerFailure: error,
   })),
+  on(AnswerActions.DownvoteAnswerSuccess, (state, { message }) => ({
+    ...state,
+    downvoteAnswerSuccess: message,
+  })),
   on(AnswerActions.DownvoteAnswerFailure, (state, { error }) => ({
     ...state,
     downvoteAnswerFailure: error,

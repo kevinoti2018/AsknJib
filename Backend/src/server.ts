@@ -1,5 +1,5 @@
 import cors from "cors"
-import app from "./Tests/app"
+import app from "./app"
 
 
 app.listen(4000,()=>{

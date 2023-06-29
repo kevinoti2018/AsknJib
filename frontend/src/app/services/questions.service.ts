@@ -38,11 +38,11 @@ export class QuestionsService {
   }
   
   upvoteQuestion(QuestionId:string){
-    return this.httpClient.patch(`http://localhost:4000/questions/upvote`,{QuestionId})
+    return this.httpClient.put(`http://localhost:4000/questions/upvote`,{QuestionId})
   }
 
   downvoteQuestion(QuestionId:string){
-    return this.httpClient.patch(`http://localhost:4000/questions/downvote`,{QuestionId})
+    return this.httpClient.put(`http://localhost:4000/questions/downvote`,{QuestionId})
   }
   
 }  

@@ -24,39 +24,39 @@
       </mat-toolbar>
       <router-outlet></router-outlet>
       <div class="body-contents ">
-       <div class="content bg-white p-2">
+       <div class="content bg-white p-2" *ngIf="question">
             <div class="top flex justify-between">
                 <div class="left ">
-                    <h1 class="text-3xl font-bold text-footer">{{ question?.Title}}</h1>
+                    <h1 class="text-3xl font-bold text-footer">{{ question.Title}}</h1>
                 </div>
                 <div class="right">
                     <button class="bg-primary py-1 px-2 text-white rounded-xl"><a routerLink="/questions/ask">Ask a question?</a></button>
                 </div>
             </div>
             <div class="sub flex gap-6  mt-4">
-                <h2 class="text-content">Asked <span class="text-footer font-bold"> {{question?.CreateDate | date}}</span></h2>
-                <h2 class="text-content">Modified <span class="text-footer font-bold">{{question?.UpdateDate}}</span></h2>
-                <h2 class="text-content">Asked By <span class="text-footer font-bold">{{question?.Username}}</span></h2>
+                <h2 class="text-content">Asked <span class="text-footer font-bold"> {{question.CreateDate | date}}</span></h2>
+                <h2 class="text-content">Modified <span class="text-footer font-bold">{{question.UpdateDate}}</span></h2>
+                <h2 class="text-content">Asked By <span class="text-footer font-bold">{{question.Username}}</span></h2>
             </div>
             <div class="question mt-8">
                 <div class="left flex flex-col align-middle justify-center text-center">
-                    <span (click)="UpvoteQuestion(question!.QuestionId)"><mat-icon >arrow_circle_up</mat-icon></span>{{question?.VoteCount}}<span (click)="DownvoteQuestion(question!.QuestionId)"><mat-icon>arrow_circle_down</mat-icon></span>
+                    <span (click)="UpvoteQuestion(question!.QuestionId)"><mat-icon >arrow_circle_up</mat-icon></span>{{question.VoteCount}}<span (click)="DownvoteQuestion(question!.QuestionId)"><mat-icon>arrow_circle_down</mat-icon></span>
                 </div>
                 <div class="right bg-secondaryContainer rounded-md p-2 text-content text-md">
-                    {{question?.Details}}
+                    {{question.Details}}
                 </div>
             </div>
             <div class="tried mt-4 ">
                 <h1 class="font-bold text-xl text-footer my-2">What I Tried</h1>
                 <div class="try bg-tertiaryContainer p-2 text-md rounded-lg">
-                    <h3>{{question?.Try}}</h3>
+                    <h3>{{question.Try}}</h3>
                     
                 </div>
             </div>
             <div class="tried mt-4 ">
                 <h1 class="font-bold text-xl text-footer my-2">What I Expect</h1>
                 <div class="try bg-tertiaryContainer p-2 text-md rounded-lg">
-                    <h3>{{question?.Expect}}</h3>
+                    <h3>{{question.Expect}}</h3>
                     
                 </div>
             </div>
@@ -84,12 +84,12 @@
                   <p>{{comment.Username}}</p>
                   <p>{{comment.CreationDate |date}}</p>
                </div>
-               <form #commentForm="ngForm" (ngSubmit)="submitComment(answer.AnswerId)">
+               <form [formGroup]="commentForm" (ngSubmit)="submitComment(answer.AnswerId)">
                 <div class="form-group">
                   <label for="comment">Comment</label>
-                  <textarea id="comment" name="comment" class="form-control" [(ngModel)]="comment" required></textarea>
-                  <div *ngIf="commentForm.controls['comment'].invalid && (commentForm.controls['comment'].dirty || commentForm.controls['comment'].touched)" class="error-message">
-                    <div *ngIf="commentForm.controls['comment'].errors?.['required']" class="errors">Comment is required.</div>
+                  <textarea id="comment" formControlName="comment" class="form-control" required></textarea>
+                  <div *ngIf="commentForm.get('comment')?.invalid && (commentForm.get('comment')?.dirty || commentForm.get('comment')?.touched)" class="error-message">
+                    <div *ngIf="commentForm.get('comment')?.errors?.['required']" class="errors">Comment is required.</div>
                   </div>
                 </div>
                 <button type="submit" class="btn bg-primary text-white py-1 px-2 rounded-lg mt-2" [disabled]="commentForm.invalid" [ngClass]="{'disabled-button': commentForm.invalid}">Submit</button>

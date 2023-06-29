@@ -33,32 +33,37 @@ export class AnswerEffects{
       });
 
     upVoteAnswers$ = createEffect(() => {
-       
+      let QuestionId = ''
         return this.action$.pipe(
           ofType(AnswerActions.UpvoteAnswer),
           mergeMap((action) => {
-          
+            QuestionId=action.QuestionId
             return this.answerService.upvoteAnswer(action.AnswerId).pipe(
             map((response: any) => AnswerActions.UpvoteAnswerSuccess({ message: response.message })),
               catchError((error: any) => of(AnswerActions.UpvoteAnswerFailure({ error: error })))
             );
           }),
+          tap(action=>{
+            this.store.dispatch(getSingleQuestion({QuestionId}))
+          })
           
         );
       });
 
     downVoteAnswers$ = createEffect(() => {
-       
+      let QuestionId = ''
         return this.action$.pipe(
           ofType(AnswerActions.DownvoteAnswer),
           mergeMap((action) => {
-           
-            return this.answerService.upvoteAnswer(action.AnswerId).pipe(
+            QuestionId=action.QuestionId
+            return this.answerService.downvoteAnswer(action.AnswerId).pipe(
             map((response: any) => AnswerActions.DownvoteAnswerSuccess({ message: response.message })),
               catchError((error: any) => of(AnswerActions.DownvoteAnswerFailure({ error: error })))
             );
           }),
-         
+          tap(action=>{
+            this.store.dispatch(getSingleQuestion({QuestionId}))
+          })
         );
       });
 }

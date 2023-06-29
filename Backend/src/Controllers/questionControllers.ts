@@ -393,8 +393,8 @@ interface extRq1 extends Request  {
   info?: {
     User_Id:string
   }
-  params:{
-    Question_Id:string
+  body:{
+    QuestionId:string
   }
   
 }
@@ -402,7 +402,7 @@ export const downvoteQuestion = async (req: extRq1, res: Response) => {
   try {
     const { QuestionId } = req.body;
     const User_Id = req.info?.User_Id; // Extract User_Id from the decoded token
-
+    console.log(User_Id, QuestionId);
     if (!User_Id) {
       res.status(400).json({ message: 'Invalid token' });
       return;
@@ -435,7 +435,8 @@ export const upvoteQuestion = async (req: extRq1, res: Response) => {
   try {
     const { QuestionId } = req.body;
     const User_Id = req.info?.User_Id; // Extract User_Id from the decoded token
-
+    console.log(User_Id, QuestionId);
+    
     if (!User_Id) {
       res.status(400).json({ message: 'Invalid token' });
       return;
@@ -461,6 +462,7 @@ export const upvoteQuestion = async (req: extRq1, res: Response) => {
     }
   }
 };
+
 
 
 

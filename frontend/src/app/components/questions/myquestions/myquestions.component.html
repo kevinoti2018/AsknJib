@@ -30,6 +30,25 @@
                 <button class="bg-secondary py-1 px-2 text-white rounded-lg" >update</button>
             </div>
             <div class="bottom ">
+                <div class="div" *ngFor="let question of questions">
+                    <div class="quiz">
+                        <div class="toped">
+                            <h1>{{question.Title}}</h1>
+                        </div>
+                        <div class="bottom">
+                            <div class="left">
+                                <button class="tag bg-primary  text-white" >update</button>
+                                <button class="tag bg-secondary text-white">delete</button>
+                            </div>
+                            <div class="mid">
+                                <div class="name text-secondary font-bold">{{user?.Username}}</div>
+                            </div>
+                            <div class="right text-content font-bold">
+                                {{questions}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <mat-card class=" bg-primaryContainer h-48 p-1 m-4  " >
                     <div class="tops">
                         <div class="left">

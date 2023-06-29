@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Login, LoginSuccess,ResetEmail,RegisterSuccess,User } from '../interface/user';
 import { Observable } from 'rxjs';
@@ -37,7 +37,10 @@ export class UserService {
   resetPassword(newPassword:string){
     return this.httpClient.post(`${this.baseUrl}/reset/:token`,newPassword)
   }
-  getUser(){
-    return this.httpClient.get('localhost:4000/usersroutes/user')
+  getUser(): Observable<User> {
+    const token = localStorage.getItem('token') as string;
+    const headers = new HttpHeaders().set('token', token);
+    
+    return this.httpClient.get<User>('http://localhost:4000/usersroutes/user', { headers });
   }
-}
+  }

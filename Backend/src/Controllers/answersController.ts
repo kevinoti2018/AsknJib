@@ -26,7 +26,7 @@ interface ExtendedRequest extends Request {
     }
 }
 interface ExtendedRequest1 extends Request {
-  info?: {
+  info?:{
     User_Id: string;
   };
     body:{
@@ -72,7 +72,11 @@ export const insertAnswer = async (req: ExtendedRequest, res: Response) => {
 
 
 export const updateAnswerAcceptedStatus = async (req: ExtendedRequest1, res: Response): Promise<void> => {
-  const User_Id = req.info?.User_Id as string;
+  const User_Id = req.info?.User_Id; 
+  if (!User_Id) {
+    res.status(400).json({ message: 'Invalid token' });
+    return;
+  }
   const { AnswerId } = req.body;
 
   try {
@@ -129,37 +133,51 @@ export const getAnswersByUserId = async (req: Request<{User_Id:string}>, res: Re
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-export const upvoteAnswer = async (req: ExtendedRequest1 , res: Response) => {
+export const upvoteAnswer = async (req: ExtendedRequest1, res: Response) => {
   try {
-    const User_Id = req.info?.User_Id as string;  
-    const { AnswerId } = req.body;
-
-    const result = await DatabaseHelper.exec('upvoteAnswers', {
-      User_Id,
-      AnswerId
-    });
-
-    const message = result.recordset[0].Result;
-
-    if (message === 'User has already upvoted this answer.' || message === 'You cannot vote on your own answer.') {
-      res.status(400).json({ message });
-    } else if (message === 'Upvote recorded successfully.') {
-      res.status(200).json({ message: 'Vote cast successfully.' });
-    } else {
-      res.status(400).json({ message: 'No vote cast.' });
+    const User_Id = req.info?.User_Id;
+  
+    if (!User_Id) {
+      return res.status(400).json({ message: 'Invalid token' });
     }
-   
+  
+    const { AnswerId } = req.body;
+    console.log(AnswerId, User_Id);
+  
+    const result = await DatabaseHelper.exec('upvoteAnswers8', { User_Id, AnswerId });
+  
+    const message = result.recordset[0].Result;
+  
+    if (message === 'User has already upvoted this answer.') {
+      return res.status(400).json({ message });
+    }
+  
+    if (message === 'You cannot vote on your own answer.') {
+      return res.status(400).json({ message });
+    }
+  
+    if (message === 'Upvote recorded successfully.') {
+      return res.status(200).json({ message: 'Vote cast successfully.' });
+    }
+  
+    return res.status(400).json({ message: 'No vote cast.' });
   } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
 
+
 export const downvoteAnswer = async (req:ExtendedRequest1 , res: Response) => {
   try {
-    const User_Id = req.info?.User_Id as string; 
+    const User_Id = req.info?.User_Id; 
+    if (!User_Id) {
+      res.status(400).json({ message: 'Invalid token' });
+      return;
+    }
     const { AnswerId } = req.body;
-
+    console.log(AnswerId,User_Id)
     const result = await DatabaseHelper.exec('DownvoteAnswers1', {
       AnswerId,
       User_Id

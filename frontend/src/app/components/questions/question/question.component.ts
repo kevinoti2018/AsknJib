@@ -21,6 +21,8 @@ import { CommentAnswer } from 'src/app/State/Actions/commentAction';
 export class QuestionComponent implements OnInit {
   
   answerForm!: FormGroup;
+  commentForm!: FormGroup;
+
   isSidenavOpen = false;
   question: Questions1| null = null;
   QuestionId:string=''
@@ -35,6 +37,9 @@ export class QuestionComponent implements OnInit {
   ngOnInit(): void {
     this.answerForm = this.formBuilder.group({
       answer: ['', Validators.required]
+    });
+    this.commentForm = this.formBuilder.group({
+      comment: ['', Validators.required]
     });
     this.QuestionId = this.route.snapshot.paramMap.get('QuestionId') as string;
 
@@ -58,24 +63,32 @@ export class QuestionComponent implements OnInit {
     this.store.dispatch(AnswerQuestion({ Answer, QuestionId }));
 
     }
-    UpvoteQuestion(QuestionId:string){
-      this.store.dispatch(UpvoteQuestion({QuestionId}))      
-    }
-    DownvoteQuestion(QuestionId:string){
-      this.store.dispatch(DownvoteQuestion({QuestionId}))
-    }
-    UpvoteAnswer(AnswerId:string){
-      this.store.dispatch(UpvoteAnswer({AnswerId}))
-    }
-    DownvoteAnswer(AnswerId:string){
-      this.store.dispatch(DownvoteAnswer({AnswerId}))
-    }
+  UpvoteQuestion(QuestionId:string){
+    this.store.dispatch(UpvoteQuestion({QuestionId}))      
+  }
+  DownvoteQuestion(QuestionId:string){
+    this.store.dispatch(DownvoteQuestion({QuestionId}))
+  }
+  UpvoteAnswer(AnswerId:string){
+    let QuestionId=this.QuestionId
+    this.store.dispatch(UpvoteAnswer({AnswerId,QuestionId}))
+  }
+  DownvoteAnswer(AnswerId:string){
+    console.log(AnswerId);
+    let QuestionId=this.QuestionId
+    
+    this.store.dispatch(DownvoteAnswer({AnswerId,QuestionId}))
+  }
 
    
 submitComment(AnswerId:string) {
-  const Comment=this.comment
+  const Comment = this.commentForm?.get('comment')?.value;
+
   console.log(Comment,AnswerId);
-  this.store.dispatch(CommentAnswer({Comment,AnswerId,QuestionId:this.QuestionId}))
+  if(Comment){
+    this.store.dispatch(CommentAnswer({Comment,AnswerId,QuestionId:this.QuestionId}))
+  }
+ 
 
 }
 }

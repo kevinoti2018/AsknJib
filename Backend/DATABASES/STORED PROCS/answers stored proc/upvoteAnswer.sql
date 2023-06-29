@@ -1,5 +1,4 @@
-
-CREATE PROCEDURE upvoteAnswers
+CREATE PROCEDURE upvoteAnswers8
     @User_Id VARCHAR(100),
     @AnswerId VARCHAR(100)
 AS
@@ -9,8 +8,8 @@ BEGIN
         SELECT 1
         FROM VOTES
         WHERE User_Id = @User_Id
-        AND AnswerId = @AnswerId
-        AND VoteType = 'upvote'
+            AND AnswerId = @AnswerId
+            AND VoteType = 'upvote'
     )
     BEGIN
         -- Check if the user is not the same as the one who posted the answer
@@ -18,7 +17,7 @@ BEGIN
             SELECT 1
             FROM ANSWERS
             WHERE AnswerId = @AnswerId
-            AND User_Id = @User_Id
+                AND User_Id = @User_Id
         )
         BEGIN
             -- Check if the user has previously downvoted the answer
@@ -26,19 +25,19 @@ BEGIN
                 SELECT 1
                 FROM VOTES
                 WHERE User_Id = @User_Id
-                AND AnswerId = @AnswerId
-                AND VoteType = 'downvote'
+                    AND AnswerId = @AnswerId
+                    AND VoteType = 'downvote'
             )
             BEGIN
                 -- Update the existing downvote record to an upvote
                 UPDATE VOTES
                 SET VoteType = 'upvote'
                 WHERE User_Id = @User_Id
-                AND AnswerId = @AnswerId;
+                    AND AnswerId = @AnswerId;
 
                 -- Increment the VoteCount in the ANSWERS table
                 UPDATE ANSWERS
-                SET VoteCount = VoteCount + 1 -- Increase by 2 to convert downvote to upvote
+                SET VoteCount = VoteCount + 1 -- Increase by 1 to convert downvote to upvote
                 WHERE AnswerId = @AnswerId;
 
                 -- Return success message

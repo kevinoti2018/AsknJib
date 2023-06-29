@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   questions:Questions[]=[]
   isSidenavOpen = false;
   searchTerm: string = ''
+  showQuestions: boolean = true;
   toggleSidenav(): void {
     this.isSidenavOpen = !this.isSidenavOpen;
   }
@@ -42,6 +43,7 @@ ngOnInit(): void {
   //   }
   // )
 }
+
 
   getSingleQuiz(QuestionId: string) {
     this.router.navigate(['/questions', QuestionId]);

@@ -22,7 +22,10 @@ export class AnswersService {
   }
 
   downvoteAnswer(AnswerId:string){
+    console.log(AnswerId);
+    
     return this.httpclient.patch(`http://localhost:4000/answers/downvote`,{AnswerId})
+
   }
   
 }

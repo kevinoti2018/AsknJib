@@ -160,7 +160,7 @@ export const getUsers = async (req: Request, res: Response) => {
     const pageNumber = parseInt(req.query.pageNumber as string) || 1;
     const pageSize = parseInt(req.query.pageSize as string) || 10;
 
-    const result = await DatabaseHelper.exec('GetUsers', {
+    const result = await DatabaseHelper.exec('GetUsers1', {
       PageNumber: pageNumber,
       PageSize: pageSize
     });
