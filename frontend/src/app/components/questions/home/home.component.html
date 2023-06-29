@@ -33,11 +33,12 @@
                 </div>
               <div class="t-bottom ">
                 <div class="t-left">
-                    <mat-button-toggle-group>
-                        <mat-button-toggle value="New">New</mat-button-toggle>
-                        <mat-button-toggle value="unanswered">Unanswered</mat-button-toggle>
-                        <mat-button-toggle value="questions">Questions</mat-button-toggle>
-                    </mat-button-toggle-group>
+                  <mat-button-toggle-group >
+                    <mat-button-toggle value="New" (click)="handleNewButtonClick()">New</mat-button-toggle>
+                    <mat-button-toggle value="unanswered" (click)="handleUnansweredButtonClick()">Unanswered</mat-button-toggle>
+                    <mat-button-toggle value="questions" (click)="handleQuestionsButtonClick()">Questions</mat-button-toggle>
+                  </mat-button-toggle-group>
+                  
                 </div>
                 <div class="t-right">
                     <button class="px-3 py-2 bg-secondaryContainer text-questionC rounded-xl">filter</button>

@@ -278,16 +278,15 @@ interface extRq extends Request  {
   
 }
 
-
 export const getQuestionsByUserWithTags = async (req: extRq, res: Response) => {
-
   const User_Id = req.info?.User_Id; // Extract User_Id from the decoded token
   if (!User_Id) {
     res.status(400).json({ message: 'Invalid token' });
     return;
   }
+
   try {
-    const result = await DatabaseHelper.exec('GetQuestionsByUserWithTags', { User_Id });
+    const result = await DatabaseHelper.exec('GetQuestionsByUserWithTags2', { User_Id });
 
     if (result.recordset.length === 0) {
       // User question not found
@@ -297,7 +296,7 @@ export const getQuestionsByUserWithTags = async (req: extRq, res: Response) => {
     const questions: Question[] = [];
 
     result.recordset.forEach((row: any) => {
-      const questionId: string = row.QuestionId;
+      const questionId: string = row.questionId;
 
       const existingQuestion = questions.find((q) => q.QuestionId === questionId);
 
@@ -315,9 +314,10 @@ export const getQuestionsByUserWithTags = async (req: extRq, res: Response) => {
           VoteCount: row.VoteCount,
           CreateDate: row.CreateDate,
           UpdateDate: row.UpdateDate,
-          User_Id:row.User_Id
+          User_Id: row.User_Id,
+          Username: row.Username,
+          isDeleted: row.isDeleted
         };
-        
 
         questions.push(question);
       }
@@ -328,6 +328,7 @@ export const getQuestionsByUserWithTags = async (req: extRq, res: Response) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 
 

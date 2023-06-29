@@ -29,125 +29,47 @@
                 <p>kelvinotix@gmail.com</p>
                 <button class="bg-secondary py-1 px-2 text-white rounded-lg" >update</button>
             </div>
-            <div class="bottom ">
-                <div class="div" *ngFor="let question of questions">
-                    <div class="quiz">
-                        <div class="toped">
-                            <h1>{{question.Title}}</h1>
-                        </div>
-                        <div class="bottom">
-                            <div class="left">
-                                <button class="tag bg-primary  text-white" >update</button>
-                                <button class="tag bg-secondary text-white">delete</button>
-                            </div>
-                            <div class="mid">
-                                <div class="name text-secondary font-bold">{{user?.Username}}</div>
-                            </div>
-                            <div class="right text-content font-bold">
-                                {{questions}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="bottom "> 
+                <div class="div" *ngFor="let question of questions ">
+                   
+               
                 <mat-card class=" bg-primaryContainer h-48 p-1 m-4  " >
-                    <div class="tops">
+                    <div class="tops sm:grid-cols-1">
                         <div class="left">
                             <div class="votes px-2 py-1 ">
-                                <h2>0 votes</h2>
+                                <h2>{{question.VoteCount}}votes</h2>
                             </div>
                             <div class="answers px-2 py-1">
-                                <h2>0 answers</h2>
+                                <h2>{{question.AnswerCount}} answers</h2>
                             </div>
                         </div>
                         <div class="right">
                          <mat-card-header class="text-2xl text-questionC">
-                             How do i finish this code?
+                            <h3 (click)="getSingleQuiz(question.QuestionId)">{{ question.Title }}</h3>
                          </mat-card-header>
                          <mat-card-content class="text-content text-sm">
-                            Lorem ipsum dolor sit amet consectetur. Vestibulum scelerisque enim morbi viverra adipiscing nulla dui pretium molestie. Magna at integer fermentum tellus gravida magna blandit condimentum. Ac tristique id sem eu. Pharetra adipiscing semper id pellentesque volutpat gravida adipiscing.
+                           {{question.Details}}
                          </mat-card-content>
                         </div>
                     </div>
                     <div class="bottom">
                         <div class="left">
-                            <button class="tag bg-primary  text-white" >update</button>
-                            <button class="tag bg-secondary text-white">delete</button>
-                            <!-- <div class="tag bg-secondaryContainer text-questionC">javascript</div> -->
+                            <li *ngFor="let tag of question.Tags" class="tag bg-secondaryContainer text-question list-none">{{ tag }}</li>
                         </div>
                         <div class="mid">
-                            <div class="name text-secondary font-bold">Kevin Otieno</div>
+                            <div class="name text-secondary font-bold">{{question.Username}}</div>
                         </div>
                         <div class="right text-content font-bold">
-                            asked june 7
+                        {{ question.CreateDate | date}}
                         </div>
+                    </div>
+                    <div class="buttons mt-4 flex w-64 justify-between">
+                        <button class="bg-secondary text-white p-2 rounded-2xl"(click)=" deleteQuestion(question.QuestionId)">delete</button>
+                        <button class="bg-primary p-2 text-white rounded-2xl">update</button>
                     </div>
                 </mat-card>
-                <mat-card class=" bg-primaryContainer h-48 p-1 m-4  " >
-                    <div class="tops">
-                        <div class="left">
-                            <div class="votes px-2 py-1 ">
-                                <h2>0 votes</h2>
-                            </div>
-                            <div class="answers px-2 py-1">
-                                <h2>0 answers</h2>
-                            </div>
-                        </div>
-                        <div class="right">
-                         <mat-card-header class="text-2xl text-questionC">
-                             How do i finish this code?
-                         </mat-card-header>
-                         <mat-card-content class="text-content text-sm">
-                            Lorem ipsum dolor sit amet consectetur. Vestibulum scelerisque enim morbi viverra adipiscing nulla dui pretium molestie. Magna at integer fermentum tellus gravida magna blandit condimentum. Ac tristique id sem eu. Pharetra adipiscing semper id pellentesque volutpat gravida adipiscing.
-                         </mat-card-content>
-                        </div>
-                    </div>
-                    <div class="bottom">
-                        <div class="left">
-                            <button class="tag bg-primary  text-white" >update</button>
-                            <button class="tag bg-secondary text-white">delete</button>
-                            <!-- <div class="tag bg-secondaryContainer text-questionC">javascript</div> -->
-                        </div>
-                        <div class="mid">
-                            <div class="name text-secondary font-bold">Kevin Otieno</div>
-                        </div>
-                        <div class="right text-content font-bold">
-                            asked june 7
-                        </div>
-                    </div>
-                </mat-card>
-                <mat-card class=" bg-primaryContainer h-48 p-1 m-4  " >
-                    <div class="tops">
-                        <div class="left">
-                            <div class="votes px-2 py-1 ">
-                                <h2>0 votes</h2>
-                            </div>
-                            <div class="answers px-2 py-1">
-                                <h2>0 answers</h2>
-                            </div>
-                        </div>
-                        <div class="right">
-                         <mat-card-header class="text-2xl text-questionC">
-                             How do i finish this code?
-                         </mat-card-header>
-                         <mat-card-content class="text-content text-sm">
-                            Lorem ipsum dolor sit amet consectetur. Vestibulum scelerisque enim morbi viverra adipiscing nulla dui pretium molestie. Magna at integer fermentum tellus gravida magna blandit condimentum. Ac tristique id sem eu. Pharetra adipiscing semper id pellentesque volutpat gravida adipiscing.
-                         </mat-card-content>
-                        </div>
-                    </div>
-                    <div class="bottom">
-                        <div class="left">
-                            <button class="tag bg-primary  text-white" >update</button>
-                            <button class="tag bg-secondary text-white">delete</button>
-                            <!-- <div class="tag bg-secondaryContainer text-questionC">javascript</div> -->
-                        </div>
-                        <div class="mid">
-                            <div class="name text-secondary font-bold">Kevin Otieno</div>
-                        </div>
-                        <div class="right text-content font-bold">
-                            asked june 7
-                        </div>
-                    </div>
-                </mat-card>
+            </div>
+                
              
             </div>
            

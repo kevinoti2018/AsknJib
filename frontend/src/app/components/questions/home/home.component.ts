@@ -43,6 +43,21 @@ ngOnInit(): void {
   //   }
   // )
 }
+handleToggleGroupClick() {
+  console.log("Toggle group clicked");
+}
+
+handleNewButtonClick() {
+  console.log("New button clicked");
+}
+
+handleUnansweredButtonClick() {
+  console.log("Unanswered button clicked");
+}
+
+handleQuestionsButtonClick() {
+  console.log("Questions button clicked");
+}
 
 
   getSingleQuiz(QuestionId: string) {

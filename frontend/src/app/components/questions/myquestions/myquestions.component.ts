@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import {  Router, RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/State/appState';
-import { userQuestion } from 'src/app/State/Actions/questionActions';
+import { deleteQuestion, userQuestion } from 'src/app/State/Actions/questionActions';
 import { Questions } from 'src/app/interface/questions';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/interface/user';
@@ -22,7 +22,7 @@ export class MyquestionsComponent implements OnInit {
   toggleSidenav(): void {
     this.isSidenavOpen = !this.isSidenavOpen;
   }
-  constructor(private store:Store<AppState>, private userService:UserService){}
+  constructor(private store:Store<AppState>, private userService:UserService, private router:Router){}
   ngOnInit(): void {
     this.getUser()
     this.store.dispatch(userQuestion())
@@ -40,5 +40,12 @@ export class MyquestionsComponent implements OnInit {
         console.log(response)
       }
     )
+  }
+  getSingleQuiz(QuestionId: string) {
+    this.router.navigate(['/questions', QuestionId]);
+  }
+  deleteQuestion(QuestionId:string){
+    this.store.dispatch(deleteQuestion({QuestionId}))
+    
   }
 }
