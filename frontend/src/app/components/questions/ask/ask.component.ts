@@ -70,18 +70,7 @@ export class AskComponent {
       Expect: expect,
       Tags: tags
     };
-    // this.router.navigateByUrl('/questions/kevin')
-
-    console.log(formData);
-
-    // this.questionsService.askQuestion(formData).subscribe(
-    //   (response)=>{
-    //     console.log('success')
-    //   }
-    //   , (error)=>{
-    //     console.log(error)
-    //   }
-    // )
+   
     this.store.dispatch(askQuestion({formData}))
   }
   

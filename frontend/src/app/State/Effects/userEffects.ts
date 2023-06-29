@@ -77,17 +77,17 @@ export class UserEffects{
         );
       });
 
-      getUser$ = createEffect(() => {
-        return this.action$.pipe(
-          ofType(UserActions.getUser),
-          mergeMap((action) => {
-            return this.userService.getUser().pipe(
-              map((user1) => UserActions.getUserSuccess({user1})),
-              catchError((error) => of(UserActions.getUserFailure({error:error.message})))
-            );
-          })
-        );
-      });
+      // getUser1$ = createEffect(() => {
+      //   return this.action$.pipe(
+      //     ofType(UserActions.getUser),
+      //     mergeMap((action) => {
+      //       return this.userService.getUser().pipe(
+      //         map((user1) => UserActions.getUserSuccess({user1})),
+      //         catchError((error) => of(UserActions.getUserFailure({error:error.message})))
+      //       );
+      //     })
+      //   );
+      // });
 
       deletUser$ = createEffect(() => {
         return this.action$.pipe(

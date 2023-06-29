@@ -35,6 +35,11 @@ export class AuthService {
     let role=localStorage.getItem('role')
     return  role==='1' ?true :false
    }
+
+   isUser(){
+    let role=localStorage.getItem('role')
+    return  role==='0' ?true :false
+   }
    
    getUsername(){
     let username=localStorage.getItem('username')

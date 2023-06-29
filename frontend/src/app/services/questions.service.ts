@@ -21,7 +21,7 @@ export class QuestionsService {
     return this.httpClient.post('http://localhost:4000/questions/ask',formData)
   }
   updateQuestion(formData:Asks, QuestionId:string){
-    return this.httpClient.put(`http://localhost:4000/questions/update/:QuestionId`,formData)
+    return this.httpClient.put(`http://localhost:4000/questions/update/${QuestionId}`,formData)
   }
   userQuestions(){
     return this.httpClient.get<Questions[]>(`http://localhost:4000/questions/userquestions`)

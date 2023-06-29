@@ -6,11 +6,8 @@
         <a mat-list-item routerLink="/questions">Home</a>
         <a mat-list-item routerLink="/questions/tags">tags</a>
         <a mat-list-item routerLink="/questions/ask">Ask a question</a>
-        <a mat-list-item routerLink="/questions/answers">Answer</a>
-        <a mat-list-item routerLink="/questions/specific/1">question detail</a>
-        <a mat-list-item routerLink="/questions/kevin">My questions</a>
-        <a mat-list-item routerLink="/admin/users">Admin users</a>
-        <a mat-list-item routerLink="/admin/question">Admin Quiz</a>
+        <a mat-list-item routerLink="/questions/answers">My Questionsr</a>
+
      
       </mat-nav-list>
     </mat-drawer>
@@ -35,7 +32,7 @@
             </div>
             <div class="sub flex gap-6  mt-4">
                 <h2 class="text-content">Asked <span class="text-footer font-bold"> {{question.CreateDate | date}}</span></h2>
-                <h2 class="text-content">Modified <span class="text-footer font-bold">{{question.UpdateDate}}</span></h2>
+                <h2 class="text-content">Modified <span class="text-footer font-bold">{{question.UpdateDate|date}}</span></h2>
                 <h2 class="text-content">Asked By <span class="text-footer font-bold">{{question.Username}}</span></h2>
             </div>
             <div class="question mt-8">

@@ -6,11 +6,7 @@
         <a mat-list-item routerLink="/questions">Home</a>
         <a mat-list-item routerLink="/questions/tags">tags</a>
         <a mat-list-item routerLink="/questions/ask">Ask a question</a>
-        <a mat-list-item routerLink="/questions/answers">Answer</a>
-        <a mat-list-item routerLink="/questions/specific/1">question detail</a>
-        <a mat-list-item routerLink="/questions/kevin">My questions</a>
-        <a mat-list-item routerLink="/admin/users">Admin users</a>
-        <a mat-list-item routerLink="/admin/question">Admin Quiz</a>
+        <a mat-list-item routerLink="/questions/answers">My Questionsr</a>
 
      
       </mat-nav-list>
@@ -126,65 +122,4 @@
   
 
 
-  <style>
-   .guidelines{
-    width: 100%;
-    height: 15rem;
-    border-radius: .5rem;
-   }
-   .title-field,.quiz-details , .quiz-try,.expect, .tags{
-    
-    padding: 0.5rem;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-   }
-   .title-field input ,.quiz-details textarea,.quiz-try textarea, .expect textarea, .tags input{
-    width: 90%;
-    background-color: #E3E6E8;
-    border-radius: .5rem;
-    padding: 0.5rem;
-   }
-   .quiz-details textarea{
-    height: 4rem;
-   }
-   .quiz-try textarea{
-    height: 6rem;
-   }
-   .expect textarea{
-    height: 6rem;
-   }
-   input:focus{
-    outline: n;
-   }
-   .error-message{
-    color: red;
-   }
-   .disabled-button {
-  opacity: 0.5;
-  cursor: not-allowed;
-
-}
-@media (max-width: 640px) {
-  h1{
-    font-size: 1.1rem;
-    font-weight: 500;
-  }
-  p{
-    font-size: 1rem;
-    font-weight: 500;
-  }
-  mat-list{
-font-weight: 500;
-font-size: .8rem;
-width: 80%;
-  }
-  mat-list-item{
-    width: 100%;
-  }
-.guidelines{
-  height: auto;
-  width: 100%;
-}
-}
-  </style>
+ 

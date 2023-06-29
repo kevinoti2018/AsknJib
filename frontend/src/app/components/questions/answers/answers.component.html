@@ -6,11 +6,7 @@
         <a mat-list-item routerLink="/questions">Home</a>
         <a mat-list-item routerLink="/questions/tags">tags</a>
         <a mat-list-item routerLink="/questions/ask">Ask a question</a>
-        <a mat-list-item routerLink="/questions/answers">Answer</a>
-        <a mat-list-item routerLink="/questions/specific/1">question detail</a>
-        <a mat-list-item routerLink="/questions/kevin">My questions</a>
-        <a mat-list-item routerLink="/admin/users">Admin users</a>
-        <a mat-list-item routerLink="/admin/question">Admin Quiz</a>
+        <a mat-list-item routerLink="/questions/answers">My Questionsr</a>
       </mat-nav-list>
     </mat-drawer>
   
@@ -23,58 +19,65 @@
       </mat-toolbar>
       <router-outlet></router-outlet>
       <div class="body-contents ">
-       <div class="content bg-white p-2">
-            <div class="top flex justify-between">
-                <div class="left ">
-                    <h1 class="text-3xl font-bold text-footer">How do i correct this code?</h1>
-                </div>
-                <div class="right">
-                    <button class="bg-primary py-1 px-2 text-white rounded-xl"><a routerLink="/questions/ask">Ask a question?</a></button>
-                </div>
+        <form [formGroup]="updateForm" (submit)="submitForm()">
+          <div class="title-field bg-white mt-2">
+            <!-- Title input field -->
+            <label for="title">Title</label>
+            <input type="text" id="title" placeholder="eg. is there an R function for finding an element in a vector?"
+                   formControlName="title">
+            <div *ngIf="titleControl.invalid && titleControl.touched">
+              <p class="error-message">Title is required.</p>
             </div>
-            <div class="sub flex gap-6  mt-4">
-                <h2 class="text-content">Asked <span class="text-footer font-bold"> 10 days ago</span></h2>
-                <h2 class="text-content">Modified <span class="text-footer font-bold">2 days ago</span></h2>
+          </div>
+        
+          <div class="quiz-details bg-white mt-2">
+            <!-- Details textarea -->
+            <label for="details">Details</label>
+            <textarea id="details" placeholder="eg. is there an R function for finding an element in a vector?"
+                      formControlName="details"></textarea>
+            <div *ngIf="detailsControl.invalid && detailsControl.touched">
+              <p class="error-message">Details are required.</p>
             </div>
-            <div class="question mt-8">
-                <div class="left flex flex-col align-middle justify-center text-center">
-                    <span><mat-icon>arrow_circle_up</mat-icon></span>2 <span><mat-icon>arrow_circle_down</mat-icon></span>
-                </div>
-                <div class="right bg-secondaryContainer rounded-md p-2 text-content text-md">
-                    Lorem ipsum dolor sit amet consectetur. Enim tempor volutpat eu mauris quam bibendum. Suspendisse libero mattis massa id quam lorem. Nulla vitae bibendum convallis mi vulputate vel nisi nam tempus. Viverra cras in varius varius sed rhoncus semper tellus.
-                </div>
+          </div>
+        
+          <div class="quiz-try bg-white mt-2" >
+            <!-- Try details textarea -->
+            <label for="tryDetails">Try Details</label>
+            <textarea id="tryDetails" placeholder="eg. is there an R function for finding an element in a vector?"
+                      formControlName="tryDetails"></textarea>
+            <div *ngIf="tryDetailsControl.invalid && tryDetailsControl.touched">
+              <p class="error-message">Try details are required.</p>
             </div>
-            <div class="tried mt-4 ">
-                <h1 class="font-bold text-xl text-footer my-2">What I Tried</h1>
-                <div class="try bg-tertiaryContainer p-2 text-md rounded-lg">
-                    Lorem ipsum dolor sit amet consectetur. Enim tempor volutpat eu mauris quam bibendum. Suspendisse libero mattis massa id quam lorem. Nulla vitae bibendum convallis mi vulputate vel nisi nam tempus. Viverra cras in varius varius sed rhoncus semper tellus.
-                </div>
+          </div>
+        
+          <div class="expect bg-white p-2 my-1" >
+            <!-- Expect textarea -->
+            <label for="expect">Expect</label>
+            <textarea id="expect" placeholder="eg. is there an R function for finding an element in a vector?"
+                      formControlName="expect"></textarea>
+            <div *ngIf="expectControl.invalid && expectControl.touched">
+              <p class="error-message">Expect details are required.</p>
             </div>
-            <div class="answers mt-8">
-                <h1 class="mb-4 font-bold text-footer text-xl">Answers</h1>
-               <div class="answer">
-                <div class="left flex flex-col align-middle justify-center text-center">
-                    <span><mat-icon>arrow_circle_up</mat-icon></span>2 <span><mat-icon>arrow_circle_down</mat-icon></span>
-                </div>
-                <div class="right bg-secondaryContainer rounded-md p-2 text-content text-md">
-                    Lorem ipsum dolor sit amet consectetur. Enim tempor volutpat eu mauris quam bibendum. Suspendisse libero mattis massa id quam lorem. Nulla vitae bibendum convallis mi vulputate vel nisi nam tempus. Viverra cras in varius varius sed rhoncus semper tellus.
-                </div>
-                <button class="mt-2 p-2 bg-secondary text-white rounded-lg">accept</button>
-               </div>
+          </div>
+        
+          <div class="tags bg-white p-2 my-1" >
+            <!-- Tags input field -->
+            <label for="tags">Tags</label>
+            <input type="text" id="tags" placeholder="Enter tags" formControlName="tags">
+            <div *ngIf="tagsControl.invalid && tagsControl.touched">
+              <p class="error-message">Tags are required.</p>
             </div>
-            <div class="response mt-6 mb-2 p-2">
-              <h2 class="font-bold text-md text-footer">comment</h2>
-              <textarea placeholder="Enter your comment" [(ngModel)]="answer" name="answer" required #answerInput="ngModel"></textarea>
-              <div *ngIf="answerInput.invalid && (answerInput.dirty || answerInput.touched)" class="error-message">
-                <div *ngIf="answerInput.errors?.['required']">
-                  <div class="errors">comment is required.</div>
-                </div>
-              </div>
-              <button class="bg-primary text-white py-1 px-2 rounded-lg mt-2" [disabled]="!answer" [ngClass]="{ 'disabled-button': !answer }">Submit</button>
-            </div>
-            
-              
-       </div>
+          </div>
+        
+          <div class="btn flex gap-4">
+            <!-- Submit and cancel buttons -->
+            <button type="submit" class="bg-primary text-white p-1 w-14 mt-1 rounded-lg" [disabled]="updateForm.invalid">
+              Submit
+            </button>
+            <button type="button" class="bg-secondary text-white p-1 w-14 mt-1 rounded-lg" (click)="resetForm()">Cancel</button>
+          </div>
+        </form>
+        
        <div class="end bg-secondaryContainer h-96">
         <h1>Top Questions?</h1>
     </div>
