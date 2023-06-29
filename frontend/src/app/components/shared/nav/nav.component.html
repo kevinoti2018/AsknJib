@@ -19,8 +19,8 @@
       <div class="right">
         <div class="adm m-4">
           <a routerLink="/questions/myquestions" *ngIf="authService.isLoggedIn()">MyQuiz</a>
-          <a class="mx-2"  routerLink="/admin/users" *ngIf="authService.isAdmin()">AdmUsers</a>
-        <a routerLink="/admin/question" *ngIf="authService.isAdmin()">AdmQuiz</a>
+          <a class="mx-2"  routerLink="/admin/users" *ngIf="authService.isLoggedIn()">AdmUsers</a>
+        <a routerLink="/admin/question" *ngIf="authService.isLoggedIn()">AdmQuiz</a>
         </div>
         <button class="h-11 w-20 rounded-md mx-3 text-primary hover:bg-primary hover:text-white">
           <a routerLink="/login" *ngIf="!authService.isLoggedIn()" >Login</a>
@@ -31,7 +31,7 @@
             <button>signup</button>
         </a></p>
         <a  *ngIf="authService.isLoggedIn()"
-        (click)="authService.logout()"
+        (click)="authService.logout()" routerLinl="/login"
         >
         <button>Logout</button>
     </a>

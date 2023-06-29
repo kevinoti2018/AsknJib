@@ -49,6 +49,23 @@ export class AnswerEffects{
           
         );
       });
+    AcceptAnswers$ = createEffect(() => {
+      let QuestionId = ''
+        return this.action$.pipe(
+          ofType(AnswerActions.AcceptAnswer),
+          mergeMap((action) => {
+            QuestionId=action.QuestionId
+            return this.answerService.AcceptAnswer(action.AnswerId).pipe(
+            map((response: any) => AnswerActions.AcceptAnswerSuccess({ message: response.message })),
+              catchError((error: any) => of(AnswerActions.AcceptAnswerFailure({ error: error })))
+            );
+          }),
+          tap(action=>{
+            this.store.dispatch(getSingleQuestion({QuestionId}))
+          })
+          
+        );
+      });
 
     downVoteAnswers$ = createEffect(() => {
       let QuestionId = ''

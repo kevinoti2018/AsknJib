@@ -9,6 +9,7 @@ import { AnswersComponent } from '../answers/answers.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthGuard } from 'src/app/auth.guard';
 
 
 
@@ -22,12 +23,12 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     HttpClientModule,
     RouterModule.forChild([
-     {path:'questions', loadComponent:()=>import('../home/home.component').then(c=>c.HomeComponent)},
-     {path:'questions/ask', loadComponent:()=>import('../ask/ask.component').then(c=>c.AskComponent)},
-     {path:"questions/tags",loadComponent:()=>import('../tags/tags.component').then(c=>c.TagsComponent)},
-     {path:'questions/myquestions', component:MyquestionsComponent},
-     {path:'questions/:QuestionId', component:QuestionComponent},
-     {path:'questions/upd/:QuestionId', component:AnswersComponent},
+     {path:'questions', loadComponent:()=>import('../home/home.component').then(c=>c.HomeComponent),canActivate: [AuthGuard]},
+     {path:'questions/ask', loadComponent:()=>import('../ask/ask.component').then(c=>c.AskComponent),canActivate: [AuthGuard]},
+     {path:"questions/tags",loadComponent:()=>import('../tags/tags.component').then(c=>c.TagsComponent),canActivate: [AuthGuard]},
+     {path:'questions/myquestions', component:MyquestionsComponent,canActivate: [AuthGuard]},
+     {path:'questions/:QuestionId', component:QuestionComponent,canActivate: [AuthGuard]},
+     {path:'questions/upd/:QuestionId', component:AnswersComponent,canActivate: [AuthGuard]},
     
     ])
   ]

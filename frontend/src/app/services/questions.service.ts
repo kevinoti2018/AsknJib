@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Question, Questions, Questions1 } from '../interface/questions';
+import { Question, Questions, Questions1, topQuiz } from '../interface/questions';
 import { Asks } from '../interface/ask';
 
 @Injectable({
@@ -14,8 +15,10 @@ export class QuestionsService {
   getAllQuestions() {
     return this.httpClient.get<Questions[]>('http://localhost:4000/questions/allquestions');
   }
-  getTopQuestion(){
-    return this.httpClient.get('http://localhost:4000/questions/topquiz')
+  getTopQuestion():Observable<topQuiz>{
+    const token = localStorage.getItem('token') as string;
+    const headers = new HttpHeaders().set('token', token);
+    return this.httpClient.get<topQuiz>('http://localhost:4000/questions/topquiz',{headers})
   }
   askQuestion(formData:Asks){
     return this.httpClient.post('http://localhost:4000/questions/ask',formData)

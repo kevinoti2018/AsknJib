@@ -12,7 +12,7 @@ export const DownvoteAnswer=createAction('[Answer] answer question',props<{Answe
 export const DownvoteAnswerSuccess = createAction('[Answer] answer vote Success',props<{message:string}>())
 export const DownvoteAnswerFailure = createAction('[Answer] answer vote Failure',props<{error:string}>())
 
-export const AcceptAnswer=createAction('[Answer] accept answer question',props<{AnswerId:string}>())
+export const AcceptAnswer=createAction('[Answer] accept answer question',props<{AnswerId:string,QuestionId:string}>())
 export const AcceptAnswerSuccess = createAction('[Answer] accept answer Success',props<{message:string}>())
 export const AcceptAnswerFailure = createAction('[Answer] accept answer  Failure',props<{error:string}>())
 

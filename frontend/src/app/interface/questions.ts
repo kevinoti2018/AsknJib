@@ -63,3 +63,14 @@ export interface Question {
     Username: string
   }
   
+
+  export interface topQuiz {
+    QuestionId: string
+    Title: string
+    Details: string
+    Try: string
+    Expect: string
+    UpdateDate: string
+    VoteCount: number
+    Tags: any[]
+  }

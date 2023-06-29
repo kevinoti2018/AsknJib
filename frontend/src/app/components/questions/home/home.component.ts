@@ -1,23 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/shared/material/material.module';
-import {  Questions } from 'src/app/interface/questions';
+import {  Questions, topQuiz } from 'src/app/interface/questions';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/State/appState';
-import { getQuestions, userQuestion } from 'src/app/State/Actions/questionActions';
+import { getQuestions} from 'src/app/State/Actions/questionActions';
 import { LatestPipe } from 'src/app/pipes/latest.pipe';
+import {MatPaginator, MatPaginatorModule,PageEvent} from '@angular/material/paginator';
+import { QuestionsService } from 'src/app/services/questions.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule,RouterModule,MaterialModule,LatestPipe],
+  imports: [CommonModule,RouterModule,MaterialModule,LatestPipe,MatPaginatorModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
   questions:Questions[]=[]
+  questions1:topQuiz|null= null
   isSidenavOpen = false;
   searchTerm: string = ''
   showQuestions: boolean = true;
@@ -25,21 +28,46 @@ export class HomeComponent implements OnInit {
   toggleSidenav(): void {
     this.isSidenavOpen = !this.isSidenavOpen;
   }
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined;
+  handlePageChange(event: PageEvent) {
+    console.log(event);
+  
+    const currentPageIndex = event.pageIndex;
+    const pageSize = event.pageSize;
+   console.log(currentPageIndex,pageSize);
+   
+  }
   constructor(
     private router:Router,
     private store:Store<AppState>,
+    private questionsService:QuestionsService
     ){}
 ngOnInit(): void {
+  
+    
   this.store.dispatch(getQuestions())
   this.store.select('question').subscribe(
     (response)=>{
       this.questions= response.questions
+    },
+    (error:any)=>{
+      console.log(error.error.message);
+      
     }
   )
-
+  this.handleTop()
 }
-handleToggleGroupClick() {
-  console.log("Toggle group clicked");
+handleTop() {
+  this.questionsService.getTopQuestion().subscribe(
+    (response)=>{
+      this.questions1=response
+      
+    },
+    (error)=>{
+      console.log(error);
+      
+    }
+  )
 }
 
 handleNewButtonClick() {

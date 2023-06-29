@@ -71,6 +71,7 @@
                    <div class="bottom flex w-96 justify-between mt-5 ">
                     <p >{{answer.Username}}</p> 
                     <p>{{answer.CreatedDate |date}}</p>
+                    <button (click)="acceptAnswer(answer.AnswerId)" [ngClass]="{'accepted': answer.accepted}">{{answer.accepted}}</button>
                    </div>
                 </div>
                
@@ -118,3 +119,11 @@
     </mat-drawer-content>
   </mat-drawer-container>
   
+  <style>
+    .green{
+      background-color: green;
+    }
+    .blue{
+      background-color: blue;
+    }
+  </style>
