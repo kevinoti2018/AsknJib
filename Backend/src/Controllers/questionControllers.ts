@@ -14,7 +14,8 @@ interface Question {
   Tags: string[];
   CreateDate: Date
   UpdateDate: Date
-  User_Id:string
+  User_Id:string,
+  UserName:string
 
 }
 interface Quiz{
@@ -83,20 +84,8 @@ export const insertQuestions = async (req: ExtendedRequest, res: Response) => {
     };
 
     const result = await DatabaseHelper.exec('insertQuestion', data);
-    const questionId = result.recordset[0].QuestionId;
-    const tags = result.recordset.map((row: any) => row.TagName);
-    const questionWithTags = {
-      QuestionId: questionId,
-      Title: result.recordset[0].Title,
-      Details: result.recordset[0].Details,
-      Try: result.recordset[0].Try,
-      Expect: result.recordset[0].Expect,
-      CreateDate: result.recordset[0].CreateDate,
-      VoteCount: result.recordset[0].VoteCount,
-      Tags: tags,
-    };
-
-    res.status(200).json(questionWithTags);
+    
+    res.status(200).json({"message":"question sent successfully"});
   } catch (error) {
     console.error('Error executing stored procedure:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -160,15 +149,15 @@ export const insertQuestions = async (req: ExtendedRequest, res: Response) => {
     console.log(req.params);
   
     try {
-      const result = await DatabaseHelper.exec('GetQuestionbyId2', { QuestionId });
+      const result = await DatabaseHelper.exec('GetQuestionByIdWithAnswersAndComments', { QuestionId });
   
       if (result.recordsets.length === 0) {
         return res.status(404).json({ message: 'Question not found' });
       }
   
-      const [questionRecordset, commentRecordset, answerRecordset] = result.recordsets;
+      const [questionRecordset, answerRecordset] = result.recordsets;
   
-      const questionWithCommentsAndAnswers = {
+      const questionWithAnswersAndComments = {
         QuestionId: questionRecordset[0].QuestionId,
         Title: questionRecordset[0].Title,
         Details: questionRecordset[0].Details,
@@ -177,15 +166,10 @@ export const insertQuestions = async (req: ExtendedRequest, res: Response) => {
         CreateDate: questionRecordset[0].CreateDate,
         UpdateDate: questionRecordset[0].UpdateDate,
         User_Id: questionRecordset[0].User_Id,
+        Username: questionRecordset[0].Username,
         VoteCount: questionRecordset[0].VoteCount,
         isDeleted: questionRecordset[0].isDeleted,
         AnswerCount: questionRecordset[0].AnswerCount,
-        Comments: commentRecordset.map((row: any) => ({
-          CommentId: row.CommentId,
-          Comment: row.Comment,
-          CreationDate: row.CreationDate,
-          User_Id: row.User_Id
-        })),
         Answers: answerRecordset.map((row: any) => ({
           AnswerId: row.AnswerId,
           Answer: row.Answer,
@@ -193,18 +177,35 @@ export const insertQuestions = async (req: ExtendedRequest, res: Response) => {
           QuestionId: row.QuestionId,
           CreatedDate: row.CreatedDate,
           User_Id: row.User_Id,
-          accepted: row.accepted
-        }))
+          Username: row.AnswerUsername,
+          accepted: row.accepted,
+          Comments: [],
+        })),
       };
   
-      res.status(200).json(questionWithCommentsAndAnswers);
+      answerRecordset.forEach((row: any) => {
+        const answerId = row.AnswerId;
+        const answerIndex = questionWithAnswersAndComments.Answers.findIndex((answer: any) => answer.AnswerId === answerId);
+        if (answerIndex !== -1) {
+          questionWithAnswersAndComments.Answers[answerIndex].Comments.push({
+            CommentId: row.CommentId,
+            Comment: row.Comment,
+            CreationDate: row.CreationDate,
+            User_Id: row.CommentUser_Id,
+            Username: row.CommentUsername,
+          });
+        }
+      });
+  
+      res.status(200).json(questionWithAnswersAndComments);
     } catch (error) {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   };
   
   
-
+  
+  
   export const getQuestions = async (req: Request, res: Response) => {
     try {
       const pageNumber: number = Number(req.query.pageNumber) || 1;
@@ -236,7 +237,8 @@ export const insertQuestions = async (req: ExtendedRequest, res: Response) => {
             AnswerCount: row.AnswerCount,
             UpdateDate: row.UpdateDate,
             CreateDate: row.CreateDate,
-            User_Id: row.User_Id, 
+            User_Id: row.User_Id,
+            Username: row.Username,
           };
   
           questions.push(question);
@@ -249,6 +251,7 @@ export const insertQuestions = async (req: ExtendedRequest, res: Response) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   };
+  
   
 
 export const getQuestionsByTag = async (req: Request<{ TagName: string }>, res: Response) => {
@@ -275,16 +278,15 @@ interface extRq extends Request  {
   
 }
 
-
 export const getQuestionsByUserWithTags = async (req: extRq, res: Response) => {
-
   const User_Id = req.info?.User_Id; // Extract User_Id from the decoded token
   if (!User_Id) {
     res.status(400).json({ message: 'Invalid token' });
     return;
   }
+
   try {
-    const result = await DatabaseHelper.exec('GetQuestionsByUserWithTags', { User_Id });
+    const result = await DatabaseHelper.exec('GetQuestionsByUserWithTags2', { User_Id });
 
     if (result.recordset.length === 0) {
       // User question not found
@@ -294,7 +296,7 @@ export const getQuestionsByUserWithTags = async (req: extRq, res: Response) => {
     const questions: Question[] = [];
 
     result.recordset.forEach((row: any) => {
-      const questionId: string = row.QuestionId;
+      const questionId: string = row.questionId;
 
       const existingQuestion = questions.find((q) => q.QuestionId === questionId);
 
@@ -312,9 +314,10 @@ export const getQuestionsByUserWithTags = async (req: extRq, res: Response) => {
           VoteCount: row.VoteCount,
           CreateDate: row.CreateDate,
           UpdateDate: row.UpdateDate,
-          User_Id:row.User_Id
+          User_Id: row.User_Id,
+          Username: row.Username,
+          isDeleted: row.isDeleted
         };
-        
 
         questions.push(question);
       }
@@ -325,6 +328,7 @@ export const getQuestionsByUserWithTags = async (req: extRq, res: Response) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 
 
@@ -390,23 +394,23 @@ interface extRq1 extends Request  {
   info?: {
     User_Id:string
   }
-  params:{
-    Question_Id:string
+  body:{
+    QuestionId:string
   }
   
 }
-
-export const downvoteQuestion = async (req:extRq1, res:Response) => {
+export const downvoteQuestion = async (req: extRq1, res: Response) => {
   try {
     const { QuestionId } = req.body;
     const User_Id = req.info?.User_Id; // Extract User_Id from the decoded token
+    console.log(User_Id, QuestionId);
     if (!User_Id) {
       res.status(400).json({ message: 'Invalid token' });
       return;
     }
 
     // Call the stored procedure and pass the parameters
-    const result = await DatabaseHelper.exec('DownvoteQuestion2', {
+    const result = await DatabaseHelper.exec('DownvoteQuestion3', {
       User_Id,
       QuestionId,
     });
@@ -419,10 +423,8 @@ export const downvoteQuestion = async (req:extRq1, res:Response) => {
     } else {
       res.status(400).json({ message });
     }
-  } catch (error:any) {
-    if (error.number === 50001) {
-      res.status(400).json({ message: error.message });
-    } else if (error.number === 50002) {
+  } catch (error: any) {
+    if (error.number === 50001 || error.number === 50002) {
       res.status(400).json({ message: error.message });
     } else {
       res.status(500).json({ error: 'Internal Server Error' });
@@ -430,18 +432,22 @@ export const downvoteQuestion = async (req:extRq1, res:Response) => {
   }
 };
 
-export const upvoteQuestion = async (req:extRq1, res:Response) => {
+export const upvoteQuestion = async (req: extRq1, res: Response) => {
   try {
     const { QuestionId } = req.body;
     const User_Id = req.info?.User_Id; // Extract User_Id from the decoded token
+    console.log(User_Id, QuestionId);
+    
     if (!User_Id) {
       res.status(400).json({ message: 'Invalid token' });
       return;
     }
-    const result = await DatabaseHelper.exec('UpvoteQuestion2', {
+
+    const result = await DatabaseHelper.exec('UpvoteQuestion3', {
       User_Id,
       QuestionId,
     });
+
     const message = result.recordset[0].Message;
 
     if (message === 'Upvote successful') {
@@ -449,15 +455,15 @@ export const upvoteQuestion = async (req:extRq1, res:Response) => {
     } else {
       res.status(400).json({ message });
     }
-  } catch (error:any) {
-    if (error.number === 50001) {
-      res.status(400).json({ message: error.message });
-    } else if (error.number === 50002) {
+  } catch (error: any) {
+    if (error.number === 50001 || error.number === 50002) {
       res.status(400).json({ message: error.message });
     } else {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   }
 };
+
+
 
 

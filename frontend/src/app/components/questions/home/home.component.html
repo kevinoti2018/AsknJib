@@ -33,11 +33,12 @@
                 </div>
               <div class="t-bottom ">
                 <div class="t-left">
-                    <mat-button-toggle-group>
-                        <mat-button-toggle value="New">New</mat-button-toggle>
-                        <mat-button-toggle value="unanswered">Unanswered</mat-button-toggle>
-                        <mat-button-toggle value="questions">Questions</mat-button-toggle>
-                    </mat-button-toggle-group>
+                  <mat-button-toggle-group >
+                    <mat-button-toggle value="New" (click)="handleNewButtonClick()">New</mat-button-toggle>
+                    <mat-button-toggle value="unanswered" (click)="handleUnansweredButtonClick()">Unanswered</mat-button-toggle>
+                    <mat-button-toggle value="questions" (click)="handleQuestionsButtonClick()">Questions</mat-button-toggle>
+                  </mat-button-toggle-group>
+                  
                 </div>
                 <div class="t-right">
                     <button class="px-3 py-2 bg-secondaryContainer text-questionC rounded-xl">filter</button>
@@ -46,7 +47,7 @@
             </div>
     
             <div class="bottom "> 
-                <div class="div" *ngFor="let question of questions">
+                <div class="div" *ngFor="let question of questions ">
                    
                
                 <mat-card class=" bg-primaryContainer h-48 p-1 m-4  " >
@@ -73,10 +74,10 @@
                             <li *ngFor="let tag of question.Tags" class="tag bg-secondaryContainer text-question list-none">{{ tag }}</li>
                         </div>
                         <div class="mid">
-                            <div class="name text-secondary font-bold">Kevin Otieno</div>
+                            <div class="name text-secondary font-bold">{{question.Username}}</div>
                         </div>
                         <div class="right text-content font-bold">
-                            Time Elapsed: {{ question.TimeElapsed }}
+                        {{ question.CreateDate | date}}
                         </div>
                     </div>
                 </mat-card>

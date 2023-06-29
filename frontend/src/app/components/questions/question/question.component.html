@@ -24,55 +24,92 @@
       </mat-toolbar>
       <router-outlet></router-outlet>
       <div class="body-contents ">
-       <div class="content bg-white p-2">
+       <div class="content bg-white p-2" *ngIf="question">
             <div class="top flex justify-between">
                 <div class="left ">
-                    <h1 class="text-3xl font-bold text-footer">{{ question?.Title}}</h1>
+                    <h1 class="text-3xl font-bold text-footer">{{ question.Title}}</h1>
                 </div>
                 <div class="right">
                     <button class="bg-primary py-1 px-2 text-white rounded-xl"><a routerLink="/questions/ask">Ask a question?</a></button>
                 </div>
             </div>
             <div class="sub flex gap-6  mt-4">
-                <h2 class="text-content">Asked <span class="text-footer font-bold"> 10 days ago</span></h2>
-                <h2 class="text-content">Modified <span class="text-footer font-bold">2 days ago</span></h2>
+                <h2 class="text-content">Asked <span class="text-footer font-bold"> {{question.CreateDate | date}}</span></h2>
+                <h2 class="text-content">Modified <span class="text-footer font-bold">{{question.UpdateDate}}</span></h2>
+                <h2 class="text-content">Asked By <span class="text-footer font-bold">{{question.Username}}</span></h2>
             </div>
             <div class="question mt-8">
                 <div class="left flex flex-col align-middle justify-center text-center">
-                    <span><mat-icon>arrow_circle_up</mat-icon></span>2 <span><mat-icon>arrow_circle_down</mat-icon></span>
+                    <span (click)="UpvoteQuestion(question!.QuestionId)"><mat-icon >arrow_circle_up</mat-icon></span>{{question.VoteCount}}<span (click)="DownvoteQuestion(question!.QuestionId)"><mat-icon>arrow_circle_down</mat-icon></span>
                 </div>
                 <div class="right bg-secondaryContainer rounded-md p-2 text-content text-md">
-                    {{question?.Details}}
+                    {{question.Details}}
                 </div>
             </div>
             <div class="tried mt-4 ">
                 <h1 class="font-bold text-xl text-footer my-2">What I Tried</h1>
                 <div class="try bg-tertiaryContainer p-2 text-md rounded-lg">
-                    <h3>{{question?.Expect}}</h3>
-                    <h3>{{question?.Expect}}</h3>
+                    <h3>{{question.Try}}</h3>
+                    
                 </div>
             </div>
-            <div class="answers mt-8">
+            <div class="tried mt-4 ">
+                <h1 class="font-bold text-xl text-footer my-2">What I Expect</h1>
+                <div class="try bg-tertiaryContainer p-2 text-md rounded-lg">
+                    <h3>{{question.Expect}}</h3>
+                    
+                </div>
+            </div>
+
+            <div class="answers mt-8" *ngFor="let answer of question?.Answers">
                 <h1 class="mb-4 font-bold text-footer text-xl">Answers</h1>
+
                <div class="answer">
                 <div class="left flex flex-col align-middle justify-center text-center">
-                    <span><mat-icon>arrow_circle_up</mat-icon></span>2 <span><mat-icon>arrow_circle_down</mat-icon></span>
+                    <button (click)="UpvoteAnswer(answer.AnswerId)"><mat-icon>arrow_circle_up</mat-icon></button>{{answer.VoteCount}} <button (click)="DownvoteAnswer(answer.AnswerId)"><mat-icon>arrow_circle_down</mat-icon></button>
                 </div>
                 <div class="right bg-secondaryContainer rounded-md p-2 text-content text-md">
-                    Lorem ipsum dolor sit amet consectetur. Enim tempor volutpat eu mauris quam bibendum. Suspendisse libero mattis massa id quam lorem. Nulla vitae bibendum convallis mi vulputate vel nisi nam tempus. Viverra cras in varius varius sed rhoncus semper tellus.
+                  <p> {{answer.Answer}}</p>
+
+                   <div class="bottom flex w-96 justify-between mt-5 ">
+                    <p >{{answer.Username}}</p> 
+                    <p>{{answer.CreatedDate |date}}</p>
+                   </div>
                 </div>
+               
                </div>
+               <h1 class="my-4 font-bold text-footer text-xl">Comments</h1>
+               <div class="comments p-6 bg-secondaryContainer my-5" *ngFor="let comment of answer.Comments">
+                  <p class="my-4 text-questionC ">{{comment.Comment}}</p>
+                  <p>{{comment.Username}}</p>
+                  <p>{{comment.CreationDate |date}}</p>
+               </div>
+               <form [formGroup]="commentForm" (ngSubmit)="submitComment(answer.AnswerId)">
+                <div class="form-group">
+                  <label for="comment">Comment</label>
+                  <textarea id="comment" formControlName="comment" class="form-control" required></textarea>
+                  <div *ngIf="commentForm.get('comment')?.invalid && (commentForm.get('comment')?.dirty || commentForm.get('comment')?.touched)" class="error-message">
+                    <div *ngIf="commentForm.get('comment')?.errors?.['required']" class="errors">Comment is required.</div>
+                  </div>
+                </div>
+                <button type="submit" class="btn bg-primary text-white py-1 px-2 rounded-lg mt-2" [disabled]="commentForm.invalid" [ngClass]="{'disabled-button': commentForm.invalid}">Submit</button>
+              </form>
+              
+              
             </div>
-            <div class="response mt-6 mb-2 p-2">
+            <div class="response mt-6 mb-2 p-2" [formGroup]="answerForm">
               <h2 class="font-bold text-md text-footer">Your answer</h2>
-              <textarea placeholder="Enter your answer" [(ngModel)]="answer" name="answer" required #answerInput="ngModel"></textarea>
-              <div *ngIf="answerInput.invalid && (answerInput.dirty || answerInput.touched)" class="error-message">
-                <div *ngIf="answerInput.errors?.['required']">
+              <textarea formControlName="answer" placeholder="Enter your answer"></textarea>
+              <div *ngIf="answerForm.get('answer')?.invalid && (answerForm.get('answer')?.dirty || answerForm.get('answer')?.touched)" class="error-message">
+                <div *ngIf="answerForm.get('answer')?.errors?.['required']">
                   <div class="errors">Answer is required.</div>
                 </div>
               </div>
-              <button class="bg-primary text-white py-1 px-2 rounded-lg mt-2" [disabled]="!answer" [ngClass]="{ 'disabled-button': !answer }">Submit</button>
+              <button class="bg-primary text-white py-1 px-2 rounded-lg mt-2" [disabled]="answerForm.invalid" [ngClass]="{ 'disabled-button': answerForm.invalid }" (click)="SubmitAnswer()">Submit</button>
             </div>
+            
+            
+            
             
               
        </div>

@@ -4,6 +4,10 @@ import { MaterialModule } from 'src/app/shared/material/material.module';
 import { RouterModule } from '@angular/router';
 import {  Questions } from 'src/app/interface/questions';
 import { QuestionsService } from 'src/app/services/questions.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/State/appState';
+import { deleteQuestion, getQuestions } from 'src/app/State/Actions/questionActions';
+
 
 @Component({
   selector: 'app-allquiz',
@@ -15,27 +19,24 @@ import { QuestionsService } from 'src/app/services/questions.service';
 export class AllquizComponent implements OnInit{
  
   isSidenavOpen = false;
-
+  questions:Questions[]=[]
 
   toggleSidenav(): void {
     this.isSidenavOpen = !this.isSidenavOpen;
   }
 
   question:Questions[]=[]
-  constructor(private questionsService:QuestionsService){}
+  constructor(private questionsService:QuestionsService
+     ,private store:Store<AppState>,){}
   ngOnInit(): void {
-    this.getQuestions()
+    this.store.dispatch(getQuestions())
+  this.store.select('question').subscribe(
+    (response)=>{
+      this.questions= response.questions
+    }
+  )
   }
-
-  getQuestions(){
-    this.questionsService.getAllQuestions().subscribe(
-      (response)=>{
-        this.question=response
-      },
-      (error:any)=>{
-        console.log(error);
-        
-      }
-    )
-  }  
+  deleteQuestion(QuestionId:string){
+    this.store.dispatch(deleteQuestion({QuestionId}))
+  }
 }

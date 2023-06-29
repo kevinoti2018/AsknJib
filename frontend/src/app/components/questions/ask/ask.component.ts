@@ -6,7 +6,9 @@ import { Router, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormControl, Validators } from '@angular/forms';
 import { QuestionsService } from 'src/app/services/questions.service';
-
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/State/appState';
+import { askQuestion } from 'src/app/State/Actions/questionActions';
 @Component({
   selector: 'app-ask',
   standalone: true,
@@ -15,7 +17,7 @@ import { QuestionsService } from 'src/app/services/questions.service';
   styleUrls: ['./ask.component.css']
 })
 export class AskComponent {
-  constructor(private router:Router, private questionsService:QuestionsService){
+  constructor(private router:Router, private questionsService:QuestionsService, private store:Store<AppState>){
 
   }
   title: string = '';
@@ -72,14 +74,15 @@ export class AskComponent {
 
     console.log(formData);
 
-    this.questionsService.askQuestion(formData).subscribe(
-      (response)=>{
-        console.log('success')
-      }
-      , (error)=>{
-        console.log(error)
-      }
-    )
+    // this.questionsService.askQuestion(formData).subscribe(
+    //   (response)=>{
+    //     console.log('success')
+    //   }
+    //   , (error)=>{
+    //     console.log(error)
+    //   }
+    // )
+    this.store.dispatch(askQuestion({formData}))
   }
   
   resetForm() {

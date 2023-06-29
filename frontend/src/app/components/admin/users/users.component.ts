@@ -4,6 +4,9 @@ import { MaterialModule } from 'src/app/shared/material/material.module';
 import { RouterModule } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/interface/user';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/State/appState';
+import { DeleteUser, getUsers } from 'src/app/State/Actions/userActions';
 
 @Component({
   selector: 'app-users',
@@ -20,32 +23,19 @@ export class UsersComponent implements OnInit {
   toggleSidenav(): void {
     this.isSidenavOpen = !this.isSidenavOpen;
   }
-  constructor(private userService:UserService){}
+  constructor(private userService:UserService, private store:Store<AppState>){}
   ngOnInit(): void {
-    this.getUsers()
-  }
-  getUsers(){
-    this.userService.getUsers().subscribe(
+    this.store.dispatch(getUsers())
+    this.store.select('user').subscribe(
       (response)=>{
-        this.users= response
-        console.log(response)
-      },
-      (error)=>{
-        console.log(error)
+        this.users=response.users
       }
     )
   }
 
   deleteUser(User_Id:string){
-   this.userService.deleteUser(User_Id).subscribe(
-    (response)=>{
-      console.log("User deleted");
-      
-    },
-    (error)=>{
-      console.log(error)
-    }
-   )
+  this.store.dispatch(DeleteUser({User_Id}))
+
   }
 
 }

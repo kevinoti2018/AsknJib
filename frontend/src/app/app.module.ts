@@ -1,5 +1,5 @@
 
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +21,17 @@ import { TagsearchPipe } from './tagsearch.pipe';
 import { StoreModule } from '@ngrx/store';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './interceptor.service';
+import { EffectsModule } from '@ngrx/effects';
+import { userReducers } from './State/Reducers/userReducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { UserEffects } from './State/Effects/userEffects';
+import { questionsReducer } from './State/Reducers/questionReducers';
+import { QuestionEffects } from './State/Effects/questionEffects';
+import { AnswerEffects } from './State/Effects/answerEffects';
+import { answerReducer } from './State/Reducers/answerReducers';
+import { CommentReducer } from './State/Reducers/commentReducer';
+import { CommentEffects } from './State/Effects/commentEffects';
+import { SearchByTitlePipe } from './search-by-title.pipe';
 
 
 
@@ -30,6 +41,7 @@ import { InterceptorService } from './interceptor.service';
     AppComponent,
     QuestionsearchPipe,
     TagsearchPipe,
+    SearchByTitlePipe,
    
   ],
   imports: [
@@ -48,7 +60,9 @@ import { InterceptorService } from './interceptor.service';
     LandingComponent,
     TestimonialsComponent,
     ProofnumComponent,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot({user:userReducers, question:questionsReducer,answer:answerReducer,comment:CommentReducer}, {}),
+    EffectsModule.forRoot([UserEffects,QuestionEffects,AnswerEffects,CommentEffects]),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
   ],
   providers: [{provide:HTTP_INTERCEPTORS,useClass:InterceptorService,multi:true}],
   bootstrap: [AppComponent]

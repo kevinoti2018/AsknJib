@@ -15,6 +15,13 @@ interface ExtendedRequest extends Request{
     isDeleted: number;
     }
 }
+interface User {
+  User_Id: string;
+  Username: string;
+  Email: string;
+  IsAdmin: boolean;
+  isDeleted: boolean;
+}
 
 
 
@@ -101,6 +108,12 @@ export const forgotPassword = async (req: Request<{ Email: string }>, res: Respo
 }
 
 
+interface extRq2 extends Request  {
+  info?:{
+    User_Id:string
+  }
+}
+
 
 interface extRq extends Request  {
   info?:{
@@ -142,15 +155,26 @@ export const resetPassword = async (req: extRq, res: Response) => {
   
 
 
-  export const getUsers = async (req: Request, res: Response) => {
-    try {
-      const result = await DatabaseHelper.exec('GetUsers', {});
-      res.status(201).json(result.recordset);
-    } catch (error) {
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  };
-  
+export const getUsers = async (req: Request, res: Response) => {
+  try {
+    const pageNumber = parseInt(req.query.pageNumber as string) || 1;
+    const pageSize = parseInt(req.query.pageSize as string) || 10;
+
+    const result = await DatabaseHelper.exec('GetUsers1', {
+      PageNumber: pageNumber,
+      PageSize: pageSize
+    });
+
+    const users: User[] = result.recordset;
+    res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+
   export const deleteUser = async (req: Request<{ User_Id: string }>, res: Response): Promise<void> => {
     const { User_Id } = req.params;
   
@@ -179,23 +203,29 @@ export const resetPassword = async (req: extRq, res: Response) => {
   };
 
 
-  export const getUserById = async (req: Request, res: Response) => {
-    const { User_Id } = req.body;
+  export const getUserById = async (req: extRq2, res: Response) => {
+    const User_Id = req.info?.User_Id; 
+  
+    if (!User_Id) {
+      res.status(400).json({ message: 'Invalid token' });
+      return;
+    }
   
     try {
-    let result=  await DatabaseHelper.exec('GetUsernameById', { User_Id });
+      let result = await DatabaseHelper.exec('GetUserById', { User_Id });
   
       if (result.recordset.length === 0) {
         return res.status(404).json({ message: 'User not found' });
       }
   
-      const username = result.recordset[0].Username;
-      res.json({ username });
+      const user = result.recordset[0];
+      res.json({ user });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   };
+  
   
   
   
