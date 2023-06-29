@@ -31,6 +31,7 @@ import { AnswerEffects } from './State/Effects/answerEffects';
 import { answerReducer } from './State/Reducers/answerReducers';
 import { CommentReducer } from './State/Reducers/commentReducer';
 import { CommentEffects } from './State/Effects/commentEffects';
+import { SearchByTitlePipe } from './search-by-title.pipe';
 
 
 
@@ -40,6 +41,7 @@ import { CommentEffects } from './State/Effects/commentEffects';
     AppComponent,
     QuestionsearchPipe,
     TagsearchPipe,
+    SearchByTitlePipe,
    
   ],
   imports: [

@@ -22,7 +22,6 @@ export interface Question {
     AnswerCount: number
     CreateDate: string
     Username:string
-    TimeElapsed?: string;
   }
 
 

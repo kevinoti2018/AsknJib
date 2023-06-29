@@ -18,7 +18,7 @@ import { getQuestions, userQuestion } from 'src/app/State/Actions/questionAction
 export class HomeComponent implements OnInit {
   questions:Questions[]=[]
   isSidenavOpen = false;
-
+  searchTerm: string = ''
   toggleSidenav(): void {
     this.isSidenavOpen = !this.isSidenavOpen;
   }
@@ -46,27 +46,7 @@ ngOnInit(): void {
   getSingleQuiz(QuestionId: string) {
     this.router.navigate(['/questions', QuestionId]);
   }
-  calculateTimeElapsed() {
-    const now = new Date();
-    this.questions.forEach((question) => {
-      const createDate = new Date(question.CreateDate);
-      const timeDiff = now.getTime() - createDate.getTime();
-      let timeElapsed: string;
   
-      if (timeDiff >= 86400000) { // If time difference is greater than or equal to 24 hours (86400000 milliseconds)
-        const daysPassed = Math.floor(timeDiff / 86400000);
-        timeElapsed = `${daysPassed} day${daysPassed > 1 ? 's' : ''} ago`;
-      } else if (timeDiff >= 3600000) { // If time difference is greater than or equal to 1 hour (3600000 milliseconds)
-        const hoursPassed = Math.floor(timeDiff / 3600000);
-        timeElapsed = `${hoursPassed} hour${hoursPassed > 1 ? 's' : ''} ago`;
-      } else { // If time difference is less than 1 hour
-        const minutesPassed = Math.floor(timeDiff / 60000);
-        timeElapsed = `${minutesPassed} minute${minutesPassed > 1 ? 's' : ''} ago`;
-      }
-  
-      question.TimeElapsed = timeElapsed;
-    });
-  }
   
 }
 

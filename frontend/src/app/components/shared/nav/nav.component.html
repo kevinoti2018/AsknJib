@@ -13,7 +13,7 @@
           <p class="text-questionC font-normal"><a routerLink="/questions" *ngIf="authService.isLoggedIn()">Questions</a></p>
         </div>
         <div class="right">
-          <input type="search" name="" id="" placeholder="Search here" class="" [(ngModel)]="searchText">
+          <input type="search" name="" id="" placeholder="Search here" class="" [(ngModel)]="searchText"  [(ngModel)]="searchTerm">
         </div>
       </div>
       <div class="right">
