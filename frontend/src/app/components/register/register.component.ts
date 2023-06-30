@@ -2,6 +2,7 @@ import { Register, User } from './../../interface/user';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {  RegisterUser } from 'src/app/State/Actions/userActions';
 import { AppState } from 'src/app/State/appState';
@@ -21,6 +22,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService:UserService,
+    private router:Router,
     private store:Store<AppState>,
 
   ) {}
@@ -54,6 +56,7 @@ export class RegisterComponent implements OnInit {
 
       // )
       this.store.dispatch(RegisterUser({newUser}))
+      this.router.navigateByUrl('/login')
      
     }
   }

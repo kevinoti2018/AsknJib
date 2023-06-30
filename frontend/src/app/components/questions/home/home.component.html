@@ -25,7 +25,7 @@
         <div class="right ">
             <div class="top">
                 <div class="ask">
-                    <button class="bg-primary text-white px-2 py-1 rounded-xl hover:bg-secondary mb-2" ><a routerLink="ask">Ask a question?</a></button>
+                    <button class="bg-primary text-white px-2 py-1 rounded-xl hover:bg-secondary mb-2 cursor-pointer" ><a routerLink="ask">Ask a question?</a></button>
                 </div>
               <div class="t-bottom ">
                 <div class="t-left" >
@@ -44,7 +44,7 @@
             <div class="page  overflow-hidden  flex  justify-between">
               <mat-paginator [length]="50"
               [pageSize]="10"
-              [pageSizeOptions]="[5, 10]"
+              [pageSizeOptions]="[5]"
               aria-label="Select page"
               (page)="handlePageChange($event)">
             </mat-paginator>
@@ -60,15 +60,15 @@
                   <mat-card class=" bg-primaryContainer h-48 p-1 m-4  " >
                       <div class="tops sm:grid-cols-1">
                           <div class="left">
-                              <div class="votes px-2 py-1 ">
+                              <!-- <div class="votes px-2 py-1 ">
                                   <h2>{{question.VoteCount}}votes</h2>
-                              </div>
+                              </div> -->
                               <div class="answers px-2 py-1">
                                   <h2>{{question.AnswerCount}} answers</h2>
                               </div>
                           </div>
                           <div class="right">
-                           <mat-card-header class="text-2xl text-questionC">
+                           <mat-card-header class="text-2xl text-questionC cursor-pointer">
                               <h3 (click)="getSingleQuiz(question.QuestionId)">{{ question.Title }}</h3>
                            </mat-card-header>
                            <mat-card-content class="text-content text-sm">
@@ -101,7 +101,7 @@
        </div>
        <div class="end bg-secondaryContainer h-96 p-2">
         <h1>Top Questions?</h1>
-        <p class="text-primary" (click)="getSingleQuiz(questions1!.QuestionId)">{{questions1?.Title}}</p>
+        <p class="text-primary cursor-pointer" (click)="getSingleQuiz(questions1!.QuestionId)">{{questions1?.Title}}</p>
     </div>
       </div>
 

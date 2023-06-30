@@ -37,7 +37,7 @@
             </div>
             <div class="question mt-8">
                 <div class="left flex flex-col align-middle justify-center text-center">
-                    <span (click)="UpvoteQuestion(question!.QuestionId)"><mat-icon >arrow_circle_up</mat-icon></span>{{question.VoteCount}}<span (click)="DownvoteQuestion(question!.QuestionId)"><mat-icon>arrow_circle_down</mat-icon></span>
+                    <!-- <span (click)="UpvoteQuestion(question!.QuestionId)"><mat-icon >arrow_circle_up</mat-icon></span>{{question.VoteCount}}<span (click)="DownvoteQuestion(question!.QuestionId)"><mat-icon>arrow_circle_down</mat-icon></span> -->
                 </div>
                 <div class="right bg-secondaryContainer rounded-md p-2 text-content text-md">
                     {{question.Details}}
@@ -71,7 +71,8 @@
                    <div class="bottom flex w-96 justify-between mt-5 ">
                     <p >{{answer.Username}}</p> 
                     <p>{{answer.CreatedDate |date}}</p>
-                    <button (click)="acceptAnswer(answer.AnswerId)" [ngClass]="{'accepted': answer.accepted}">{{answer.accepted}}</button>
+                    <button (click)="acceptAnswer(answer.AnswerId)" [ngClass]="{'accepted': answer.accepted, 'custom-class': !answer.accepted}">Accepted</button>
+
                    </div>
                 </div>
                
@@ -120,10 +121,22 @@
   </mat-drawer-container>
   
   <style>
-    .green{
-      background-color: green;
-    }
-    .blue{
-      background-color: blue;
-    }
+    button.accepted {
+
+  background-color: green;
+  color: white;
+  padding: 0.5rem;
+  border-radius: .5rem;
+
+}
+
+button.custom-class {
+
+  background-color: red;
+  color: white;
+  padding: 0.5rem;
+  border-radius: .5rem;
+ 
+}
+
   </style>

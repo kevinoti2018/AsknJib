@@ -30,7 +30,7 @@ export class UserService {
   }
  
 
-  forgotUser(Email:ResetEmail){
+  forgotUser(Email:string){
     return this.httpClient.post(`${this.baseUrl}/forgot`,Email)
   }
   

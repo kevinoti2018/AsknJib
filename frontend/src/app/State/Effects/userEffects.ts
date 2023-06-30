@@ -45,8 +45,8 @@ export class UserEffects{
             ofType(UserActions.ForgotUser),
             mergeMap(action=>{
                 return this.userService.resetPassword(action.newPassword).pipe(
-                    map((response: any) => UserActions.ForgotUserSuccess({ message: response.message })),
-                    catchError(error=>of(UserActions.ForgotUserFailure({error:error})))
+                    map((response: any) => UserActions.ResetUserSuccess({ message: response.message })),
+                    catchError(error=>of(UserActions.ResetUserFailure({error:error})))
                 )
             })
         )
@@ -57,8 +57,8 @@ export class UserEffects{
           ofType(UserActions.ResetUser),
           mergeMap(action => {
             return this.userService.forgotUser(action.Email).pipe(
-              map((response: any) => UserActions.ResetUserSuccess({ message: response.message })),
-              catchError(error => of(UserActions.ResetUserFailure({ error: error.message })))
+              map((response: any) => UserActions.ForgotUserSuccess({ message: response.message })),
+              catchError(error => of(UserActions.ForgotUserFailure({ error: error.message })))
             );
           })
         );
