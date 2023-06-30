@@ -12,6 +12,7 @@ export class AdminGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (this.authService.isLoggedIn() && this.authService.isAdmin()) {
       // User is logged in and has admin role, allow access
+      
       return true;
     } else {
       // User is not logged in or doesn't have admin role, redirect to login page or unauthorized page

@@ -33,7 +33,10 @@ export class AuthService {
 
    isAdmin(){
     let role=localStorage.getItem('role')
+    console.log(role);
     return  role==='1' ?true :false
+   
+    
    }
 
    isUser(){

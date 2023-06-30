@@ -21,7 +21,7 @@
       <div class="body-contents">
         <div class="right ">
             <div class="user flex justify-around bg-secondaryContainer p-2 w-3/5 ml-10" >
-                <p>Kevin Otieno</p>
+                <p>{{user!.Email}}</p>
                 <p>kelvinotix@gmail.com</p>
                 <button class="bg-secondary py-1 px-2 text-white rounded-lg" >update</button>
             </div>
@@ -75,9 +75,10 @@
             </div>
          
        </div>
-       <div class="end bg-secondaryContainer h-96">
+       <!-- <div class="end bg-secondaryContainer h-96">
         <h1>Top Questions?</h1>
-    </div>
+        <p class="text-primary" (click)="getSingleQuiz(questions1!.QuestionId)">{{questions1?.Title}}</p>
+    </div> -->
       </div>
 
     </mat-drawer-content>
