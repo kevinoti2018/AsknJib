@@ -10,11 +10,13 @@ export class AdminGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (this.authService.isLoggedIn() && this.authService.isAdmin()) {
-      // User is logged in and has admin role, allow access
+    let role=localStorage.getItem('role')
+    // this.authService.isAdmin()
+    if (this.authService.isLoggedIn() && role =='true') {
+      
       return true;
     } else {
-      // User is not logged in or doesn't have admin role, redirect to login page or unauthorized page
+     
       if (!this.authService.isLoggedIn()) {
         this.router.navigate(['/login']);
       } else {

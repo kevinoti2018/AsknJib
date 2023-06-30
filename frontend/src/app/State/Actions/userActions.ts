@@ -12,7 +12,7 @@ export const RegisterUser = createAction('[Register] user Register',props<{newUs
 export const RegisterUserSuccess = createAction('[Register] user Register success',props<{message:string}>())
 export const RegisterUserFailure = createAction('[Register] user Register Failure',props<{error:string}>())
 
-export const ResetUser= createAction('[Reset] user Reset', props<{Email:ResetEmail}>())
+export const ResetUser= createAction('[Reset] user Reset', props<{Email:string}>())
 export const ResetUserSuccess= createAction('[Reset] user Reset Success', props<{message:string}>())
 export const ResetUserFailure= createAction('[Reset] user Reset Failure', props<{error:string}>())
 

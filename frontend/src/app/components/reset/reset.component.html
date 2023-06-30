@@ -9,10 +9,6 @@
                 <p class="err" *ngIf="resetForm.get('email')?.errors?.['required']">Email is required.</p>
                 <p class="err" *ngIf="resetForm.get('email')?.errors?.['email']">Invalid email format.</p>
               </div>
-              <input type="password" formControlName="password" placeholder="Enter Your Password">
-              <div *ngIf="resetForm.get('password')?.invalid && (resetForm.get('password')?.dirty || resetForm.get('password')?.touched)">
-                <p class="err" *ngIf="resetForm.get('password')?.errors?.['required']">Password is required.</p>
-              </div>
               <button type="submit" class="bg-primary">reset</button>
               <p>Don't have an account? <a routerLink="/signup">Click here</a></p>
               
