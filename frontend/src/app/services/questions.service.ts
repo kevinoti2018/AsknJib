@@ -12,8 +12,8 @@ export class QuestionsService {
   constructor(private httpClient:HttpClient) { }
   private baseUrl ='http://localhost:4000/questions'
 
-  getAllQuestions() {
-    return this.httpClient.get<Questions[]>('http://localhost:4000/questions/allquestions');
+  getAllQuestions(queries:{pageNumber?:number, pageSize?:number}) {
+    return this.httpClient.get<Questions[]>(`http://localhost:4000/questions/allquestions?pageNumber=${queries.pageNumber}&pageSize=${queries.pageSize}`);
   }
   getTopQuestion():Observable<topQuiz>{
     const token = localStorage.getItem('token') as string;

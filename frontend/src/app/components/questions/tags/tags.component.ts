@@ -22,7 +22,7 @@ export class TagsComponent implements OnInit {
   isSidenavOpen = false;
   constructor(private store:Store<AppState> , private router:Router){}
  ngOnInit(): void {
-  this.store.dispatch(getQuestions())
+  this.store.dispatch(getQuestions({}))
   this.store.select('question').subscribe(
     (response)=>{
       this.questions= response.questions

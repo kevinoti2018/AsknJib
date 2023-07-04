@@ -29,7 +29,7 @@
                 <div class="  flex-col align-middle justify-evenly gap-1 p-2  w-64 bg-secondaryContainer rounded-lg">
                     <p>{{user.Username}}</p>
                     <p>{{user.Email}}</p>
-                    <button class="bg-secondary py-1 px-4 mt-4 text-white rounded-lg"  >delete</button>
+                    <button class="bg-secondary py-1 px-4 mt-4 text-white rounded-lg" (click)=" deleteUser(user.User_Id)" >delete</button>
                 </div>
             </div>
           

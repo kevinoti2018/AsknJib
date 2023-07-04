@@ -18,7 +18,18 @@
       </mat-toolbar>
       <router-outlet></router-outlet>
       <div class="body-contents">
+        
         <div class="right ">
+
+            <div class="page    ">
+                <mat-paginator [length]="50"
+                [pageSize]="10"
+                [pageSizeOptions]="[5]"
+                aria-label="Select page"
+                (page)="handlePageChange($event)">
+              </mat-paginator>
+  
+              </div>
           
             <div class="bottom " *ngFor="let question of questions">
                 <mat-card class=" bg-primaryContainer h-48 p-1 m-4  " >

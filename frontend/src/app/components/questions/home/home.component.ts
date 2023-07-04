@@ -28,15 +28,16 @@ export class HomeComponent implements OnInit {
   toggleSidenav(): void {
     this.isSidenavOpen = !this.isSidenavOpen;
   }
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | undefined;
   handlePageChange(event: PageEvent) {
     console.log(event);
   
-    const currentPageIndex = event.pageIndex;
+    const pageNumber = event.pageIndex + 1;
     const pageSize = event.pageSize;
-   console.log(currentPageIndex,pageSize);
-   
+   this.store.dispatch(getQuestions({pageNumber,pageSize}))
   }
+
   constructor(
     private router:Router,
     private store:Store<AppState>,
@@ -45,7 +46,7 @@ export class HomeComponent implements OnInit {
 ngOnInit(): void {
   
     
-  this.store.dispatch(getQuestions())
+  this.store.dispatch(getQuestions({pageNumber:1,pageSize:10}))
   this.store.select('question').subscribe(
     (response)=>{
       this.questions= response.questions

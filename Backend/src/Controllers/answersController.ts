@@ -38,7 +38,9 @@ export const insertAnswer = async (req: ExtendedRequest, res: Response) => {
   const { QuestionId } = req.params;
   const { Answer } = req.body;
   const User_Id = req.info?.User_Id; 
-  if (!User_Id) {
+  console.log(Answer);
+  
+  if (!User_Id || !Answer) {
     res.status(400).json({ message: 'Invalid token' });
     return;
   }
@@ -101,7 +103,7 @@ export const updateAnswerAcceptedStatus = async (req: ExtendedRequest1, res: Res
 export const getAnswersByQuestionId = async (req: Request<{QuestionId:string}>, res: Response) => {
   try {
     const {QuestionId} = req.params;
-    console.log(req.params)
+    // console.log(req.params)
 
     const result = await DatabaseHelper.exec('GetAnswersByQuestionId', {
       QuestionId
@@ -119,7 +121,7 @@ export const getAnswersByQuestionId = async (req: Request<{QuestionId:string}>, 
 export const getAnswersByUserId = async (req: Request<{User_Id:string}>, res: Response) => {
   try {
     const {User_Id} = req.params;
-    console.log(req.params)
+    // console.log(req.params)
 
     const result = await DatabaseHelper.exec('GetAnswersByUserId', {
       User_Id
@@ -127,7 +129,7 @@ export const getAnswersByUserId = async (req: Request<{User_Id:string}>, res: Re
 
     const response = result.recordset;
 
-    console.log(response)
+    // console.log(response)
     res.status(201).json(response);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
@@ -142,7 +144,7 @@ export const upvoteAnswer = async (req: ExtendedRequest1, res: Response) => {
     }
   
     const { AnswerId } = req.body;
-    console.log(AnswerId, User_Id);
+    // console.log(AnswerId, User_Id);
   
     const result = await DatabaseHelper.exec('upvoteAnswers8', { User_Id, AnswerId });
   
@@ -177,7 +179,7 @@ export const downvoteAnswer = async (req:ExtendedRequest1 , res: Response) => {
       return;
     }
     const { AnswerId } = req.body;
-    console.log(AnswerId,User_Id)
+    // console.log(AnswerId,User_Id)
     const result = await DatabaseHelper.exec('DownvoteAnswers1', {
       AnswerId,
       User_Id

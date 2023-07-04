@@ -25,7 +25,7 @@ export const verifyLogin =  async (req:ExtendedRequest, res:Response,next:NextFu
  
         //token  i need to check two things: is it expired, is it valid token
         const dedodedData = jwt.verify(token, 'ttttweywastring' as string) as Decoded
-        console.log(dedodedData)
+        // console.log(dedodedData)
         req.info=dedodedData
  
      } catch (error:any) {

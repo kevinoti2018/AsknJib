@@ -21,12 +21,15 @@ export class UserService {
   }
 
   getUsers(){
+   
   return this.httpClient.get<User[]>('http://localhost:4000/usersroutes/allusers');
   }
  
 
   deleteUser(User_Id:string){
-    return this.httpClient.delete('localhost:4000/usersroutes/deleteuser');
+    const token = localStorage.getItem('token') as string;
+    const headers = new HttpHeaders().set('token', token);
+    return this.httpClient.delete(`http://localhost:4000/usersroutes/deleteuser/${User_Id}`,{headers});
   }
  
 

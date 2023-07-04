@@ -33,9 +33,9 @@ export class UsersComponent implements OnInit {
     )
   }
 
-  deleteUser(User_Id:string){
-  this.store.dispatch(DeleteUser({User_Id}))
-
+  deleteUser(User_Id:string |undefined){
+  this.store.dispatch(DeleteUser({User_Id:User_Id as string}))
+    console.log(User_Id)
   }
 
 }

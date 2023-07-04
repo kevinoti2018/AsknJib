@@ -14,7 +14,8 @@ export class QuestionEffects{
         return this.action$.pipe(
             ofType(QuestionActions.getQuestions),
             mergeMap(action=>{
-                return this.questionService.getAllQuestions().pipe(
+              const {type, ...queries} = action
+                return this.questionService.getAllQuestions(queries).pipe(
                     map(questions=>{
                         return QuestionActions.getQuestionsSuccess({questions})
                     }),
@@ -79,6 +80,7 @@ export class QuestionEffects{
         return this.action$.pipe(
             ofType(QuestionActions.userQuestion),
             mergeMap(action=>{
+              
                 return this.questionService.userQuestions().pipe(
                     map(questions1=>{
                         return QuestionActions.userQuestionSuccess({questions1})
@@ -87,7 +89,7 @@ export class QuestionEffects{
                 )
             }),
             tap(action=>{
-              this.store.dispatch(getQuestions())
+              // this.store.dispatch(getQuestions())
             })
         )
     })

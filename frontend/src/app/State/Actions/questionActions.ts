@@ -3,7 +3,7 @@ import { Asks } from 'src/app/interface/ask';
 import { Questions1 ,Questions} from 'src/app/interface/questions';
 
 
-export const getQuestions = createAction('[Questions] Get Questions');
+export const getQuestions = createAction('[Questions] Get Questions',props<{pageSize?:number,pageNumber?:number}>());
 export const getQuestionsSuccess = createAction('[Questions] Get Questions Success', props<{ questions: Questions[] }>());
 export const getQuestionsFailure = createAction('[Questions] Get Questions Failure', props<{ error: string }>());
 

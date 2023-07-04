@@ -16,6 +16,7 @@ interface Question {
   UpdateDate: Date
   User_Id:string,
   Username:string
+  isDeleted?:boolean
 
 }
 interface Quiz{
@@ -156,7 +157,7 @@ export const insertQuestions = async (req: ExtendedRequest, res: Response) => {
       }
   
       const [questionRecordset, answerRecordset] = result.recordsets;
-  
+
       const questionWithAnswersAndComments = {
         QuestionId: questionRecordset[0].QuestionId,
         Title: questionRecordset[0].Title,

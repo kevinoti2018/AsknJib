@@ -63,7 +63,9 @@
 
                <div class="answer">
                 <div class="left flex flex-col align-middle justify-center text-center">
-                    <button (click)="UpvoteAnswer(answer.AnswerId)"><mat-icon>arrow_circle_up</mat-icon></button>{{answer.VoteCount}} <button (click)="DownvoteAnswer(answer.AnswerId)"><mat-icon>arrow_circle_down</mat-icon></button>
+                    <button (click)="UpvoteAnswer(answer.AnswerId)"><mat-icon>arrow_circle_up</mat-icon></button>{{answer.VoteCount}} <button (click)="DownvoteAnswer($event, answer.AnswerId)">
+                <mat-icon>arrow_circle_down</mat-icon>
+                </button>
                 </div>
                 <div class="right bg-secondaryContainer rounded-md p-2 text-content text-md">
                   <p> {{answer.Answer}}</p>
@@ -96,17 +98,17 @@
               
               
             </div>
-            <div class="response mt-6 mb-2 p-2" [formGroup]="answerForm">
-              <h2 class="font-bold text-md text-footer">Your answer</h2>
-              <textarea formControlName="answer" placeholder="Enter your answer"></textarea>
-              <div *ngIf="answerForm.get('answer')?.invalid && (answerForm.get('answer')?.dirty || answerForm.get('answer')?.touched)" class="error-message">
-                <div *ngIf="answerForm.get('answer')?.errors?.['required']">
-                  <div class="errors">Answer is required.</div>
-                </div>
-              </div>
-              <button class="bg-primary text-white py-1 px-2 rounded-lg mt-2" [disabled]="answerForm.invalid" [ngClass]="{ 'disabled-button': answerForm.invalid }" (click)="SubmitAnswer()">Submit</button>
-            </div>
-            
+         <div class="response mt-6 mb-2 p-2">
+  <h2 class="font-bold text-md text-footer">Your answer</h2>
+  <form #answerForm="ngForm" (ngSubmit)="SubmitAnswer()">
+    <textarea name="answer" [(ngModel)]="answer" placeholder="Enter your answer" required></textarea>
+    <div *ngIf="answerForm.controls['answer'].invalid && (answerForm.controls['answer'].dirty || answerForm.controls['answer'].touched)" class="error-message">
+      <div *ngIf="answerForm.controls['answer'].errors?.['required']" class="errors">Answer is required.</div>
+    </div>
+    <button type="submit" class="bg-primary text-white py-1 px-2 rounded-lg mt-2" [disabled]="answerForm.invalid">Submit</button>
+  </form>
+</div>
+
             
             
             
